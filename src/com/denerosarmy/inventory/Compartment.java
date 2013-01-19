@@ -18,6 +18,10 @@ public class Compartment{
         this.itemMap = new Hashtable<String, Item>();
         Container.inst().addComp(this);
     }
+    
+    protected int getSize() {
+    	return this.itemMap.size();
+    }
 
     protected void putItem(Item item){
         this.itemMap.put(item.getId(), item);

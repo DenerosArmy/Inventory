@@ -1,16 +1,12 @@
 package com.denerosarmy.inventory;
 
-import java.util.*;
+import android.widget.LinearLayout.LayoutParams;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CompartmentAdapter extends ArrayAdapter<Compartment>{
@@ -33,7 +29,7 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         GridView gridView = (GridView) rowView.findViewById(R.id.itemGrid);
         textView.setText(compartments[position].getName());
         gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
-        // Change the icon for Windows and iPhone
+        gridView.setLayoutParams(new LayoutParams(-1, 2 * (110*(1+(int)((compartments[position].getSize()-1)/3)))));
         return rowView;
     }
 } 

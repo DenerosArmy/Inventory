@@ -8,6 +8,7 @@ public class Container{
     private Hashtable<String, Compartment> compartmentMap;
 
     protected Container(){
+        compartmentMap = new Hashtable<String, Compartment>();
     }
 
     protected static Container inst(){

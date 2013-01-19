@@ -12,6 +12,7 @@ public class Compartment{
     public Compartment(String id, String name){
         this.id = id;
         this.name = name;
+        this.itemMap = new Hashtable<String, Item>();
         Container.inst().addComp(this);
     }
 
@@ -34,7 +35,7 @@ public class Compartment{
         Hashtable<String, Integer> items = new Hashtable<String, Integer>();
         for (Item item:itemMap.values()){
             if (items.containsKey(item.getName())){
-                items.put(item.getName(), items.get(item)+1);
+                items.put(item.getName(), items.get(item.getName())+1);
             }else{
                 items.put(item.getName(), 1);
             }

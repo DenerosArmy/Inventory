@@ -45,6 +45,7 @@ public class Inventory extends Activity{
         i0.putInto("1");
         i1.putInto("1");
         i2.putInto("1");
+        i2.remove();
         i3.putInto("1");
         i4.putInto("1");
         i5.putInto("1");
@@ -58,13 +59,13 @@ public class Inventory extends Activity{
      
         gridView.setAdapter(adapter);
      
-        gridView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-              int position, long id) {
-               Toast.makeText(getApplicationContext(),
-              ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        //gridView.setOnItemClickListener(new OnItemClickListener() {
+            //public void onItemClick(AdapterView<?> parent, View v,
+              //int position, long id) {
+               //Toast.makeText(getApplicationContext(),
+              //((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+            //}
+        //});
    
     }
 

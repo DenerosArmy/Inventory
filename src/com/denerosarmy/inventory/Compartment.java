@@ -1,6 +1,10 @@
 package com.denerosarmy.inventory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
+
+import android.annotation.SuppressLint;
 
 public class Compartment{
 
@@ -35,14 +39,14 @@ public class Compartment{
         Hashtable<Item, Integer> itemsAndCounts = new Hashtable<Item, Integer>();
         for (Item item:itemMap.values()){
             if (itemNameMap.containsKey(item.getName())){
-                if (itemsAndCounts.containsKey(item)){
-                    itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName()))+1);
+                if (itemsAndCounts.containsKey(itemNameMap.get(item.getName()))){
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName())) + Integer.valueOf(1));
                 }else{
-                    itemsAndCounts.put(itemNameMap.get(item.getName()), 1);
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), Integer.valueOf(1));
                 }
             }else{
                 itemNameMap.put(item.getName(), item);
-                itemsAndCounts.put(item, 1);
+                itemsAndCounts.put(item, Integer.valueOf(1));
             }
         }
         return itemsAndCounts;
@@ -61,7 +65,8 @@ public class Compartment{
         return items;
     }
 
-    protected Item[] getItemList(){
+    @SuppressLint("NewApi")
+	protected Item[] getItemList(){
         Object[] objs = this.itemMap.values().toArray();
         Item[] items = Arrays.copyOf(objs, objs.length, Item[].class);
         return items;

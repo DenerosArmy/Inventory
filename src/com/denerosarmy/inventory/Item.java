@@ -5,10 +5,12 @@ public class Item{
     private String id;
     private String name;
     private String compId;
+    private Integer pic;
 
-    public Item(String id, String name){
+    public Item(String id, String name, Integer pic){
         this.id = id;
         this.name = name;
+        this.pic = pic;
     }
 
     protected void putInto(String compId){
@@ -27,6 +29,10 @@ public class Item{
 
     protected String getName(){
         return this.name;
+    }
+
+    protected Integer getPic(){
+        return this.pic;
     }
 
     protected Compartment getComp(){

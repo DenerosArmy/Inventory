@@ -42,7 +42,13 @@ public class Compartment{
         return items;
     }
 
-    protected ArrayList<String> getItemList(){
+    protected Item[] getItemList(){
+        Object[] objs = this.itemMap.values().toArray();
+        Item[] items = Arrays.copyOf(objs, objs.length, Item[].class);
+        return items;
+    }
+
+    protected ArrayList<String> getStringItemList(){
         Hashtable<String, Integer> items = this.getItems();
         ArrayList<String> itemList = new ArrayList<String>();
         for (String item:items.keySet()){

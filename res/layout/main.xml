@@ -10,7 +10,7 @@
     <!--android:text="Hello World, Inventory"-->
     <!--/>-->
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridView1"
+    android:id="@+id/itemGrid"
     android:numColumns="auto_fit"
     android:gravity="center"
     android:columnWidth="50dp"

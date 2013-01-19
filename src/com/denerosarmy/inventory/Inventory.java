@@ -22,7 +22,7 @@ public class Inventory extends Activity{
      
         setContentView(R.layout.main);
      
-        gridView = (GridView) findViewById(R.id.gridView1);
+        gridView = (GridView) findViewById(R.id.itemGrid);
         Compartment c1 = new Compartment("1", "Main");
         Compartment c2 = new Compartment("2", "Misc");
         Compartment c3 = new Compartment("3", "Miscer");
@@ -49,19 +49,10 @@ public class Inventory extends Activity{
         i8.putInto("2");
         i9.putInto("3");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_1, Container.inst().getComp("1").getItemList());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getItemList());
      
         gridView.setAdapter(adapter);
      
-        //gridView.setOnItemClickListener(new OnItemClickListener() {
-            //public void onItemClick(AdapterView<?> parent, View v,
-              //int position, long id) {
-               //Toast.makeText(getApplicationContext(),
-              //((TextView) v).getText(), Toast.LENGTH_SHORT).show();
-            //}
-        //});
-   
     }
 
 }

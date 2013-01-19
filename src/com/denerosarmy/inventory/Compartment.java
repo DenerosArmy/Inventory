@@ -1,6 +1,5 @@
 package com.denerosarmy.inventory;
 
-import android.widget.ArrayAdapter;
 import java.util.*;
 
 public class Compartment{

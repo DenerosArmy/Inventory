@@ -4,15 +4,28 @@
     android:layout_height="100dp"
     android:orientation="vertical"
     android:gravity="center"
-    >      
-    <TextView
-        android:id="@+id/label"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_weight="0.8"
+        android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@+id/label"
-        android:textSize="16dp" 
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-    > </TextView>
-
+    ></LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_weight="0.2"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:background="#88000000"
+		>
+		<TextView
+        	android:id="@+id/label"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:text="@+id/label"
+        	android:textSize="16dp"
+			android:textStyle="bold"
+        	android:gravity="center"
+        	android:textColor="#FFFFFF"        
+    	> </TextView>
+	> </LinearLayout>        
+    	
 </LinearLayout> 

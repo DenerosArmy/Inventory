@@ -10,10 +10,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.content.Context;
 import android.widget.ListView;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 
 public class Inventory extends Activity{
 
-  	ListView container;
+    ListView container;
+    NotificationManager notificationManager;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +61,62 @@ public class Inventory extends Activity{
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-        
+        searchView.setSubmitButtonEnabled(true);
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        System.out.println(i1.inContainer());
+        System.out.println(i2.inContainer());
+
+        this.registerReceiver(this.WifiStateChangedReceiver,
+                              new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+
+    }
+
+    private BroadcastReceiver WifiStateChangedReceiver
+        = new BroadcastReceiver(){
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+       
+            int extraWifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE ,
+                                                    WifiManager.WIFI_STATE_UNKNOWN);
+       
+            switch(extraWifiState){
+                case WifiManager.WIFI_STATE_DISABLED:
+                    checkForMissing();
+                    break;
+                case WifiManager.WIFI_STATE_DISABLING:
+                    break;
+                case WifiManager.WIFI_STATE_ENABLED:
+                    break;
+                case WifiManager.WIFI_STATE_ENABLING:
+                    break;
+                case WifiManager.WIFI_STATE_UNKNOWN:
+                    break;
+            }
+        }
+    };
+
+    protected void checkForMissing(){
+        for (Item item:Container.inst().getMissingItems()){
+            addNotification(item);
+        }
+    }
+
+    protected void addNotification(Item item){
+
+        Notification noti = new Notification.Builder(this)
+                            .setContentTitle("Missing Item")
+                            .setContentText("You left your "+item.getName()+" behind!")
+                            .setSmallIcon(item.getPic())
+                            .build();
+
+        // Hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(Integer.parseInt(item.getId()), noti); 
+
     }
 
 }

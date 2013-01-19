@@ -11,6 +11,7 @@ public class Item{
         this.id = id;
         this.name = name;
         this.pic = pic;
+        Container.inst().addItem(this);
     }
 
     protected void putInto(String compId){
@@ -40,6 +41,10 @@ public class Item{
             return null;
         }
         return Container.inst().getComp(this.compId);
+    }
+
+    protected boolean inContainer(){
+        return this.compId != null;
     }
 
 }

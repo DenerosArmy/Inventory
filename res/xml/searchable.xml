@@ -2,5 +2,6 @@
 <searchable 
     xmlns:android="http://schemas.android.com/apk/res/android" 
     android:label="Search Inventory"
-    android:hint="Search Inventory">
+    android:hint="Search Inventory"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer">
 </searchable>

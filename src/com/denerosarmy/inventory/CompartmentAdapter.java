@@ -33,7 +33,6 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         GridView gridView = (GridView) rowView.findViewById(R.id.itemGrid);
         textView.setText(compartments[position].getName());
         gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
-        // Change the icon for Windows and iPhone
         return rowView;
     }
 } 

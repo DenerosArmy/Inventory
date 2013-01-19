@@ -10,7 +10,7 @@ public class Container{
     protected Container(){
     }
 
-    protected Container inst(){
+    protected static Container inst(){
         if (inst == null){
             inst = new Container();
         }
@@ -26,7 +26,7 @@ public class Container{
     }
 
     protected Compartment[] getComps(){
-        return this.compartmentMap.values();
+        return (Compartment[]) this.compartmentMap.values().toArray();
     }
 
 }

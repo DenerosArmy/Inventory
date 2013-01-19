@@ -9,5 +9,15 @@
     android:layout_height="wrap_content"
     android:text="Hello World, Inventory"
     />
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridView1"
+    android:numColumns="auto_fit"
+    android:gravity="center"
+    android:columnWidth="50dp"
+    android:stretchMode="columnWidth"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    />
+<!--</GridView>-->
 </LinearLayout>
 

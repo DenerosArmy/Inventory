@@ -17,7 +17,7 @@ public class Item{
     }
 
     protected void remove(){
-        Container.inst().getComp(compId).popItem(this);
+        Container.inst().getComp(compId).popItem(this.getId());
         this.compId = null;
     }
     

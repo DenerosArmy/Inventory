@@ -1,5 +1,6 @@
 package com.denerosarmy.inventory;
 
+import android.widget.ArrayAdapter;
 import java.util.*;
 
 public class Compartment{
@@ -28,9 +29,9 @@ public class Compartment{
         return item;
     }
 
-    protected Hashtable<String, int> getItems(){
+    protected Hashtable<String, Integer> getItems(){
         // Returns <K,V> = <ItemName, Count>
-        Hashtable<String, int> items = new Hashtable<String, int>();
+        Hashtable<String, Integer> items = new Hashtable<String, Integer>();
         for (Item item:itemMap.values()){
             if (items.containsKey(item.getName())){
                 items.put(item.getName(), items.get(item)+1);
@@ -39,6 +40,19 @@ public class Compartment{
             }
         }
         return items;
+    }
+
+    protected ArrayList<String> getItemList(){
+        Hashtable<String, Integer> items = this.getItems();
+        ArrayList<String> itemList = new ArrayList<String>();
+        for (String item:items.keySet()){
+            if (items.get(item) > 1){
+                itemList.add(item+" ("+items.get(item)+")");
+            }else{
+                itemList.add(item);
+            }
+        }
+        return itemList;
     }
 
     protected String getId(){

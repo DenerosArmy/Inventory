@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -41,6 +42,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         if (itemCounts[position] > 1){
             count.setText(itemCounts[position].toString());
         }else{
+        	tile.findViewById(R.id.counter).setBackgroundColor(00000000);
             count.setText("");
         }
         return tile;

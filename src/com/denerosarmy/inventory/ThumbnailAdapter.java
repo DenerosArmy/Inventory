@@ -15,7 +15,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     private final Item[] items;
 
     public ThumbnailAdapter(Context context, Item[] items){
-        super(context, R.layout.rowlayout, items);
+        super(context, R.layout.thumbnail, items);
         this.context = context;
         this.items = items;
     }
@@ -23,7 +23,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+        View rowView = inflater.inflate(R.layout.thumbnail, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.label);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textView.setText(items[position].getName());

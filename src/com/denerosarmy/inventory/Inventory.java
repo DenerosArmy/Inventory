@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.SearchView;
+import android.app.SearchManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.content.Context;
 
 public class Inventory extends Activity{
 
@@ -39,12 +44,15 @@ public class Inventory extends Activity{
         i6.putInto("2");
         i7.putInto("2");
         i8.putInto("2");
-        i9.putInto("1");
+        i9.putInto("3");
 
-        //ArrayAdapter<String> itemList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getStringItemList());
-        //gridView.setAdapter(itemList);
-        
         gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemsAndCounts()));
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
      
     }
 

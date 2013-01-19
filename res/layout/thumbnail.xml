@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="100dp"
     android:orientation="vertical"
     android:gravity="center"
     >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/counter"
-		android:layout_weight="0.2"
+	    	android:layout_weight="0.2"
         android:layout_height="0dp"
         android:layout_width="wrap_content"
         android:background="#BB000000"
        	android:layout_gravity="right"
        	android:paddingBottom="5dp"
        	android:paddingLeft="5dp"
-       	android:paddingRight="5dp"
-    	>
-    	<TextView
-    	    android:id="@+id/count"
-        	android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:text="@+id/count"
-        	android:textSize="14dp"
-			android:textStyle="bold"
-        	android:textColor="#FFFFFF"
-    	> </TextView>
+       	android:paddingRight="5dp">
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@+id/count"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF">
+        </TextView>
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_weight="0.6"
+    <LinearLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_weight="0.6"
         android:layout_height="0dp"
-        android:layout_width="fill_parent"
-    ></LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_weight="0.2"
+        android:layout_width="fill_parent">
+    </LinearLayout>
+    <LinearLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+	      android:layout_weight="0.2"
         android:layout_height="0dp"
         android:layout_width="fill_parent"
         android:background="#88000000"
-        android:paddingLeft="5dp"
-		>
-		<TextView
-        	android:id="@+id/label"
-        	android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:text="@+id/label"
-        	android:textSize="16dp"
-			android:textStyle="bold"
-        	android:textColor="#FFFFFF"
-    	> </TextView>
-	</LinearLayout>        
+        android:paddingLeft="5dp">
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@+id/label"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF">
+        </TextView>
+	  </LinearLayout>        
 </LinearLayout> 

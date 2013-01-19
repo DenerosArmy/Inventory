@@ -6,20 +6,12 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 public class Inventory extends Activity{
-    //* Called when the activity is first created. 
-    //@Override
-    //public void onCreate(Bundle savedInstanceState)
-    //{
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main);
-    //}
 
     GridView gridView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     
         setContentView(R.layout.main);
      
         gridView = (GridView) findViewById(R.id.itemGrid);

@@ -1,5 +1,6 @@
 package com.denerosarmy.inventory;
 
+import java.util.*;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,31 +15,31 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
 
     private final Context context;
     private final Item[] items;
+    private final Integer[] itemCounts;
 
-    public ThumbnailAdapter(Context context, Item[] items){
-        super(context, R.layout.thumbnail, items);
+    public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts){
+        super(context, R.layout.thumbnail, Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class));
         this.context = context;
-        this.items = items;
+        this.items = Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class);
+        this.itemCounts = new Integer[items.length];
+        for (int i=0; i<items.length; i++){
+            this.itemCounts[i] = itemsAndCounts.get(this.items[i]);
+        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	/*
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.thumbnail, parent, false);
-        rowView.setBackgroundResource(R.id.icon);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
-        //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        textView.setText(items[position].getName());
-        //imageView.setImageResource(items[position].getPic());
-        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        //imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
-        return rowView;*/
-    	LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.thumbnail, parent, false);
-        rowView.setBackgroundResource(items[position].getPic());
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
-        textView.setText(items[position].getName());
-        return rowView;
+        View tile = inflater.inflate(R.layout.thumbnail, parent, false);
+        tile.setBackgroundResource(items[position].getPic());
+        TextView label = (TextView) tile.findViewById(R.id.label);
+        TextView count = (TextView) tile.findViewById(R.id.count);
+        label.setText(items[position].getName());
+        if (itemCounts[position] > 1){
+            count.setText(itemCounts[position].toString());
+        }else{
+            count.setText("");
+        }
+        return tile;
     }
 } 

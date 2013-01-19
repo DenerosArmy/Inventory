@@ -52,7 +52,7 @@ public class Inventory extends Activity{
         //ArrayAdapter<String> itemList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getStringItemList());
         //gridView.setAdapter(itemList);
         
-        gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemList()));
+        gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemsAndCounts()));
      
     }
 

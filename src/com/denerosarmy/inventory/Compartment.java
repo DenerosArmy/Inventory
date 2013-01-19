@@ -29,7 +29,26 @@ public class Compartment{
         return item;
     }
 
-    protected Hashtable<String, Integer> getItems(){
+    protected Hashtable<Item, Integer> getItemsAndCounts(){
+        // Returns <K,V> = <Item, Count>
+        Hashtable<String, Item> itemNameMap = new Hashtable<String, Item>();
+        Hashtable<Item, Integer> itemsAndCounts = new Hashtable<Item, Integer>();
+        for (Item item:itemMap.values()){
+            if (itemNameMap.containsKey(item.getName())){
+                if (itemsAndCounts.containsKey(item)){
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName()))+1);
+                }else{
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), 1);
+                }
+            }else{
+                itemNameMap.put(item.getName(), item);
+                itemsAndCounts.put(item, 1);
+            }
+        }
+        return itemsAndCounts;
+    }
+
+    protected Hashtable<String, Integer> getItemNames(){
         // Returns <K,V> = <ItemName, Count>
         Hashtable<String, Integer> items = new Hashtable<String, Integer>();
         for (Item item:itemMap.values()){
@@ -49,7 +68,7 @@ public class Compartment{
     }
 
     protected ArrayList<String> getStringItemList(){
-        Hashtable<String, Integer> items = this.getItems();
+        Hashtable<String, Integer> items = this.getItemNames();
         ArrayList<String> itemList = new ArrayList<String>();
         for (String item:items.keySet()){
             if (items.get(item) > 1){

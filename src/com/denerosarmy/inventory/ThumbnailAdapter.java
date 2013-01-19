@@ -27,7 +27,6 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         this.itemCounts = new Integer[items.length];
         for (int i=0; i<items.length; i++){
             this.itemCounts[i] = itemsAndCounts.get(this.items[i]);
-            System.out.println(itemsAndCounts.get(this.items[i]));
         }
     }
 

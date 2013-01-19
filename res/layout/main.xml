@@ -3,16 +3,44 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@drawable/maze_repeating"
-              android:padding="10dp" >
-    <SearchView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/searchView"
-                android:layout_width="fill_parent" 
-                android:layout_height="50dp" />
+              >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            	  android:orientation="horizontal"
+            	  android:layout_width="fill_parent"
+        	      android:layout_height="60dp"
+            	  android:background="#111111"
+    	          >
+    
+		<SearchView xmlns:android="http://schemas.android.com/apk/res/android"
+        	    	android:id="@+id/searchView"
+            		android:layout_weight="0.2"
+            		android:layout_width="0dp" 
+            		android:layout_height="fill_parent"
+            		android:gravity="right"
+        			/>
+		<Button xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:layout_weight="0.2"
+	        	android:layout_width="0dp"
+	        	android:layout_height="wrap_content"
+	        	android:background="@drawable/plus"
+	        	android:id="@+id/ButtonTest"
+            	android:gravity="right"
+	        />
+	</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	          android:orientation="vertical"
+        	      android:layout_width="fill_parent"
+            	  android:layout_height="fill_parent"
+            	  android:background="@drawable/maze_repeating"
+            	  android:paddingLeft="10dp"
+		          android:paddingRight="10dp"
+		          >
+	    
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+android:id/compartments"
-		          android:layout_width="fill_parent"
-              android:layout_height="wrap_content" >
-    </ListView>
+		      android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+			  />
+</LinearLayout>
 </LinearLayout>
 

@@ -4,31 +4,35 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	>
-	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/name"
-	   	android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@id/name"
-	    android:textSize="48dp"
-	    android:textColor="#88FFFFFF"
-	></TextView>
+
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:background="#11FFFFFF"
-	    android:padding="10dp"
-	    >	
+	    android:background="#11000000"
+	    android:paddingLeft="10dp"
+	    android:paddingRight="10dp"
+	    android:paddingBottom="5dp"
+	    android:layout_marginTop="10dp"
+	    >
+	    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	    	android:id="@+id/name"
+	   		android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:text="@id/name"
+	    	android:textSize="36dp"
+	    	android:textColor="#88000000"
+			/>
 		<GridView xmlns:android="http://schemas.android.com/apk/res/android" 
 		    android:id="@+id/itemGrid"
 		    android:layout_width="fill_parent" 
-		    android:layout_height="fill_parent"
+		    android:layout_height="0dp"
 		    android:columnWidth="90dp"
 		    android:numColumns="auto_fit"
 		    android:verticalSpacing="10dp"
 		    android:horizontalSpacing="10dp"
 		    android:stretchMode="columnWidth"
 		    android:gravity="center"
-		/>
+			/>
 	</LinearLayout>
 </LinearLayout>

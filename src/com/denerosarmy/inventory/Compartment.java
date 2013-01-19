@@ -9,7 +9,7 @@ import android.annotation.SuppressLint;
 public class Compartment{
 
     private String id;
-    private String name;
+    public String name;
     private Hashtable<String, Item> itemMap;
 
     public Compartment(String id, String name){
@@ -92,5 +92,4 @@ public class Compartment{
     protected String getName(){
         return this.name;
     }
-
 }

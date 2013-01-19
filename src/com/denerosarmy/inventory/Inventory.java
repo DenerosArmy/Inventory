@@ -2,8 +2,7 @@ package com.denerosarmy.inventory;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
+import android.widget.ListView;
 
 public class Inventory extends Activity{
     //* Called when the activity is first created. 
@@ -14,15 +13,15 @@ public class Inventory extends Activity{
         //setContentView(R.layout.main);
     //}
 
-    GridView gridView;
-
+	ListView container;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
      
         setContentView(R.layout.main);
      
-        gridView = (GridView) findViewById(R.id.itemGrid);
+        container = (ListView) findViewById(R.id.compartments);
         Compartment c1 = new Compartment("1", "Main");
         Compartment c2 = new Compartment("2", "Misc");
         Compartment c3 = new Compartment("3", "Miscer");
@@ -47,12 +46,12 @@ public class Inventory extends Activity{
         i6.putInto("2");
         i7.putInto("2");
         i8.putInto("2");
-        i9.putInto("1");
+        i9.putInto("3");
 
         //ArrayAdapter<String> itemList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getStringItemList());
         //gridView.setAdapter(itemList);
         
-        gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemsAndCounts()));
+        container.setAdapter(new CompartmentAdapter(this, Container.inst().getComps()));
      
     }
 

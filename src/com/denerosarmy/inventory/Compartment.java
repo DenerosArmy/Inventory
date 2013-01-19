@@ -1,0 +1,52 @@
+package com.denerosarmy.inventory;
+
+import java.util.*;
+
+public class Compartment{
+
+    private String id;
+    private String name;
+    private Hashtable<String, Item> itemMap;
+
+    public Compartment(String id, String name){
+        this.id = id;
+        this.name = name;
+        Container.inst().addComp(this);
+    }
+
+    protected void putItem(Item item){
+        this.itemMap.put(item.getId(), item);
+    }
+
+    protected Item getItem(String itemId){
+        return this.itemMap.get(itemId);
+    }
+
+    protected Item popItem(String itemId){
+        Item item = this.getItem(itemId);
+        this.itemMap.remove(itemId);
+        return item;
+    }
+
+    protected Hashtable<String, int> getItems(){
+        // Returns <K,V> = <ItemName, Count>
+        Hashtable<String, int> items = new Hashtable<String, int>();
+        for (Item item:itemMap.values()){
+            if (items.containsKey(item.getName())){
+                items.put(item.getName(), items.get(item)+1);
+            }else{
+                items.put(item.getName(), 1);
+            }
+        }
+        return items;
+    }
+
+    protected String getId(){
+        return this.id;
+    }
+
+    protected String getName(){
+        return this.name;
+    }
+
+}

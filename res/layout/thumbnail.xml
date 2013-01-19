@@ -38,7 +38,7 @@
 	      android:layout_weight="0.2"
         android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:background="#88000000"
+        android:background="#AA000000"
         android:paddingLeft="5dp">
         <TextView
             android:id="@+id/label"
@@ -48,6 +48,6 @@
             android:textSize="16dp"
             android:textStyle="bold"
             android:textColor="#FFFFFF">
-        </TextView>
-	  </LinearLayout>        
+         </TextView>
+    </LinearLayout>        
 </LinearLayout> 

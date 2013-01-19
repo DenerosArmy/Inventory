@@ -9,17 +9,18 @@ import android.app.SearchManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.content.Context;
+import android.widget.ListView;
 
 public class Inventory extends Activity{
 
-    GridView gridView;
-
+  	ListView container;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
      
-        gridView = (GridView) findViewById(R.id.itemGrid);
+        container = (ListView) findViewById(R.id.compartments);
         Compartment c1 = new Compartment("1", "Main");
         Compartment c2 = new Compartment("2", "Misc");
         Compartment c3 = new Compartment("3", "Miscer");
@@ -46,14 +47,14 @@ public class Inventory extends Activity{
         i8.putInto("2");
         i9.putInto("3");
 
-        gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemsAndCounts()));
+        container.setAdapter(new CompartmentAdapter(this, Container.inst().getComps()));
 
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-     
+        
     }
 
 }

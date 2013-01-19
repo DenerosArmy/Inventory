@@ -1,5 +1,6 @@
 package com.denerosarmy.inventory;
 
+import android.annotation.SuppressLint;
 import java.util.*;
 
 public class Container{
@@ -11,8 +12,8 @@ public class Container{
         compartmentMap = new Hashtable<String, Compartment>();
     }
 
-    protected static Container inst(){
-        if (inst == null){
+    protected static Container inst() {
+        if (inst == null) {
             inst = new Container();
         }
         return inst;
@@ -26,8 +27,9 @@ public class Container{
         this.compartmentMap.put(compartment.getId(), compartment);
     }
 
-    protected Compartment[] getComps(){
-        return (Compartment[]) this.compartmentMap.values().toArray();
+    @SuppressLint("NewApi")
+	protected Compartment[] getComps(){
+        return Arrays.copyOf(this.compartmentMap.values().toArray(), this.compartmentMap.size(), Compartment[].class);
     }
 
 }

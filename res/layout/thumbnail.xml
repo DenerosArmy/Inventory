@@ -14,5 +14,14 @@
         android:gravity="center"
         android:textColor="#FFFFFF"
     > </TextView>
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@+id/count"
+        android:textSize="16dp" 
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+    > </TextView>
 
 </LinearLayout> 

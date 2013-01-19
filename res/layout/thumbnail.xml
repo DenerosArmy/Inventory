@@ -6,6 +6,7 @@
     android:gravity="center"
     >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/counter"
 		android:layout_weight="0.2"
         android:layout_height="0dp"
         android:layout_width="wrap_content"
@@ -16,15 +17,15 @@
        	android:paddingRight="5dp"
     	>
     	<TextView
+    	    android:id="@+id/count"
         	android:layout_width="fill_parent"
         	android:layout_height="wrap_content"
-        	android:text="22"
+        	android:text="@+id/count"
         	android:textSize="14dp"
 			android:textStyle="bold"
         	android:textColor="#FFFFFF"
     	> </TextView>
     </LinearLayout>
-    
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_weight="0.6"
         android:layout_height="0dp"

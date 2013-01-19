@@ -39,7 +39,7 @@ public class Inventory extends Activity{
         i6.putInto("2");
         i7.putInto("2");
         i8.putInto("2");
-        i9.putInto("3");
+        i9.putInto("1");
 
         //ArrayAdapter<String> itemList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getStringItemList());
         //gridView.setAdapter(itemList);

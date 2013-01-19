@@ -41,7 +41,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         if (itemCounts[position] > 1){
             count.setText(itemCounts[position].toString());
         }else{
-        	tile.findViewById(R.id.counter).setBackgroundColor(00000000);
+            tile.findViewById(R.id.counter).setBackgroundColor(00000000);
             count.setText("");
         }
         return tile;

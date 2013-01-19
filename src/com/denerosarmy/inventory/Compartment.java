@@ -33,6 +33,28 @@ public class Compartment{
         return item;
     }
 
+    protected Hashtable<Item, Integer> getItemsAndCounts(String query){
+        // Does a search for [query] and returns <K,V> = <Item, Count>
+        Hashtable<String, Item> itemNameMap = new Hashtable<String, Item>();
+        Hashtable<Item, Integer> itemsAndCounts = new Hashtable<Item, Integer>();
+        for (Item item:itemMap.values()){
+            if (item.getName() != query){
+                continue;
+            }
+            if (itemNameMap.containsKey(item.getName())){
+                if (itemsAndCounts.containsKey(item)){
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName()))+1);
+                }else{
+                    itemsAndCounts.put(itemNameMap.get(item.getName()), 1);
+                }
+            }else{
+                itemNameMap.put(item.getName(), item);
+                itemsAndCounts.put(item, 1);
+            }
+        }
+        return itemsAndCounts;
+    }
+
     protected Hashtable<Item, Integer> getItemsAndCounts(){
         // Returns <K,V> = <Item, Count>
         Hashtable<String, Item> itemNameMap = new Hashtable<String, Item>();

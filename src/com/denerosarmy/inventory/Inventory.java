@@ -2,23 +2,22 @@ package com.denerosarmy.inventory;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.SearchView;
+import android.app.SearchManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.content.Context;
 import android.widget.ListView;
 
 public class Inventory extends Activity{
-    //* Called when the activity is first created. 
-    //@Override
-    //public void onCreate(Bundle savedInstanceState)
-    //{
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main);
-    //}
 
-	ListView container;
+  	ListView container;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     
         setContentView(R.layout.main);
      
         container = (ListView) findViewById(R.id.compartments);
@@ -48,11 +47,14 @@ public class Inventory extends Activity{
         i8.putInto("2");
         i9.putInto("3");
 
-        //ArrayAdapter<String> itemList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Container.inst().getComp("1").getStringItemList());
-        //gridView.setAdapter(itemList);
-        
         container.setAdapter(new CompartmentAdapter(this, Container.inst().getComps()));
-     
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        
     }
 
 }

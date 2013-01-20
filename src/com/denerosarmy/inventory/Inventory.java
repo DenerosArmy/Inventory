@@ -133,7 +133,7 @@ public class Inventory extends Activity{
         this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
-        getActionBar().setDisplayShowTitleEnabled(false);
+        //getActionBar().setDisplayShowTitleEnabled(false);
 
         // Get the SearchView and set the searchable configuration
         //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -326,9 +326,11 @@ public class Inventory extends Activity{
     }
     
     public void genItem(View view) {
-        Item newItem = new Item("9999", "Test", R.drawable.olivia_wilde);
+    	process("|1abcd");
+        /*Item newItem = new Item("9999", "Test", R.drawable.olivia_wilde);
         newItem.putInto("3");
-        update();
+        update();*/
+    	update();
     }
 
     @Override

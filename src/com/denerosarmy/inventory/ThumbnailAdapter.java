@@ -49,9 +49,12 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
             count.setText("");
         }
         if (item.toBeDeleted) {
-        	Animation fadeout = AnimationHelper.createFadeoutAnimation();
-            item.remove();
-        	AnimationHelper.animate(tile, fadeout);
+        	//System.out.println("DELETING");
+        	//Animation fadeout = AnimationHelper.createFadeoutAnimation();
+        	//AnimationHelper.animate(tile, fadeout);
+            //deleteOnAnimationComplete(fadeout, item);
+        	item.remove();
+        	//item.toBeDeleted = false;
         }
         if (item.isNew) {
         	Animation fadein = AnimationHelper.createFadeInAnimation();
@@ -59,5 +62,21 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         	item.isNew = false;
         }   
         return tile;
+    }
+
+    private void deleteOnAnimationComplete(Animation fadeout, final Item item) {
+        fadeout.setAnimationListener(new AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+    
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                item.remove();
+                notifyDataSetChanged();
+            }
+            
+        });
     }
 }

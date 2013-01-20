@@ -94,17 +94,21 @@ public class Inventory extends Activity{
             Item i5 = new Item("5", "Mouse", R.drawable.sample_5);
             Item i6 = new Item("6", "Passport", R.drawable.sample_6);
             Item i7 = new Item("7", "Pencil", R.drawable.sample_7);
+            Item i10 = new Item("10", "Pencil", R.drawable.sample_7);
+            Item i11 = new Item("11", "Pencil", R.drawable.sample_7);
             Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
             Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
 
-            i0.putInto("1");
-            i1.putInto("3");
-            i2.putInto("3");
+            i0.putInto("2");
+            i1.putInto("1");
+            i2.putInto("1");
             i4.putInto("3");
-            i5.putInto("3");
-            i6.putInto("3");
+            i5.putInto("2");
+            //i6.putInto("3");
             i7.putInto("2");
-            i8.putInto("3");
+            i10.putInto("2");
+            i11.putInto("2");
+            //i8.putInto("3");
 
             rfidTags.put("102343530304238393845443838DA3",i8);
             rfidTags.put("102343530304637324434304446DA3",i9);
@@ -195,7 +199,7 @@ public class Inventory extends Activity{
             switch(extraWifiState){
                 case WifiManager.WIFI_STATE_DISABLED:
                     checkForMissing();
-                    checkContextAware();
+                    //checkContextAware();
                     break;
                 case WifiManager.WIFI_STATE_DISABLING:
                     break;
@@ -217,7 +221,8 @@ public class Inventory extends Activity{
 
         if (rfidTags.containsKey(rfidTag.substring(0,30))) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            Toast.makeText(this, rfidTags.get(rfidTag.substring(0,30)).flip(),Toast.LENGTH_SHORT).show(); 
+            Item the_item = rfidTags.get(rfidTag.substring(0,30)); 
+            Toast.makeText(this, the_item.flip(),Toast.LENGTH_SHORT).show(); 
         }
 
 
@@ -305,7 +310,10 @@ public class Inventory extends Activity{
         //}catch (MalformedURLException e){
         //}
         boolean cold = true;
-        if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
+        System.out.println("Context-aware check");
+        if (cold){
+        //if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
+            System.out.println("It's cold!");
             Notification noti = new Notification.Builder(this)
                                 .setContentTitle("It's cold outside")
                                 .setContentText("Don't forget your jacket!")

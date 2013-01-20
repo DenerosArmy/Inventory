@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
-	  <uses-permission android:name="android.permission.INTERNET"/>
-	  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -14,21 +14,20 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/backpack"
+        android:logo="@drawable/backpack"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Holo" >
+        <meta-data android:name="android.app.default_searchable"
+                   android:value="com.denerosarmy.inventory.Search" />
         <activity
             android:name="com.denerosarmy.inventory.Inventory"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
-                       android:value="com.denerosarmy.inventory.Search" />
         </activity>
-
         <activity 
             android:name="com.denerosarmy.inventory.Search"
             android:label="@string/app_name" >
@@ -38,12 +37,10 @@
             <meta-data android:name="android.app.searchable" 
                        android:resource="@xml/searchable" /> 
         </activity>
-
         <activity
             android:name="com.denerosarmy.inventory.ItemCreate"
             android:label="New Item"
-            android:parentActivityName="com.denerosarmy.inventory.Inventory"
-            android:theme="@android:style/Theme.Holo.NoActionBar" >
+            android:parentActivityName="com.denerosarmy.inventory.Inventory" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.denerosarmy.inventory.Inventory" />

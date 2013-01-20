@@ -12,6 +12,8 @@ import android.view.animation.Animation;
 public class AnimationHelper {
 
 	private static final int HALF_A_SECOND = 500;
+	private static final int ONE_SECOND = 1000;
+
 	private static final float VISIBLE = 1.0f;
 	private static final float INVISIBLE = 0.0f;
 

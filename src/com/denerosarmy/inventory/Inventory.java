@@ -34,6 +34,8 @@ import android.view.Menu;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Inventory extends Activity{
@@ -200,7 +202,7 @@ public class Inventory extends Activity{
 
         if (rfidTags.containsKey(rfidTag)) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            Toast.makeText(this, rfidTags.get(rfidTag).flip(),Toast.LENGTH_SHORT).show(); 
+            rfidTags.get(rfidTag).flip();
         }
 
 
@@ -262,20 +264,32 @@ public class Inventory extends Activity{
     }
 
     protected void checkContextAware(){
-//"http://weather.yahooapis.com/forecastrss?w=2347597&u=c"
-  //URL url = new URL("http://maps.google.at/maps?saddr=4714&daddr=Marchtrenk&hl=de");
-    //InputStream is = url.openConnection().getInputStream();
-
-        //BufferedReader reader = new BufferedReader( new InputStreamReader( is )  );
-
-            //String line = null;
-                //while( ( line = reader.readLine() ) != null )  {
-                       //System.out.println(line);
+        // Weather
+        //boolean cold = false;
+        //try{
+            //URL url = new URL("http://weather.yahooapis.com/forecastrss?w=2347597&u=c");
+            //try{
+                //InputStream is = url.openConnection().getInputStream();
+                //BufferedReader reader = new BufferedReader( new InputStreamReader( is )  );
+                //String line = null;
+                //while ((line = reader.readLine()) != null){
+                    //if (line.substring(0, 18).equals("<yweather:condition")){
+                        //if (Integer.parseInt(line.substring(47, 48)) < 15){
+                            //cold = true;
+                            //break;
+                        //}
                     //}
-                    //reader.close();
-        if ((true)&&(Container.inst().getItemNamed("jacket") == null)){ // TODO: Check temp
+                    //System.out.println(line);
+                //}
+                //reader.close();
+            //}catch (IOException e){
+            //}
+        //}catch (MalformedURLException e){
+        //}
+        boolean cold = true;
+        if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
             Notification noti = new Notification.Builder(this)
-                                .setContentTitle("It's cold outside.")
+                                .setContentTitle("It's cold outside")
                                 .setContentText("Don't forget your jacket!")
                                 .setSmallIcon(R.drawable.cold)
                                 .build();
@@ -371,6 +385,7 @@ public class Inventory extends Activity{
             }
         }
     }
+    
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -403,6 +418,8 @@ public class Inventory extends Activity{
                 String readMessage = new String(readBuf,0,msg.arg1);
                 
                 Log.d(TAG, readMessage);
+                Toast.makeText(getApplicationContext(), readMessage,
+                               Toast.LENGTH_SHORT).show();
                 process(readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:

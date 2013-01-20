@@ -199,7 +199,7 @@ public class Inventory extends Activity{
 
         if (rfidTags.containsKey(rfidTag)) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            rfidTags.get(rfidTag).flip();
+            Toast.makeText(this, rfidTags.get(rfidTag).flip(),Toast.LENGTH_SHORT).show(); 
         }
 
 
@@ -377,8 +377,6 @@ public class Inventory extends Activity{
                 String readMessage = new String(readBuf,0,msg.arg1);
                 
                 Log.d(TAG, readMessage);
-                Toast.makeText(getApplicationContext(), readMessage,
-                               Toast.LENGTH_SHORT).show();
                 process(readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:

@@ -38,4 +38,5 @@ public class SearchCompartmentAdapter extends CompartmentAdapter{
         gridView.setLayoutParams(new LayoutParams(-1, 2 * (110*(1+(int)((compartments[position].getSize()-1)/3)))));
         return rowView;
     }
+
 } 

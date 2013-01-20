@@ -191,8 +191,11 @@ public class Inventory extends Activity{
     public void genItem(View view) {
         new Item("9999", "Test", R.drawable.olivia_wilde).putInto("3");
         System.out.println("ITEM ADDED");
-        this.adapter = new CompartmentAdapter(this);
-        container.setAdapter(this.adapter);
+        runOnUiThread(new Runnable(){
+            public void run(){
+                update();
+            }
+        });
     }
 
     @Override

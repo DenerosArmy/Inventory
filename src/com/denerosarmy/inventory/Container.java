@@ -21,6 +21,19 @@ public class Container{
         return inst;
     }
 
+    protected boolean hasItem(Item item){
+        return items.contains(item);
+    }
+
+    protected Item getItemNamed(String itemName){
+        for (Item item:items){
+            if (Matcher.matches(item.getName(), itemName)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     protected LinkedList<Item> getMissingItems(){
         LinkedList<Item> missingItems = new LinkedList<Item>();
         for (Item item:items){

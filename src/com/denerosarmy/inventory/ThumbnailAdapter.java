@@ -60,5 +60,4 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         }   
         return tile;
     }
-    
 }

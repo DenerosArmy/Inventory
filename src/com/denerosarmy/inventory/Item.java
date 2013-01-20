@@ -40,12 +40,14 @@ public class Item implements Comparable {
     	this.toBeDeleted = true;
     }
     
-    protected void flip() { 
+    protected String flip() { 
         System.out.println("FLIP CALLED FLIP CALLED");
         if (inContainer()) { 
-            remove(); 
+            scheduleDeletion(); 
+            return name + " removed from bag";
         } else {
             putInto("1");
+            return name + " entered bag";
         }
     }
 

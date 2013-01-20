@@ -4,30 +4,25 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.os.Handler;
-import android.widget.Toast;
 import android.os.Message;
 import android.util.Log;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.KeyEvent;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 public class Inventory extends Activity{
 
+	ViewGroup mContainerView;
     ListView container;
     NotificationManager notificationManager;
     static boolean initialized;
@@ -54,9 +49,9 @@ public class Inventory extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 	    container = (ListView) findViewById(R.id.compartments);
+        mContainerView = (ViewGroup) findViewById(R.id.itemGrid);
 	    
 	    if (!initialized) {
-
 	        Compartment c1 = new Compartment("1", "Drawer");
 	        Compartment c2 = new Compartment("2", "Secondary");
 	        Compartment c3 = new Compartment("3", "Main");
@@ -193,8 +188,8 @@ public class Inventory extends Activity{
     }
     
     public void genItem(View view) {
-        new Item("9999", "Test", R.drawable.olivia_wilde).putInto("3");
-        System.out.println("ITEM ADDED");
+        Item newItem = new Item("9999", "Test", R.drawable.olivia_wilde);
+        newItem.putInto("3");
         update();
     }
 

@@ -46,7 +46,7 @@ public class Inventory extends Activity{
     private int messageState;
     private int byteCount = 0;
     private int bufferLen = 0;
-    private Hashtable<String,Item> rfidTags = new Hashtable<String,Item>();
+    private Hashtable<String,Item> rfidTags;
     private String rfidTag = "";
     public static final char HEADER = '|';
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -72,6 +72,7 @@ public class Inventory extends Activity{
         container = (ListView) findViewById(R.id.compartments);
         
         if (!initialized) {
+            rfidTags = new Hashtable<String,Item>();
 
             Compartment c1 = new Compartment("1", "Drawer");
             Compartment c2 = new Compartment("2", "Secondary");
@@ -100,6 +101,7 @@ public class Inventory extends Activity{
             i8.putInto("2");
             i9.putInto("3");
 
+            System.out.println("Placing abcd");
             rfidTags.put("abcd",i0);
             rfidTags.put("efgh",i1);
             rfidTags.put("ijkl",i2);
@@ -107,6 +109,7 @@ public class Inventory extends Activity{
             rfidTags.put("qrst",i4);
 
         }
+
         if (initialized) {
             System.out.println("AWEFHDSIUJUROEWRHUGFOJRATHUGJFAOIRHEGUJAFSIORGHEJ");
             try{
@@ -159,6 +162,9 @@ public class Inventory extends Activity{
         return true;
     }
 
+    protected void checkContextAware(){
+    }
+
     private BroadcastReceiver WifiStateChangedReceiver
         = new BroadcastReceiver(){
 
@@ -171,6 +177,7 @@ public class Inventory extends Activity{
             switch(extraWifiState){
                 case WifiManager.WIFI_STATE_DISABLED:
                     checkForMissing();
+                    checkContextAware();
                     break;
                 case WifiManager.WIFI_STATE_DISABLING:
                     break;
@@ -183,11 +190,12 @@ public class Inventory extends Activity{
             }
         }
     };
+
     
 
     protected void stateToggle(String rfidTag) { 
         Log.d(TAG,rfidTag);
-
+        Log.d(TAG,rfidTags.toString());
 
         if (rfidTags.containsKey(rfidTag)) { 
             Log.d(TAG,"FLIP CALL PLEASE");

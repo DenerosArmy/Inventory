@@ -162,9 +162,6 @@ public class Inventory extends Activity{
         return true;
     }
 
-    protected void checkContextAware(){
-    }
-
     private BroadcastReceiver WifiStateChangedReceiver
         = new BroadcastReceiver(){
 
@@ -190,8 +187,6 @@ public class Inventory extends Activity{
             }
         }
     };
-
-    
 
     protected void stateToggle(String rfidTag) { 
         Log.d(TAG,rfidTag);
@@ -256,11 +251,21 @@ public class Inventory extends Activity{
 
     protected void checkForMissing(){
         for (Item item:Container.inst().getMissingItems()){
-            addNotification(item);
+            addMissingNotification(item);
         }
     }
 
-    protected void addNotification(Item item){
+    protected void checkContextAware(){
+        if ((true)&&(Container.inst().getItemNamed("jacket") == null)){
+            Notification noti = new Notification.Builder(this)
+                                .setContentTitle("It's cold outside!")
+                                .setContentText("Don't forget your jacket!")
+                                .setSmallIcon(R.drawable.cold)
+                                .build();
+        }
+    }
+  
+    protected void addMissingNotification(Item item){
 
         Notification noti = new Notification.Builder(this)
                             .setContentTitle("Missing Item")
@@ -275,7 +280,7 @@ public class Inventory extends Activity{
 
     }
     public void deviceList(View view) {
-        Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
+       Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
          

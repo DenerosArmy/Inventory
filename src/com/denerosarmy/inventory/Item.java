@@ -24,6 +24,14 @@ public class Item{
         this.compId = null;
     }
     
+    protected void flip() { 
+        System.out.println("FLIP CALLED FLIP CALLED");
+        if (inContainer()) { 
+            remove(); 
+        } else {
+            putInto("1");
+        }
+    }
     protected String getId(){
         return this.id;
     }

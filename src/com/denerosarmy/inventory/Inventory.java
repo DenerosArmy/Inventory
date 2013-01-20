@@ -146,14 +146,18 @@ public class Inventory extends Activity{
     };
 
     protected void process(String value){
+        update();
+    }
+
+    protected void update(){
         runOnUiThread(new Runnable(){
             public void run(){
-                update();
+                _update();
             }
         });
     }
 
-    protected void update(){
+    protected void _update(){
         this.adapter.notifyDataSetChanged();
     }
 
@@ -184,18 +188,14 @@ public class Inventory extends Activity{
          
     }
     public void createItem(View view) {
-    	Intent intent = new Intent(this, ItemCreate.class);
+        Intent intent = new Intent(this, ItemCreate.class);
         startActivity(intent);
     }
     
     public void genItem(View view) {
         new Item("9999", "Test", R.drawable.olivia_wilde).putInto("3");
         System.out.println("ITEM ADDED");
-        runOnUiThread(new Runnable(){
-            public void run(){
-                update();
-            }
-        });
+        update();
     }
 
     @Override

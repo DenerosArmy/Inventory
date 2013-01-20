@@ -45,7 +45,8 @@ public class Inventory extends Activity{
     private static final int REQUEST_ENABLE_BT = 3;
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast"; 
- 
+    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -169,7 +170,12 @@ public class Inventory extends Activity{
         notificationManager.notify(Integer.parseInt(item.getId()), noti); 
 
     }
-    
+    public void deviceList(View view) {
+        Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
+        Intent serverIntent = new Intent(this, DeviceListActivity.class);
+        startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+         
+    }
     public void createItem(View view) {
     	Intent intent = new Intent(this, ItemCreate.class);
         startActivity(intent);

@@ -44,7 +44,12 @@
         	<meta-data
             	android:name="android.support.PARENT_ACTIVITY"
             	android:value="com.denerosarmy.inventory.Inventory" />
-    	</activity>
+            </activity>
+            <activity android:name=".DeviceListActivity"
+                  android:label="@string/select_device"
+                  android:theme="@android:style/Theme.Holo.Dialog"
+                  android:configChanges="orientation|keyboardHidden" />
+
     </application>
      <uses-permission android:name="android.permission.BLUETOOTH"/>
      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>

@@ -33,7 +33,13 @@
 	        	android:drawablePadding="-15sp"
 	        	android:text="New"
             	android:gravity="right"
-            	android:onClick="createItem" />
+                android:onClick="createItem" />
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_mylocation"
+                    android:onClick="deviceList"
+            />
 	        />
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

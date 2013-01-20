@@ -1,22 +1,25 @@
 package com.denerosarmy.inventory;
 
+import java.util.*;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
-import android.os.Handler;
 import android.widget.Toast;
 import android.os.Message;
 import android.util.Log;
@@ -30,6 +33,7 @@ import android.view.Menu;
 
 public class Inventory extends Activity{
 
+    ViewGroup mContainerView;
     ListView container;
     NotificationManager notificationManager;
     static boolean initialized;
@@ -39,6 +43,12 @@ public class Inventory extends Activity{
     private static final boolean D = true;
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothChatService mChatService = null;
+    private int messageState;
+    private int byteCount = 0;
+    private int bufferLen = 0;
+    private Hashtable<String,Item> rfidTags = new Hashtable<String,Item>();
+    private String rfidTag = "";
+    public static final char HEADER = '|';
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
@@ -49,7 +59,11 @@ public class Inventory extends Activity{
     public static final String TOAST = "toast"; 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-	
+    public static final int READING_LENGTH = 1;
+    public static final int READING_TAG = 2;
+    
+    public static final int WAITING = 0;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         System.out.println("Initialized is " + initialized);
@@ -84,6 +98,41 @@ public class Inventory extends Activity{
             i7.putInto("2");
             i8.putInto("2");
             i9.putInto("3");
+	    container = (ListView) findViewById(R.id.compartments);
+        mContainerView = (ViewGroup) findViewById(R.id.itemGrid);
+	    
+	    if (!initialized) {
+	        Compartment c1 = new Compartment("1", "Drawer");
+	        Compartment c2 = new Compartment("2", "Secondary");
+	        Compartment c3 = new Compartment("3", "Main");
+	        Item i0 = new Item("0", "Pencil", R.drawable.sample_0);
+
+	        Item i1 = new Item("1", "Banana", R.drawable.sample_1);
+	        Item i2 = new Item("2", "Popsicle", R.drawable.sample_2);
+	        Item i3 = new Item("3", "Pencil", R.drawable.sample_3);
+	        Item i4 = new Item("4", "Flour", R.drawable.sample_4);
+	        Item i5 = new Item("5", "Hair", R.drawable.sample_5);
+	        Item i6 = new Item("6", "Sand", R.drawable.sample_6);
+	        Item i7 = new Item("7", "Aluminum Foil", R.drawable.sample_7);
+	        Item i8 = new Item("8", "Rubbish", R.drawable.sample_0);
+	        Item i9 = new Item("9", "Pencil", R.drawable.sample_3);
+            rfidTags.put("abcd",i0);
+            rfidTags.put("efgh",i1);
+            rfidTags.put("ijkl",i2);
+            rfidTags.put("mnop",i3);
+            rfidTags.put("qrst",i4);
+
+	        i0.putInto("1");
+	        i1.putInto("3");
+	        i2.putInto("1");
+	        i2.remove();
+	        i3.putInto("3");
+	        i4.putInto("3");
+	        i5.putInto("3");
+	        i6.putInto("2");
+	        i7.putInto("2");
+	        i8.putInto("2");
+	        i9.putInto("3");
         }
         if (initialized) {
             System.out.println("AWEFHDSIUJUROEWRHUGFOJRATHUGJFAOIRHEGUJAFSIORGHEJ");
@@ -161,9 +210,55 @@ public class Inventory extends Activity{
             }
         }
     };
+    
 
-    protected void process(String value){
-        update();
+    protected void stateToggle(String rfidTag) { 
+        Log.d(TAG,rfidTag);
+
+
+        if (rfidTags.containsKey(rfidTag)) { 
+            Log.d(TAG,"FLIP CALL PLEASE");
+            rfidTags.get(rfidTag).flip();
+        }
+
+
+    }
+
+    protected void process(String message){
+        Log.d(TAG,"PROCESSING " + message);
+        Log.d(TAG,"" + rfidTags.get("abcd"));
+
+        for (char letter:message.toCharArray()) { 
+            switch(messageState) { 
+                case WAITING:
+                    Log.d(TAG,"WAITING");
+                    if (letter == HEADER) { 
+                        messageState = READING_LENGTH;
+                    }
+                    break;
+                case READING_LENGTH: 
+                    Log.d(TAG,"READING LENGTH");
+                    bufferLen = 4;
+                    messageState = READING_TAG;
+                    break;
+                case READING_TAG: 
+                    Log.d(TAG,"READING TAG");
+                    if (byteCount != bufferLen) { 
+                            Log.d(TAG, "" +  (int) letter);
+                            rfidTag += letter; 
+                            byteCount++;
+                    } 
+                    if (byteCount == bufferLen) { 
+                       stateToggle(rfidTag);
+                       byteCount = 0;
+                       rfidTag = "";
+                       bufferLen = 0;
+                       messageState = WAITING; 
+
+                    }
+            }
+        }
+        update(); 
     }
 
     protected void update(){
@@ -210,8 +305,8 @@ public class Inventory extends Activity{
     }
     
     public void genItem(View view) {
-        new Item("9999", "Test", R.drawable.olivia_wilde).putInto("3");
-        System.out.println("ITEM ADDED");
+        Item newItem = new Item("9999", "Test", R.drawable.olivia_wilde);
+        newItem.putInto("3");
         update();
     }
 
@@ -273,14 +368,16 @@ public class Inventory extends Activity{
 
     private final Handler mHandler = new Handler() {
         @Override
-        public synchronized void handleMessage(Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
                 case BluetoothChatService.STATE_CONNECTED:
+                    Toast.makeText(getApplicationContext(), "Connected!", Toast.LENGTH_LONG).show();
                     break;
                 case BluetoothChatService.STATE_CONNECTING:
+                    Toast.makeText(getApplicationContext(), "Connecting...", Toast.LENGTH_LONG).show();
                     break;
                 case BluetoothChatService.STATE_LISTEN:
                 case BluetoothChatService.STATE_NONE:
@@ -294,10 +391,14 @@ public class Inventory extends Activity{
                 break;
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
-               
+                Log.d(TAG,"READ");
+                    
                 // construct a string from the valid bytes in the buffer
-                String readMessage = new String(readBuf, 0, msg.arg1);
-                System.out.println(readMessage); 
+                String readMessage = new String(readBuf,0,msg.arg1);
+                
+                Log.d(TAG, readMessage);
+                Toast.makeText(getApplicationContext(), readMessage,
+                               Toast.LENGTH_SHORT).show();
                 process(readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:
@@ -314,5 +415,47 @@ public class Inventory extends Activity{
         }
     };
 
+ public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG,"ON ACTIVITY RESULT");
+        if(D) Log.d(TAG, "onActivityResult " + resultCode);
+        switch (requestCode) {
+        case REQUEST_CONNECT_DEVICE_SECURE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+                connectDevice(data, true);
+            }
+            break;
+        case REQUEST_CONNECT_DEVICE_INSECURE:
+            // When DeviceListActivity returns wsith a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+                connectDevice(data, false);
+            }
+            break;
+        case REQUEST_ENABLE_BT:
+            // When the request to enable Bluetooth returns
+            if (resultCode == Activity.RESULT_OK) {
+                // Bluetooth is now enabled, so set up a chat session
+                if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
+              // Start the Bluetooth chat services
+                mChatService.start();
+            }
+
+            } else {
+                // User did not enable Bluetooth or an error occurred
+                Log.d(TAG, "BT not enabled");
+                finish();
+            }
+        }
+    }
+
+    private void connectDevice(Intent data, boolean secure) {
+        // Get the device MAC address
+        String address = data.getExtras()
+            .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+        // Get the BluetoothDevice object
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        // Attempt to connect to the device
+        mChatService.connect(device, secure);
+    }
 
 }

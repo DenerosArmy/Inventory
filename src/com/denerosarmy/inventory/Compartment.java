@@ -1,6 +1,8 @@
 package com.denerosarmy.inventory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
 
 import android.annotation.SuppressLint;
 
@@ -19,6 +21,10 @@ public class Compartment{
     
     protected int getSize() {
     	return this.itemMap.size();
+    }
+    
+    protected int getNumTiles() {
+    	return getItemNames().size();
     }
 
     protected void putItem(Item item){

@@ -52,7 +52,9 @@ public class Inventory extends Activity{
     private int bufferLen = 0;
     private Hashtable<String,Item> rfidTags;
     private String rfidTag = "";
-    public static final char HEADER = '|';
+    public static final char HEADER1 = '7';
+    public static final char HEADER2 = 'C';
+
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
@@ -63,10 +65,9 @@ public class Inventory extends Activity{
     public static final String TOAST = "toast"; 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    public static final int READING_LENGTH = 1;
-    public static final int READING_TAG = 2;
-    
-    public static final int WAITING = 0;
+    public static final int HEADER2WAIT = 1;
+    public static final int READING_TAG = 2; 
+    public static final int HEADER1WAIT = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,12 +106,10 @@ public class Inventory extends Activity{
             i8.putInto("2");
             i9.putInto("3");
 
-            System.out.println("Placing abcd");
-            rfidTags.put("abcd",i0);
-            rfidTags.put("efgh",i1);
-            rfidTags.put("ijkl",i2);
-            rfidTags.put("mnop",i3);
-            rfidTags.put("qrst",i4);
+            rfidTags.put("102343530304238393845443838DA3",i0);
+            rfidTags.put("102343530304637324434304446DA3",i1);
+            rfidTags.put("102343530304238453546384530DA3",i2);
+            rfidTags.put("102343530304238453546454536DA3",i3);
 
         }
 
@@ -195,12 +194,18 @@ public class Inventory extends Activity{
     };
 
     protected void stateToggle(String rfidTag) { 
-        Log.d(TAG,rfidTag);
-        Log.d(TAG,rfidTags.toString());
+        Log.d(TAG, rfidTag);
+        Log.d(TAG, "102343530304238393845443838DA3");
+        Log.d(TAG, rfidTags.toString());
+        System.out.println(rfidTag.length());
+        System.out.println("102343530304238393845443838DA3".length());
 
-        if (rfidTags.containsKey(rfidTag)) { 
+
+        System.out.println(rfidTag.substring(0,30).equals("102343530304238393845443838DA3".substring(0,30)));
+
+        if (rfidTags.containsKey(rfidTag.substring(0,30))) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            Toast.makeText(this, rfidTags.get(rfidTag).flip(),Toast.LENGTH_SHORT).show(); 
+            Toast.makeText(this, rfidTags.get(rfidTag.substring(0,30)).flip(),Toast.LENGTH_SHORT).show(); 
         }
 
 
@@ -208,34 +213,37 @@ public class Inventory extends Activity{
 
     protected void process(String message){
         Log.d(TAG,"PROCESSING " + message);
-        Log.d(TAG,"" + rfidTags.get("abcd"));
 
         for (char letter:message.toCharArray()) { 
             switch(messageState) { 
-                case WAITING:
-                    Log.d(TAG,"WAITING");
-                    if (letter == HEADER) { 
-                        messageState = READING_LENGTH;
+                case HEADER1WAIT:
+                    if (letter == HEADER1) { 
+                        Log.d(TAG,"HEADER1 Receiveed");
+                        messageState = HEADER2WAIT;
                     }
                     break;
-                case READING_LENGTH: 
-                    Log.d(TAG,"READING LENGTH");
-                    bufferLen = 4;
-                    messageState = READING_TAG;
+                case HEADER2WAIT: 
+                    bufferLen = 32;
+                     if (letter == HEADER2) { 
+                        Log.d(TAG,"HEADER2 Receiveed");
+                        messageState = READING_TAG;
+                    } 
+                    else { 
+                        messageState = HEADER1WAIT; 
+                    }
                     break;
                 case READING_TAG: 
                     Log.d(TAG,"READING TAG");
-                    if (byteCount != bufferLen) { 
-                            Log.d(TAG, "" +  (int) letter);
+                    if (byteCount != 32) { 
                             rfidTag += letter; 
                             byteCount++;
                     } 
-                    if (byteCount == bufferLen) { 
+                    if (byteCount == 32) { 
                        stateToggle(rfidTag);
                        byteCount = 0;
                        rfidTag = "";
                        bufferLen = 0;
-                       messageState = WAITING; 
+                       messageState = HEADER1WAIT; 
 
                     }
             }

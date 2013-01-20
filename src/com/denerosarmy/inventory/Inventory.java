@@ -96,7 +96,7 @@ public class Inventory extends Activity{
         }
         initialized = true;
 
-        this.adapter = new CompartmentAdapter(this, Container.inst().getComps());
+        this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
         // Get the SearchView and set the searchable configuration
@@ -146,7 +146,11 @@ public class Inventory extends Activity{
     };
 
     public void process(String value){
-        //this.adapter.notifyDataSetChanged();
+        runOnUiThread(new Runnable(){
+            public void run(){
+                this.adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     protected void checkForMissing(){

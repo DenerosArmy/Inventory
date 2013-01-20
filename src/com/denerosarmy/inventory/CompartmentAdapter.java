@@ -14,14 +14,16 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
     private final Context context;
     private final Compartment[] compartments;
 
-    public CompartmentAdapter(Context context, Compartment[] compartments) {
-        super(context, R.layout.compartment, compartments);
+    public CompartmentAdapter(Context context) {
+        super(context, R.layout.compartment, Container.inst().getComps());
         this.context = context;
-        this.compartments = compartments;
+        this.context = context;
+        this.compartments = Container.inst().getComps();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        this.compartments = Container.inst().getComps();
         LayoutInflater inflater = (LayoutInflater) context
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.compartment, parent, false);

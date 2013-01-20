@@ -14,6 +14,7 @@
 	    android:paddingRight="10dp"
 	    android:paddingBottom="5dp"
 	    android:layout_marginTop="10dp"
+	    android:layout_marginBottom="10dp"
 	    >
 	    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
 	    	android:id="@+id/name"
@@ -22,7 +23,7 @@
 	    	android:text="@id/name"
 	    	android:textSize="36dp"
 	    	android:textColor="#88000000"
-			/>
+		></TextView>
 		<GridView xmlns:android="http://schemas.android.com/apk/res/android" 
 		    android:id="@+id/itemGrid"
 		    android:layout_width="fill_parent" 
@@ -33,6 +34,6 @@
 		    android:horizontalSpacing="10dp"
 		    android:stretchMode="columnWidth"
 		    android:gravity="center"
-			/>
+		/>
 	</LinearLayout>
 </LinearLayout>

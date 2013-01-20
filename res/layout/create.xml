@@ -11,30 +11,23 @@
             	  android:background="#111111"
     	          >
     
-        <!--  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <!--  --><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             		  android:layout_weight="0.6"
             		  android:layout_width="0dp" 
             		  android:layout_height="fill_parent"
             		  />-->
-		<SearchView xmlns:android="http://schemas.android.com/apk/res/android"
-        	    	android:id="@+id/searchView"
-            		android:layout_weight="1"
-            		android:layout_width="0dp" 
-            		android:layout_height="fill_parent"
-            		android:gravity="right"
-        			/>
 		<Button xmlns:android="http://schemas.android.com/apk/res/android"
 		        android:layout_weight="0.25"
 	        	android:layout_width="0dp"
 	        	android:layout_height="wrap_content"
 	        	android:textColor="#FFFFFF"
 	        	android:id="@+id/ButtonTest"
-	        	android:paddingTop="20sp"
+	        	android:paddingTop="32sp"
 	        	android:drawablePadding="-15sp"
-	        	android:text="New"
-            	android:gravity="right"
-            	android:onClick="createItem" />
-	        />
+	        	android:text="Back"
+            	android:gravity="left"
+            	android:onClick="sendMessage" />
+	        	/>
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	          android:orientation="vertical"
@@ -46,7 +39,6 @@
 		          >
 	    
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+android:id/compartments"
 		      android:layout_width="fill_parent"
               android:layout_height="wrap_content"
 			  />

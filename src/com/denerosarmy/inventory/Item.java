@@ -40,6 +40,15 @@ public class Item implements Comparable {
     	this.toBeDeleted = true;
     }
     
+    protected void flip() { 
+        System.out.println("FLIP CALLED FLIP CALLED");
+        if (inContainer()) { 
+            remove(); 
+        } else {
+            putInto("1");
+        }
+    }
+
     protected String getId(){
         return this.id;
     }

@@ -3,7 +3,7 @@ package com.denerosarmy.inventory;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.content.Intent;
 import android.app.SearchManager;
 import android.view.Menu;
@@ -11,9 +11,10 @@ import android.view.MenuItem;
 
 public class Search extends Activity{
 
-    GridView gridView;
     private static final int LOCAL_SEARCH_ID = Menu.FIRST+1;
     private static final int GLOBAL_SEARCH_ID = Menu.FIRST+2;
+    ListView container;
+    CompartmentAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,11 @@ public class Search extends Activity{
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            gridView = (GridView) findViewById(R.id.itemGrid);
+            container = (ListView) findViewById(R.id.compartments);
             String query = intent.getStringExtra(SearchManager.QUERY);
             System.out.println("Query = "+query);
-            gridView.setAdapter(new ThumbnailAdapter(this, Container.inst().getComp("1").getItemsAndCounts(query)));
+            this.adapter = new SearchCompartmentAdapter(this, query);
+            container.setAdapter(this.adapter);
         }
     }
 

@@ -335,6 +335,7 @@ public class BluetoothChatService {
         private String mSocketType;
 
         public ConnectThread(BluetoothDevice device, boolean secure) {
+            Log.d(TAG,"Connect Attempt");
             mmDevice = device;
             BluetoothSocket tmp = null;
             mSocketType = secure ? "Secure" : "Insecure";
@@ -428,7 +429,7 @@ public class BluetoothChatService {
         public synchronized void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
-            int bytes;
+            int bytes = 0;
             String val;
             
             // Keep listening to the InputStream while connected
@@ -442,12 +443,13 @@ public class BluetoothChatService {
                 try {
                     // Read from the InputStream
                 
+                    String readMessage = new String(buffer, 0, bytes);
                     bytes = mmInStream.read(buffer);
                     
               
                     
-                    
-                    // Send the obtained bytes to the UI Activity
+                   mHandler.obtainMessage(Inventory.MESSAGE_READ, bytes, -1, buffer)
+                            .sendToTarget(); 
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();

@@ -11,18 +11,29 @@ import android.widget.TextView;
 
 public class CompartmentAdapter extends ArrayAdapter<Compartment>{
 
-    private Context context;
-    private Compartment[] compartments;
+    protected Context context;
+    protected Compartment[] compartments;
+    protected boolean autoUpdate;
 
-    public CompartmentAdapter(Context context) {
+    public CompartmentAdapter(Context context){
         super(context, R.layout.compartment, Container.inst().getComps());
         this.context = context;
         this.compartments = Container.inst().getComps();
+        this.autoUpdate = true;
+    }
+
+    public CompartmentAdapter(Context context, Compartment[] compartments){
+        super(context, R.layout.compartment, compartments);
+        this.context = context;
+        this.compartments = compartments;
+        this.autoUpdate = false;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        this.compartments = Container.inst().getComps();
+        if (autoUpdate){
+            this.compartments = Container.inst().getComps();
+        }
         LayoutInflater inflater = (LayoutInflater) context
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.compartment, parent, false);

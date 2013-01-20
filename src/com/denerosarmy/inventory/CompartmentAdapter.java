@@ -17,7 +17,6 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
     public CompartmentAdapter(Context context) {
         super(context, R.layout.compartment, Container.inst().getComps());
         this.context = context;
-        this.context = context;
         this.compartments = Container.inst().getComps();
     }
 

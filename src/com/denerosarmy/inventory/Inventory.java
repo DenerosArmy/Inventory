@@ -145,12 +145,16 @@ public class Inventory extends Activity{
         }
     };
 
-    public void process(String value){
+    protected void process(String value){
         runOnUiThread(new Runnable(){
             public void run(){
-                //this.adapter.notifyDataSetChanged();
+                update();
             }
         });
+    }
+
+    protected void update(){
+        this.adapter.notifyDataSetChanged();
     }
 
     protected void checkForMissing(){

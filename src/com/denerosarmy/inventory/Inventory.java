@@ -34,7 +34,10 @@ import android.view.Menu;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import android.view.MenuItem;
 
 public class Inventory extends Activity{
 
@@ -52,7 +55,9 @@ public class Inventory extends Activity{
     private int bufferLen = 0;
     private Hashtable<String,Item> rfidTags;
     private String rfidTag = "";
-    public static final char HEADER = '|';
+    public static final char HEADER1 = '7';
+    public static final char HEADER2 = 'C';
+
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
@@ -63,10 +68,9 @@ public class Inventory extends Activity{
     public static final String TOAST = "toast"; 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    public static final int READING_LENGTH = 1;
-    public static final int READING_TAG = 2;
-    
-    public static final int WAITING = 0;
+    public static final int HEADER2WAIT = 1;
+    public static final int READING_TAG = 2; 
+    public static final int HEADER1WAIT = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,12 +109,10 @@ public class Inventory extends Activity{
             i8.putInto("2");
             i9.putInto("3");
 
-            System.out.println("Placing abcd");
-            rfidTags.put("abcd",i0);
-            rfidTags.put("efgh",i1);
-            rfidTags.put("ijkl",i2);
-            rfidTags.put("mnop",i3);
-            rfidTags.put("qrst",i4);
+            rfidTags.put("102343530304238393845443838DA3",i0);
+            rfidTags.put("102343530304637324434304446DA3",i1);
+            rfidTags.put("102343530304238453546384530DA3",i2);
+            rfidTags.put("102343530304238453546454536DA3",i3);
 
         }
 
@@ -156,12 +158,28 @@ public class Inventory extends Activity{
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.create_item:
+                createItem();
+                return true;
+            case R.id.pair_device:
+                deviceList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.options, menu);
         
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        System.out.println(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
@@ -195,12 +213,18 @@ public class Inventory extends Activity{
     };
 
     protected void stateToggle(String rfidTag) { 
-        Log.d(TAG,rfidTag);
-        Log.d(TAG,rfidTags.toString());
+        Log.d(TAG, rfidTag);
+        Log.d(TAG, "102343530304238393845443838DA3");
+        Log.d(TAG, rfidTags.toString());
+        System.out.println(rfidTag.length());
+        System.out.println("102343530304238393845443838DA3".length());
 
-        if (rfidTags.containsKey(rfidTag)) { 
+
+        System.out.println(rfidTag.substring(0,30).equals("102343530304238393845443838DA3".substring(0,30)));
+
+        if (rfidTags.containsKey(rfidTag.substring(0,30))) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            Toast.makeText(this, rfidTags.get(rfidTag).flip(),Toast.LENGTH_SHORT).show(); 
+            Toast.makeText(this, rfidTags.get(rfidTag.substring(0,30)).flip(),Toast.LENGTH_SHORT).show(); 
         }
 
 
@@ -208,34 +232,37 @@ public class Inventory extends Activity{
 
     protected void process(String message){
         Log.d(TAG,"PROCESSING " + message);
-        Log.d(TAG,"" + rfidTags.get("abcd"));
 
         for (char letter:message.toCharArray()) { 
             switch(messageState) { 
-                case WAITING:
-                    Log.d(TAG,"WAITING");
-                    if (letter == HEADER) { 
-                        messageState = READING_LENGTH;
+                case HEADER1WAIT:
+                    if (letter == HEADER1) { 
+                        Log.d(TAG,"HEADER1 Receiveed");
+                        messageState = HEADER2WAIT;
                     }
                     break;
-                case READING_LENGTH: 
-                    Log.d(TAG,"READING LENGTH");
-                    bufferLen = 4;
-                    messageState = READING_TAG;
+                case HEADER2WAIT: 
+                    bufferLen = 32;
+                     if (letter == HEADER2) { 
+                        Log.d(TAG,"HEADER2 Receiveed");
+                        messageState = READING_TAG;
+                    } 
+                    else { 
+                        messageState = HEADER1WAIT; 
+                    }
                     break;
                 case READING_TAG: 
                     Log.d(TAG,"READING TAG");
-                    if (byteCount != bufferLen) { 
-                            Log.d(TAG, "" +  (int) letter);
+                    if (byteCount != 32) { 
                             rfidTag += letter; 
                             byteCount++;
                     } 
-                    if (byteCount == bufferLen) { 
+                    if (byteCount == 32) { 
                        stateToggle(rfidTag);
                        byteCount = 0;
                        rfidTag = "";
                        bufferLen = 0;
-                       messageState = WAITING; 
+                       messageState = HEADER1WAIT; 
 
                     }
             }
@@ -262,20 +289,32 @@ public class Inventory extends Activity{
     }
 
     protected void checkContextAware(){
-//"http://weather.yahooapis.com/forecastrss?w=2347597&u=c"
-  //URL url = new URL("http://maps.google.at/maps?saddr=4714&daddr=Marchtrenk&hl=de");
-    //InputStream is = url.openConnection().getInputStream();
-
-        //BufferedReader reader = new BufferedReader( new InputStreamReader( is )  );
-
-            //String line = null;
-                //while( ( line = reader.readLine() ) != null )  {
-                       //System.out.println(line);
+        // Weather
+        //boolean cold = false;
+        //try{
+            //URL url = new URL("http://weather.yahooapis.com/forecastrss?w=2347597&u=c");
+            //try{
+                //InputStream is = url.openConnection().getInputStream();
+                //BufferedReader reader = new BufferedReader( new InputStreamReader( is )  );
+                //String line = null;
+                //while ((line = reader.readLine()) != null){
+                    //if (line.substring(0, 18).equals("<yweather:condition")){
+                        //if (Integer.parseInt(line.substring(47, 48)) < 15){
+                            //cold = true;
+                            //break;
+                        //}
                     //}
-                    //reader.close();
-        if ((true)&&(Container.inst().getItemNamed("jacket") == null)){ // TODO: Check temp
+                    //System.out.println(line);
+                //}
+                //reader.close();
+            //}catch (IOException e){
+            //}
+        //}catch (MalformedURLException e){
+        //}
+        boolean cold = true;
+        if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
             Notification noti = new Notification.Builder(this)
-                                .setContentTitle("It's cold outside.")
+                                .setContentTitle("It's cold outside")
                                 .setContentText("Don't forget your jacket!")
                                 .setSmallIcon(R.drawable.cold)
                                 .build();
@@ -301,12 +340,21 @@ public class Inventory extends Activity{
 
     }
     public void deviceList(View view) {
+      deviceList();
+    }
+
+    public void deviceList() {
        Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
          
     }
+
     public void createItem(View view) {
+        createItem();
+    }
+
+    public void createItem() {
         Intent intent = new Intent(this, ItemCreate.class);
         startActivity(intent);
     }
@@ -373,6 +421,7 @@ public class Inventory extends Activity{
             }
         }
     }
+    
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -405,6 +454,8 @@ public class Inventory extends Activity{
                 String readMessage = new String(readBuf,0,msg.arg1);
                 
                 Log.d(TAG, readMessage);
+                Toast.makeText(getApplicationContext(), readMessage,
+                               Toast.LENGTH_SHORT).show();
                 process(readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:

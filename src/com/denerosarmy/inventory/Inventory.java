@@ -31,6 +31,10 @@ import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.Menu;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class Inventory extends Activity{
 
@@ -147,6 +151,8 @@ public class Inventory extends Activity{
             finish();
             return;
         }
+
+        checkContextAware();
     }
 
     @Override
@@ -160,9 +166,6 @@ public class Inventory extends Activity{
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         return true;
-    }
-
-    protected void checkContextAware(){
     }
 
     private BroadcastReceiver WifiStateChangedReceiver
@@ -190,8 +193,6 @@ public class Inventory extends Activity{
             }
         }
     };
-
-    
 
     protected void stateToggle(String rfidTag) { 
         Log.d(TAG,rfidTag);
@@ -256,11 +257,36 @@ public class Inventory extends Activity{
 
     protected void checkForMissing(){
         for (Item item:Container.inst().getMissingItems()){
-            addNotification(item);
+            addMissingNotification(item);
         }
     }
 
-    protected void addNotification(Item item){
+    protected void checkContextAware(){
+//"http://weather.yahooapis.com/forecastrss?w=2347597&u=c"
+  //URL url = new URL("http://maps.google.at/maps?saddr=4714&daddr=Marchtrenk&hl=de");
+    //InputStream is = url.openConnection().getInputStream();
+
+        //BufferedReader reader = new BufferedReader( new InputStreamReader( is )  );
+
+            //String line = null;
+                //while( ( line = reader.readLine() ) != null )  {
+                       //System.out.println(line);
+                    //}
+                    //reader.close();
+        if ((true)&&(Container.inst().getItemNamed("jacket") == null)){ // TODO: Check temp
+            Notification noti = new Notification.Builder(this)
+                                .setContentTitle("It's cold outside.")
+                                .setContentText("Don't forget your jacket!")
+                                .setSmallIcon(R.drawable.cold)
+                                .build();
+            // Hide the notification after its selected
+            noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            notificationManager.notify(874520642, noti); 
+        }
+    }
+  
+    protected void addMissingNotification(Item item){
 
         Notification noti = new Notification.Builder(this)
                             .setContentTitle("Missing Item")
@@ -275,7 +301,7 @@ public class Inventory extends Activity{
 
     }
     public void deviceList(View view) {
-        Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
+       Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
          

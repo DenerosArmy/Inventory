@@ -21,7 +21,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     private final Integer[] itemCounts;
 
     @SuppressLint("NewApi")
-	public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts){
+    public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts){
         super(context, R.layout.thumbnail, Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class));
         this.context = context;
         this.items = Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class);
@@ -64,19 +64,19 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         return tile;
     }
 
-	private void deleteOnAnimationComplete(Animation fadeout, final Item item) {
-	    fadeout.setAnimationListener(new AnimationListener() {
-	        @Override
-	        public void onAnimationStart(Animation animation) { }
-	        @Override
-	        public void onAnimationRepeat(Animation animation) { }
-	
-	        @Override
-	        public void onAnimationEnd(Animation animation) {
-	            item.remove();
-	            notifyDataSetChanged();
-	        }
-	        
-	    });
-	}
+    private void deleteOnAnimationComplete(Animation fadeout, final Item item) {
+        fadeout.setAnimationListener(new AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+    
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                item.remove();
+                notifyDataSetChanged();
+            }
+            
+        });
+    }
 }

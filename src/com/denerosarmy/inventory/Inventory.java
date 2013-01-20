@@ -34,7 +34,6 @@ import android.view.Menu;
 
 public class Inventory extends Activity{
 
-    ViewGroup mContainerView;
     ListView container;
     NotificationManager notificationManager;
     static boolean initialized;
@@ -77,6 +76,7 @@ public class Inventory extends Activity{
             Compartment c1 = new Compartment("1", "Drawer");
             Compartment c2 = new Compartment("2", "Secondary");
             Compartment c3 = new Compartment("3", "Main");
+
             Item i0 = new Item("0", "Pencil", R.drawable.sample_0);
             Item i1 = new Item("1", "Banana", R.drawable.sample_1);
             Item i2 = new Item("2", "Popsicle", R.drawable.sample_2);
@@ -99,41 +99,13 @@ public class Inventory extends Activity{
             i7.putInto("2");
             i8.putInto("2");
             i9.putInto("3");
-	    container = (ListView) findViewById(R.id.compartments);
-        mContainerView = (ViewGroup) findViewById(R.id.itemGrid);
-	    
-	    if (!initialized) {
-	        Compartment c1 = new Compartment("1", "Drawer");
-	        Compartment c2 = new Compartment("2", "Secondary");
-	        Compartment c3 = new Compartment("3", "Main");
-	        Item i0 = new Item("0", "Pencil", R.drawable.sample_0);
 
-	        Item i1 = new Item("1", "Banana", R.drawable.sample_1);
-	        Item i2 = new Item("2", "Popsicle", R.drawable.sample_2);
-	        Item i3 = new Item("3", "Pencil", R.drawable.sample_3);
-	        Item i4 = new Item("4", "Flour", R.drawable.sample_4);
-	        Item i5 = new Item("5", "Hair", R.drawable.sample_5);
-	        Item i6 = new Item("6", "Sand", R.drawable.sample_6);
-	        Item i7 = new Item("7", "Aluminum Foil", R.drawable.sample_7);
-	        Item i8 = new Item("8", "Rubbish", R.drawable.sample_0);
-	        Item i9 = new Item("9", "Pencil", R.drawable.sample_3);
             rfidTags.put("abcd",i0);
             rfidTags.put("efgh",i1);
             rfidTags.put("ijkl",i2);
             rfidTags.put("mnop",i3);
             rfidTags.put("qrst",i4);
 
-	        i0.putInto("1");
-	        i1.putInto("3");
-	        i2.putInto("1");
-	        i2.remove();
-	        i3.putInto("3");
-	        i4.putInto("3");
-	        i5.putInto("3");
-	        i6.putInto("2");
-	        i7.putInto("2");
-	        i8.putInto("2");
-	        i9.putInto("3");
         }
         if (initialized) {
             System.out.println("AWEFHDSIUJUROEWRHUGFOJRATHUGJFAOIRHEGUJAFSIORGHEJ");
@@ -173,7 +145,7 @@ public class Inventory extends Activity{
             return;
         }
     }
-}
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.options, menu);

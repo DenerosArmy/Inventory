@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+     <item android:id="@+id/menu_search"
+           android:title="@string/menu_search"
+           android:icon="@drawable/search"
+           android:showAsAction="ifRoom|collapseActionView"
+           android:actionViewClass="android.widget.SearchView" />
+     <!--<item android:layout_weight="0.25"-->
+           <!--android:layout_width="0dp"-->
+           <!--android:layout_height="wrap_content"-->
+           <!--android:textColor="#FFFFFF"-->
+           <!--android:id="@+id/ButtonTest"-->
+           <!--android:paddingTop="20sp"-->
+           <!--android:drawablePadding="-15sp"-->
+           <!--android:text="New"-->
+           <!--android:gravity="right"-->
+           <!--android:onClick="com.denerosarmy.inventory.Inventory.createItem" />-->
+     <!--<item android:layout_width="wrap_content"-->
+           <!--android:layout_height="wrap_content"-->
+           <!--android:src="@android:drawable/ic_menu_mylocation"-->
+           <!--android:onClick="com.denerosarmy.inventory.Inventory.deviceList" />-->
+</menu>

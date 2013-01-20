@@ -37,6 +37,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import android.view.MenuItem;
 
 public class Inventory extends Activity{
 
@@ -158,12 +159,28 @@ public class Inventory extends Activity{
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.create_item:
+                createItem();
+                return true;
+            case R.id.pair_device:
+                deviceList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.options, menu);
         
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        System.out.println(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
@@ -315,12 +332,21 @@ public class Inventory extends Activity{
 
     }
     public void deviceList(View view) {
+      deviceList();
+    }
+
+    public void deviceList() {
        Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
          
     }
+
     public void createItem(View view) {
+        createItem();
+    }
+
+    public void createItem() {
         Intent intent = new Intent(this, ItemCreate.class);
         startActivity(intent);
     }

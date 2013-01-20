@@ -41,6 +41,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         tile.setBackgroundResource(item.getPic());
         TextView label = (TextView) tile.findViewById(R.id.label);
         TextView count = (TextView) tile.findViewById(R.id.count);
+        //System.out.println(item.getName());
         label.setText(item.getName());
         if (itemCounts[position] > 1){
             count.setText(itemCounts[position].toString());

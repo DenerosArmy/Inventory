@@ -345,7 +345,6 @@ public class Inventory extends Activity{
             }
         }
     }
-    
 
     private final Handler mHandler = new Handler() {
         @Override

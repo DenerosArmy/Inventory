@@ -60,16 +60,4 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         }   
         return tile;
     }
-    
-    private void deleteOnAnimationComplete(Animation fadeout, final View view) {
-        fadeout.setAnimationListener(new AnimationListener() {
-            public void onAnimationStart(Animation animation) { }
-            public void onAnimationRepeat(Animation animation) { }
- 
-            public void onAnimationEnd(Animation animation) {
-                Container.inst().getComp(compId).popItem(this.getId());
-                notifyDataSetChanged();
-            }
-        });
-    }
 } 

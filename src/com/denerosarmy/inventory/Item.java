@@ -40,7 +40,7 @@ public class Item implements Comparable {
     	this.toBeDeleted = true;
     }
     
-    protected void flip() { 
+    protected String flip() { 
         System.out.println("FLIP CALLED FLIP CALLED");
         if (inContainer()) { 
             scheduleDeletion(); 

@@ -9,24 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class CompartmentAdapter extends ArrayAdapter<Compartment>{
+public class SearchCompartmentAdapter extends CompartmentAdapter{
 
-    protected Context context;
-    protected Compartment[] compartments;
-    protected boolean autoUpdate;
+    private String query;
 
-    public CompartmentAdapter(Context context){
-        super(context, R.layout.compartment, Container.inst().getComps());
-        this.context = context;
-        this.compartments = Container.inst().getComps();
-        this.autoUpdate = true;
+    public SearchCompartmentAdapter(Context context, String query){
+        super(context);
+        this.query = query;
     }
 
-    public CompartmentAdapter(Context context, Compartment[] compartments){
-        super(context, R.layout.compartment, compartments);
-        this.context = context;
-        this.compartments = compartments;
-        this.autoUpdate = false;
+    public SearchCompartmentAdapter(Context context, Compartment[] compartments, String query){
+        super(context, compartments);
+        this.query = query;
     }
 
     @Override
@@ -40,7 +34,7 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         TextView textView = (TextView) rowView.findViewById(R.id.name);
         GridView gridView = (GridView) rowView.findViewById(R.id.itemGrid);
         textView.setText(compartments[position].getName());
-        gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
+        gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts(query)));
         gridView.setLayoutParams(new LayoutParams(-1, 2 * (110*(1+(int)((compartments[position].getSize()-1)/3)))));
         return rowView;
     }

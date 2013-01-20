@@ -2,6 +2,8 @@ package com.denerosarmy.inventory;
 
 import java.util.Date;
 
+import android.view.animation.Animation;
+
 
 
 public class Item implements Comparable {
@@ -11,6 +13,7 @@ public class Item implements Comparable {
     private String compId;
     private Integer pic;
     public boolean isNew;
+    public boolean toBeDeleted;
     private Date created;
 
     public Item(String id, String name, Integer pic){
@@ -18,6 +21,7 @@ public class Item implements Comparable {
         this.name = name;
         this.pic = pic;
         this.isNew = true;
+        this.toBeDeleted = false;
         this.created = new Date();
         Container.inst().addItem(this);
     }
@@ -30,6 +34,10 @@ public class Item implements Comparable {
     protected void remove(){
         Container.inst().getComp(compId).popItem(this.getId());
         this.compId = null;
+    }
+    
+    protected void scheduleDeletion() {
+    	this.toBeDeleted = true;
     }
     
     protected String getId(){

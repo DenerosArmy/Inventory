@@ -1,5 +1,6 @@
 package com.denerosarmy.inventory;
 
+import java.lang.Thread;
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -17,7 +19,6 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     private final Context context;
     private final Item[] items;
     private final Integer[] itemCounts;
-    private ViewGroup mCompartment;
 
     @SuppressLint("NewApi")
 	public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts){
@@ -33,24 +34,42 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	mCompartment = parent;
+    	Item item = items[position];
+    	
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View tile = inflater.inflate(R.layout.thumbnail, parent, false);
-        tile.setBackgroundResource(items[position].getPic());
+        tile.setBackgroundResource(item.getPic());
         TextView label = (TextView) tile.findViewById(R.id.label);
         TextView count = (TextView) tile.findViewById(R.id.count);
-        label.setText(items[position].getName());
+        label.setText(item.getName());
         if (itemCounts[position] > 1){
             count.setText(itemCounts[position].toString());
         }else{
             tile.findViewById(R.id.counter).setBackgroundColor(00000000);
             count.setText("");
         }
-        if (items[position].isNew) {
+        if (item.toBeDeleted) {
+        	Animation fadeout = AnimationHelper.createFadeoutAnimation();
+            item.remove();
+        	AnimationHelper.animate(tile, fadeout);
+        }
+        if (item.isNew) {
         	Animation fadein = AnimationHelper.createFadeInAnimation();
         	AnimationHelper.animate(tile, fadein);
-        	items[position].isNew = false;
+        	item.isNew = false;
         }   
         return tile;
+    }
+    
+    private void deleteOnAnimationComplete(Animation fadeout, final View view) {
+        fadeout.setAnimationListener(new AnimationListener() {
+            public void onAnimationStart(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) { }
+ 
+            public void onAnimationEnd(Animation animation) {
+                Container.inst().getComp(compId).popItem(this.getId());
+                notifyDataSetChanged();
+            }
+        });
     }
 } 

@@ -173,7 +173,7 @@ public class Inventory extends Activity{
             return;
         }
     }
-
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.options, menu);

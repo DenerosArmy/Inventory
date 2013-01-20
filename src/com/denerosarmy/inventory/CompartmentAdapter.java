@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 public class CompartmentAdapter extends ArrayAdapter<Compartment>{
 
-    private final Context context;
-    private final Compartment[] compartments;
+    private Context context;
+    private Compartment[] compartments;
 
     public CompartmentAdapter(Context context) {
         super(context, R.layout.compartment, Container.inst().getComps());

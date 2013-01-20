@@ -148,7 +148,7 @@ public class Inventory extends Activity{
     public void process(String value){
         runOnUiThread(new Runnable(){
             public void run(){
-                this.adapter.notifyDataSetChanged();
+                //this.adapter.notifyDataSetChanged();
             }
         });
     }

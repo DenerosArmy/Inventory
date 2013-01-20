@@ -1,16 +1,24 @@
 package com.denerosarmy.inventory;
 
-public class Item{
+import java.util.Date;
+
+
+
+public class Item implements Comparable {
 
     private String id;
     private String name;
     private String compId;
     private Integer pic;
+    public boolean isNew;
+    private Date created;
 
     public Item(String id, String name, Integer pic){
         this.id = id;
         this.name = name;
         this.pic = pic;
+        this.isNew = true;
+        this.created = new Date();
         Container.inst().addItem(this);
     }
 
@@ -55,4 +63,9 @@ public class Item{
         return this.compId != null;
     }
 
+    public int compareTo(Object other) throws ClassCastException {
+        if (!(other instanceof Item))
+        	throw new ClassCastException("An Item object expected.");
+        return ((Date) this.created).compareTo((Date) ((Item) other).created);
+    }
 }

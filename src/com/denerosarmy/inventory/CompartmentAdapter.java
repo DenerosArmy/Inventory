@@ -1,12 +1,12 @@
 package com.denerosarmy.inventory;
 
-import android.widget.LinearLayout.LayoutParams;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class CompartmentAdapter extends ArrayAdapter<Compartment>{
@@ -30,7 +30,13 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         GridView gridView = (GridView) rowView.findViewById(R.id.itemGrid);
         textView.setText(compartments[position].getName());
         gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
-        gridView.setLayoutParams(new LayoutParams(-1, 2 * (110*(1+(int)((compartments[position].getSize()-1)/3)))));
+
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        System.out.println(compartments[position].getNumTiles());
+        double rows = Math.ceil(compartments[position].getNumTiles()/3.0);
+        int width = -1;
+        int height = (int) (110 * rows * scale + 0.5f);
+        gridView.setLayoutParams(new LayoutParams(width, height));
         return rowView;
     }
 } 

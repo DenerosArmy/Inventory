@@ -97,7 +97,7 @@ public class Inventory extends Activity{
         }
         initialized = true;
 
-        this.adapter = new CompartmentAdapter(this, Container.inst().getComps());
+        this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
         // Get the SearchView and set the searchable configuration
@@ -118,7 +118,6 @@ public class Inventory extends Activity{
             finish();
             return;
         }
- 
     }
 
     private BroadcastReceiver WifiStateChangedReceiver
@@ -146,8 +145,16 @@ public class Inventory extends Activity{
         }
     };
 
-    public void process(String value){
-        //this.adapter.notifyDataSetChanged();
+    protected void process(String value){
+        runOnUiThread(new Runnable(){
+            public void run(){
+                update();
+            }
+        });
+    }
+
+    protected void update(){
+        this.adapter.notifyDataSetChanged();
     }
 
     protected void checkForMissing(){
@@ -180,6 +187,14 @@ public class Inventory extends Activity{
     	Intent intent = new Intent(this, ItemCreate.class);
         startActivity(intent);
     }
+    
+    public void genItem(View view) {
+        new Item("9999", "Test", R.drawable.olivia_wilde).putInto("3");
+        System.out.println("ITEM ADDED");
+        this.adapter = new CompartmentAdapter(this);
+        container.setAdapter(this.adapter);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -216,6 +231,8 @@ public class Inventory extends Activity{
         if (mChatService != null) mChatService.stop();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
+    
+
     @Override
     public synchronized void onResume() {
         super.onResume();
@@ -234,7 +251,6 @@ public class Inventory extends Activity{
     }
     
 
-         
     private final Handler mHandler = new Handler() {
         @Override
         public synchronized void handleMessage(Message msg) {

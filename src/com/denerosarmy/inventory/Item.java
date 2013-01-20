@@ -43,10 +43,10 @@ public class Item implements Comparable {
     protected String flip() { 
         System.out.println("FLIP CALLED FLIP CALLED");
         if (inContainer()) { 
-            scheduleDeletion(); 
+            remove();
             return name + " removed from bag";
         } else {
-            putInto("1");
+            putInto("3");
             return name + " entered bag";
         }
     }

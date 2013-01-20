@@ -82,37 +82,34 @@ public class Inventory extends Activity{
         if (!initialized) {
             rfidTags = new Hashtable<String,Item>();
 
-            Compartment c1 = new Compartment("1", "Drawer");
-            Compartment c2 = new Compartment("2", "Secondary");
+            Compartment c1 = new Compartment("1", "Front");
+            Compartment c2 = new Compartment("2", "Side");
             Compartment c3 = new Compartment("3", "Main");
 
-            Item i0 = new Item("0", "Pencil", R.drawable.sample_0);
-            Item i1 = new Item("1", "Banana", R.drawable.sample_1);
-            Item i2 = new Item("2", "Popsicle", R.drawable.sample_2);
-            Item i3 = new Item("3", "Pencil", R.drawable.sample_3);
-            Item i4 = new Item("4", "Flour", R.drawable.sample_4);
-            Item i5 = new Item("5", "Hair", R.drawable.sample_5);
-            Item i6 = new Item("6", "Sand", R.drawable.sample_6);
-            Item i7 = new Item("7", "Aluminum Foil", R.drawable.sample_7);
-            Item i8 = new Item("8", "Rubbish", R.drawable.sample_0);
-            Item i9 = new Item("9", "Pencil", R.drawable.sample_3);
+            Item i0 = new Item("0", "Earbuds", R.drawable.sample_0);
+            Item i1 = new Item("1", "Glasses", R.drawable.sample_1);
+            Item i2 = new Item("2", "Headphones", R.drawable.sample_2);
+            Item i3 = new Item("3", "Jacket", R.drawable.sample_3);
+            Item i4 = new Item("4", "Laptop", R.drawable.sample_4);
+            Item i5 = new Item("5", "Mouse", R.drawable.sample_5);
+            Item i6 = new Item("6", "Passport", R.drawable.sample_6);
+            Item i7 = new Item("7", "Pencil", R.drawable.sample_7);
+            Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
+            Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
 
             i0.putInto("1");
             i1.putInto("3");
-            i2.putInto("1");
-            i2.remove();
-            i3.putInto("3");
+            i2.putInto("3");
             i4.putInto("3");
             i5.putInto("3");
-            i6.putInto("2");
+            i6.putInto("3");
             i7.putInto("2");
-            i8.putInto("2");
-            i9.putInto("3");
+            i8.putInto("3");
 
-            rfidTags.put("102343530304238393845443838DA3",i0);
-            rfidTags.put("102343530304637324434304446DA3",i1);
-            rfidTags.put("102343530304238453546384530DA3",i2);
-            rfidTags.put("102343530304238453546454536DA3",i3);
+            rfidTags.put("102343530304238393845443838DA3",i8);
+            rfidTags.put("102343530304637324434304446DA3",i9);
+            rfidTags.put("102343530304238453546384530DA3",i3);
+            rfidTags.put("102343530304238453546454536DA3",i6);
 
         }
 
@@ -213,11 +210,7 @@ public class Inventory extends Activity{
     };
 
     protected void stateToggle(String rfidTag) { 
-        Log.d(TAG, rfidTag);
-        Log.d(TAG, "102343530304238393845443838DA3");
-        Log.d(TAG, rfidTags.toString());
         System.out.println(rfidTag.length());
-        System.out.println("102343530304238393845443838DA3".length());
 
 
         System.out.println(rfidTag.substring(0,30).equals("102343530304238393845443838DA3".substring(0,30)));
@@ -344,7 +337,6 @@ public class Inventory extends Activity{
     }
 
     public void deviceList() {
-       Toast.makeText(this, "Button Pressed", Toast.LENGTH_LONG).show();
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
          
@@ -454,8 +446,6 @@ public class Inventory extends Activity{
                 String readMessage = new String(readBuf,0,msg.arg1);
                 
                 Log.d(TAG, readMessage);
-                Toast.makeText(getApplicationContext(), readMessage,
-                               Toast.LENGTH_SHORT).show();
                 process(readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:

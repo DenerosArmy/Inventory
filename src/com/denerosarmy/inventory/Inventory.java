@@ -1,13 +1,14 @@
 package com.denerosarmy.inventory;
 
-import java.util.*;
+import java.util.Hashtable;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.SearchManager;
-import android.app.AlertDialog;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,28 +19,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.os.Message;
-import android.util.Log;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.KeyEvent;
-import android.widget.Button;
-import android.widget.EditText;
-import android.view.Menu;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import android.view.MenuItem;
 
 public class Inventory extends Activity{
 
@@ -144,8 +130,22 @@ public class Inventory extends Activity{
 
         this.registerReceiver(this.WifiStateChangedReceiver,
                               new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+        
+        
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        
+        if (!mBluetoothAdapter.isEnabled()) {
+        	System.out.println("Enabling bluetooth");
+        	mBluetoothAdapter.enable();
+        }
 
+        try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
@@ -155,8 +155,6 @@ public class Inventory extends Activity{
 
         checkContextAware();
     }
-    
-    
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -416,6 +414,18 @@ public class Inventory extends Activity{
     public void onStop() {
         super.onStop();
         if(D) Log.e(TAG, "-- ON STOP --");
+                
+        if (mBluetoothAdapter.isEnabled()) {
+        	System.out.println("Disabling bluetooth");
+            mBluetoothAdapter.disable();
+        }
+        
+        try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override

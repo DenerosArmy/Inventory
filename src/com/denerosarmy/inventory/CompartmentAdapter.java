@@ -43,7 +43,6 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
 
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        System.out.println(compartments[position].getNumTiles());
         double rows = Math.ceil(compartments[position].getNumTiles()/3.0);
         int width = -1;
         int height = (int) (110 * rows * scale + 0.5f);

@@ -35,6 +35,7 @@ public class Search extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        System.out.println("onOptionsItemSelected");
         switch (item.getItemId()) {
             case LOCAL_SEARCH_ID:
                 onSearchRequested(); 
@@ -48,10 +49,14 @@ public class Search extends Activity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        System.out.println("onCreateOptionsMenu");
         menu.add(Menu.NONE, LOCAL_SEARCH_ID, Menu.NONE, "Local Search").setIcon(R.drawable.sample_0);
         menu.add(Menu.NONE, GLOBAL_SEARCH_ID, Menu.NONE, "Global Search").setIcon(R.drawable.sample_1).setAlphabeticShortcut(SearchManager.MENU_KEY);
        
         return(super.onCreateOptionsMenu(menu));
     }
+
+    //@Override
+    //public boolean 
 
 }

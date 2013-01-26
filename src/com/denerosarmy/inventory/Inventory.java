@@ -38,6 +38,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import android.view.MenuItem;
+import android.widget.SearchView.OnQueryTextListener;
+import android.widget.SearchView.OnCloseListener;
+import android.view.MenuItem.OnActionExpandListener;
 
 public class Inventory extends Activity{
 
@@ -71,10 +74,10 @@ public class Inventory extends Activity{
     public static final int HEADER2WAIT = 1;
     public static final int READING_TAG = 2; 
     public static final int HEADER1WAIT = 0;
+    private SearchView searchView;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        System.out.println("Initialized is " + initialized);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         container = (ListView) findViewById(R.id.compartments);
@@ -118,7 +121,6 @@ public class Inventory extends Activity{
         }
 
         if (initialized) {
-            System.out.println("AWEFHDSIUJUROEWRHUGFOJRATHUGJFAOIRHEGUJAFSIORGHEJ");
             try{
                 Intent intent = getIntent();
                 System.out.println(intent.toString());
@@ -127,6 +129,7 @@ public class Inventory extends Activity{
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
                 new Item(id, name, R.drawable.olivia_wilde).putInto(comp);
             } catch (NullPointerException e) {
+                System.out.println(e);
             }
         }
         initialized = true;
@@ -180,7 +183,44 @@ public class Inventory extends Activity{
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        System.out.println(searchManager.getSearchableInfo(getComponentName()));
+        //this.searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(new OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextChange(String newText){
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query){
+                container.setAdapter(new SearchCompartmentAdapter(Inventory.this, query));
+                update();
+                return true;
+            }
+        });
+        MenuItem searchBar = menu.findItem(R.id.menu_search);
+        searchBar.setOnActionExpandListener(new OnActionExpandListener(){
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item){
+                container.setAdapter(Inventory.this.adapter);
+                update();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item){
+                return true;
+            }
+
+        });
+        //searchView.setOnCloseListener(new OnCloseListener(){
+            //@Override
+            //public boolean onClose(){
+                //container.setAdapter(Inventory.this.adapter);
+                //update();
+                //return true;
+            //}
+        //});
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 

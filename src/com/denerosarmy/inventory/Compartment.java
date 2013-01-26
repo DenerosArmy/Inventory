@@ -46,18 +46,17 @@ public class Compartment{
         Hashtable<String, Item> itemNameMap = new Hashtable<String, Item>();
         Hashtable<Item, Integer> itemsAndCounts = new Hashtable<Item, Integer>();
         for (Item item:itemMap.values()){
-            if (item.getName() != query){
-                continue;
-            }
-            if (itemNameMap.containsKey(item.getName())){
-                if (itemsAndCounts.containsKey(item)){
-                    itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName()))+1);
+            if (Matcher.matches(item.getName(), query)){
+                if (itemNameMap.containsKey(item.getName())){
+                    if (itemsAndCounts.containsKey(item)){
+                        itemsAndCounts.put(itemNameMap.get(item.getName()), itemsAndCounts.get(itemNameMap.get(item.getName()))+1);
+                    }else{
+                        itemsAndCounts.put(itemNameMap.get(item.getName()), 1);
+                    }
                 }else{
-                    itemsAndCounts.put(itemNameMap.get(item.getName()), 1);
+                    itemNameMap.put(item.getName(), item);
+                    itemsAndCounts.put(item, 1);
                 }
-            }else{
-                itemNameMap.put(item.getName(), item);
-                itemsAndCounts.put(item, 1);
             }
         }
         return itemsAndCounts;

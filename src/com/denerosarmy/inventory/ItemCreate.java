@@ -20,7 +20,7 @@ public class ItemCreate extends Activity {
     public final static String ITEM_ID = "com.denerosarmy.inventory.ITEM_ID";
     public final static String ITEM_COMPARTMENT = "com.denerosarmy.inventory.ITEM_COMPARTMENT";
 
-    @SuppressLint("NewApi")
+  @SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

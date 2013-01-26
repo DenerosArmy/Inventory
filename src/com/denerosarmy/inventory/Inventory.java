@@ -33,6 +33,9 @@ import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.Menu;
+import android.net.http.AndroidHttpClient;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,9 +43,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import android.view.MenuItem;
-
+import java.io.BufferedInputStream;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.StatusLine;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.HttpEntity;
+import java.io.ByteArrayOutputStream;
+import 	org.apache.http.client.ClientProtocolException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import android.os.StrictMode;
 public class Inventory extends Activity{
-
     ListView container;
     NotificationManager notificationManager;
     static boolean initialized;
@@ -59,7 +71,7 @@ public class Inventory extends Activity{
     private String rfidTag = "";
     public static final char HEADER1 = '7';
     public static final char HEADER2 = 'C';
-
+    public static final String BASEURL = "http://192.168.1.102:3000";
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
@@ -74,8 +86,22 @@ public class Inventory extends Activity{
     public static final int READING_TAG = 2; 
     public static final int HEADER1WAIT = 0;
     
+    public String readStream(InputStream is) {
+    try {
+      ByteArrayOutputStream bo = new ByteArrayOutputStream();
+      int i = is.read();
+      while(i != -1) {
+        bo.write(i);
+        i = is.read();
+      }
+      return bo.toString();
+    } catch (IOException e) {
+      return "";
+    }
+    } 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+       
         System.out.println("Initialized is " + initialized);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -157,6 +183,10 @@ public class Inventory extends Activity{
     }
     
     
+  
+    
+    
+    
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -182,7 +212,22 @@ public class Inventory extends Activity{
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                   String value = input.getText().toString();
-                  }
+                   StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+                  StrictMode.setThreadPolicy(policy); 
+                  HttpURLConnection urlConnection = null;
+                  try {
+                  URL url = new URL("http://192.168.1.102:3000?&action=\"" + value + "\"");
+                  urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    readStream(in);
+                   } catch ( IOException e ) { 
+
+                   
+                   }finally {
+                    urlConnection.disconnect();
+                    }
+                  }     
                 });
 
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

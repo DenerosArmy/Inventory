@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/css/style.css" type="text/css">
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js">
+		<script>
+			function easeGrid(id, direction, maxtime) {
+				$(".grid#"+id).children().each(function(i, e) {
+					$(e).animate({
+						opacity: ((direction == "out") ? 0.0 : 0.75)
+					}, Math.random()*maxtime);
+				});
+			};
+			
+			$(function() {
+				$("body").fadeIn(300);
+				$(".square").each(function (i, e) {
+					var url = "http://"+$(e).children().text()+"icon.jpg.to";
+					$('<img/>').attr('src', url).load(function() {
+					   $(e).css("background-image", "url('"+url+"')");
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="retroheadband"></div>
+		<div id="name">
+			inventory
+		</div>
+		<div id="wrapper">
+		
+			<%-body%>
+		
+		</div>
+	</body>
+</html>

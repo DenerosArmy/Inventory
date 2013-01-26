@@ -38,14 +38,6 @@ public class ItemCreate extends Activity {
     	String name = nameView.getText().toString();
     	intent.putExtra(ITEM_NAME, name);
 
-    	EditText idView = (EditText) findViewById(R.id.rfid);
-    	String id = idView.getText().toString();
-    	intent.putExtra(ITEM_ID, id);
-    	
-    	EditText compView = (EditText) findViewById(R.id.compartment);
-    	String comp = compView.getText().toString();
-    	intent.putExtra(ITEM_COMPARTMENT, comp);
-
         startActivity(intent);
 	}
 

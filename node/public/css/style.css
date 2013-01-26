@@ -1,0 +1,93 @@
+@import url(http://fonts.googleapis.com/css?family=Lobster|Arvo|Anaheim|Droid+Sans);
+
+html {
+	height: 102%;
+}
+
+body {
+	margin: 0;
+	overflow-x: hidden;
+	display: none;
+}
+
+#retroheadband {
+	width: 100%;
+	height: 15px;
+	background-color: grey;
+}
+
+#name {
+	font-family: Anaheim;
+	font-size: 48px;
+	color: #444;
+	width: 145px;
+	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+}
+
+#contentbar {
+	float: left;
+	margin-right: auto;
+	font-family: Anaheim;
+	font-size: 16px;
+	width: 700px;
+}
+
+#wrapper {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 700px;
+	overflow: hidden;
+}
+
+.content  {
+	display: none;
+	float: top;
+}
+
+.square {
+	float: left;
+	width: 160px;
+	height: 160px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: white;
+	box-shadow: 2px 2px 3px #aaaaaa;
+	visibility: visible;
+	opacity: 0.0;
+	position: relative;
+	cursor: pointer;
+}
+
+p {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+}
+
+a {
+	color: #444;
+}
+
+.squaretext {
+	position: absolute;
+	bottom: 25px;
+	height: 20px;
+	padding-bottom: 5px;
+	background-color: green;
+	width: 120px;
+	border-right: 40px dashed white;
+	color: white;
+	opacity: 0.8;
+}
+
+.squaretext>span {
+	font-family: Arvo;
+	font-size: 18px;
+	display: inline-block;
+	margin-left: 10px;
+}

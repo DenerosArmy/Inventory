@@ -81,7 +81,7 @@ class RequestTask extends AsyncTask<String, String, String>{
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response;
         String responseString = null;
-        HttpPost httppost = new HttpPost("http://192.168.1.102:8000/join/room1");
+        HttpPost httppost = new HttpPost("http://pythonscript.denerosarmy.com:8000/join/room1");
         HttpGet httpget = new HttpGet("http://192.168.1.102:8000/room/room1");
          
         try {

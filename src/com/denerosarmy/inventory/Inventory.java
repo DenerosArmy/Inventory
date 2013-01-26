@@ -2,6 +2,7 @@ package com.denerosarmy.inventory;
 
 import java.util.Hashtable;
 
+import android.provider.Settings.Secure;;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -26,7 +27,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-<<<<<<< HEAD
 import android.os.Message;
 import android.util.Log;
 import android.view.Window;
@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import android.view.MenuItem;
+import android.provider.Settings.Secure;
 import java.io.BufferedInputStream;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.StatusLine;
@@ -75,6 +76,9 @@ public class Inventory extends Activity{
     private int bufferLen = 0;
     private Hashtable<String,Item> rfidTags;
     private String rfidTag = "";
+    private final String ANDROID_ID = Secure.ANDROID_ID;
+
+
     public static final char HEADER1 = '7';
     public static final char HEADER2 = 'C';
     public static final String BASEURL = "http://192.168.1.102:3000";
@@ -91,7 +95,9 @@ public class Inventory extends Activity{
     public static final int HEADER2WAIT = 1;
     public static final int READING_TAG = 2; 
     public static final int HEADER1WAIT = 0;
+    public Compartment compartment; 
     private SearchView searchView;
+
     
     public String readStream(InputStream is) {
     try {
@@ -117,10 +123,8 @@ public class Inventory extends Activity{
         if (!initialized) {
             rfidTags = new Hashtable<String,Item>();
 
-            Compartment c1 = new Compartment("1", "Front");
-            Compartment c2 = new Compartment("2", "Side");
-            Compartment c3 = new Compartment("3", "Main");
-
+            Compartment c3 = new Compartment("3", "My stuff");
+            compartment = c3;
             Item i0 = new Item("0", "Earbuds", R.drawable.sample_0);
             Item i1 = new Item("1", "Glasses", R.drawable.sample_1);
             Item i2 = new Item("2", "Headphones", R.drawable.sample_2);
@@ -134,15 +138,15 @@ public class Inventory extends Activity{
             Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
             Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
 
-            i0.putInto("2");
-            i1.putInto("1");
-            i2.putInto("1");
+            i0.putInto("3");
+            i1.putInto("3");
+            i2.putInto("3");
             i4.putInto("3");
-            i5.putInto("2");
+            i5.putInto("3");
             //i6.putInto("3");
-            i7.putInto("2");
-            i10.putInto("2");
-            i11.putInto("2");
+            i7.putInto("3");
+            i10.putInto("3");
+            i11.putInto("3");
             //i8.putInto("3");
 
             rfidTags.put("102343530304238393845443838DA3",i8);
@@ -206,7 +210,7 @@ public class Inventory extends Activity{
 
         checkContextAware();
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -230,23 +234,9 @@ public class Inventory extends Activity{
 
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                  String value = input.getText().toString();
-                   StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-                  StrictMode.setThreadPolicy(policy); 
-                  HttpURLConnection urlConnection = null;
-                  try {
-                  URL url = new URL("http://192.168.1.102:3000?&action=\"" + value + "\"");
-                  urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                    readStream(in);
-                   } catch ( IOException e ) { 
-
-                   
-                   }finally {
-                    urlConnection.disconnect();
-                    }
-                  }     
+                   String value = input.getText().toString();
+                   new RequestTask(compartment.itemMapList, ANDROID_ID).execute("");
+                    }     
                 });
 
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -254,7 +244,6 @@ public class Inventory extends Activity{
                     // Canceled.
                   }
                 });
-
                 alert.show();
                 return true;
             default:

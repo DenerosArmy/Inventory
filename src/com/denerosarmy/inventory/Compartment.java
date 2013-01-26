@@ -2,7 +2,11 @@ package com.denerosarmy.inventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.apache.http.NameValuePair;
 import java.util.Hashtable;
+import org.apache.http.NameValuePair;
+import java.util.* ;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.annotation.SuppressLint;
 
@@ -11,11 +15,12 @@ public class Compartment{
     private String id;
     public String name;
     private Hashtable<String, Item> itemMap;
-
+    public List<NameValuePair> itemMapList;
     public Compartment(String id, String name){
         this.id = id;
         this.name = name;
         this.itemMap = new Hashtable<String, Item>();
+        this.itemMapList = new ArrayList<NameValuePair>();
         Container.inst().addComp(this);
     }
     
@@ -29,6 +34,7 @@ public class Compartment{
 
     protected void putItem(Item item){
         this.itemMap.put(item.getId(), item);
+        this.itemMapList.add(new BasicNameValuePair(item.getId(),item.getName()));
     }
 
     protected Item getItem(String itemId){
@@ -38,6 +44,7 @@ public class Compartment{
     protected Item popItem(String itemId){
         Item item = this.getItem(itemId);
         this.itemMap.remove(itemId);
+        this.itemMapList.remove(new BasicNameValuePair(item.getId(),item.getName()));
         return item;
     }
 

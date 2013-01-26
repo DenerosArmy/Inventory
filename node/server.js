@@ -3,7 +3,11 @@ var express = require('express'),
 	ejs = require('ejs'),
 	engine = require('ejs-locals'),
 	mongoose = require('mongoose'),
-	socketIO = require('socket.io');
+	socketIO = require('socket.io'),
+    util = require('util'),
+    couchdb = require('felix-couchdb');
+    client = couchdb.createClient(5984, 'pythonscript.denerosarmy.com'), 
+    db = client.db('inventory'); 
 	//models = require('./models');
 	
 var app = express.createServer();
@@ -25,15 +29,24 @@ app.configure(function() {
 	app.use('/', express.static(__dirname + '/public'));
 });
 
-var db = {}
-
 app.get('/room/:title', function(req, res) {
-	res.render('room', {title: req.params.title, data: db[req.params.title]});
+    db.getDoc(req.params.title, function(er,doc) { 
+        console.log("Error is" + JSON.stringify(er))
+        console.log(doc);
+	    res.render('room', {title: req.params.title, data:doc})
+
+    });
 });
 
-app.post('/room/:title', function(req, res) {
-	db[req.params.title][req.body.name] = req.body.items;
+/*
+app.post('/join/:title', function(req, res) {
+    db.saveDoc(req.params.title, {req.body.name:req.body.items});
 });
+*/
+app.post('/join/:title', function(req, res){
+    console.log(req.body);
+});
+
 
 var port = process.env.PORT || 8000;
 app.listen(port);

@@ -11,42 +11,50 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int backpack=0x7f020000;
-        public static final int furley_bg=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int maze_repeating=0x7f020003;
-        public static final int olivia_wilde=0x7f020004;
-        public static final int px_black=0x7f020005;
-        public static final int sample_0=0x7f020006;
-        public static final int sample_1=0x7f020007;
-        public static final int sample_2=0x7f020008;
-        public static final int sample_3=0x7f020009;
-        public static final int sample_4=0x7f02000a;
-        public static final int sample_5=0x7f02000b;
-        public static final int sample_6=0x7f02000c;
-        public static final int sample_7=0x7f02000d;
+        public static final int arden_cho=0x7f020000;
+        public static final int backpack=0x7f020001;
+        public static final int cold=0x7f020002;
+        public static final int furley_bg=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int maze_repeating=0x7f020005;
+        public static final int olivia_wilde=0x7f020006;
+        public static final int px_black=0x7f020007;
+        public static final int sample_0=0x7f020008;
+        public static final int sample_1=0x7f020009;
+        public static final int sample_10=0x7f02000a;
+        public static final int sample_11=0x7f02000b;
+        public static final int sample_2=0x7f02000c;
+        public static final int sample_3=0x7f02000d;
+        public static final int sample_4=0x7f02000e;
+        public static final int sample_5=0x7f02000f;
+        public static final int sample_6=0x7f020010;
+        public static final int sample_7=0x7f020011;
+        public static final int sample_8=0x7f020012;
+        public static final int sample_9=0x7f020013;
+        public static final int search=0x7f020014;
     }
     public static final class id {
-        public static final int ButtonTest=0x7f080007;
-        public static final int button_scan=0x7f08000c;
-        public static final int compartment=0x7f080003;
+        public static final int ButtonTest=0x7f080005;
+        public static final int button_scan=0x7f08000a;
         public static final int compartments=0x01010000;
-        public static final int count=0x7f080010;
-        public static final int counter=0x7f08000f;
-        public static final int discoverable=0x7f080012;
-        public static final int genItem=0x7f08000d;
+        public static final int count=0x7f08000c;
+        public static final int counter=0x7f08000b;
+        public static final int create_item=0x7f080011;
+        public static final int discoverable=0x7f08000e;
         public static final int itemForm=0x7f080000;
-        public static final int itemGrid=0x7f080006;
+        public static final int itemGrid=0x7f080004;
         public static final int itemName=0x7f080001;
-        public static final int itemSubmit=0x7f080004;
-        public static final int label=0x7f080011;
-        public static final int name=0x7f080005;
-        public static final int new_devices=0x7f08000b;
-        public static final int paired_devices=0x7f080009;
-        public static final int rfid=0x7f080002;
-        public static final int searchView=0x7f08000e;
-        public static final int title_new_devices=0x7f08000a;
-        public static final int title_paired_devices=0x7f080008;
+        public static final int itemSubmit=0x7f080002;
+        public static final int join_room=0x7f080013;
+        public static final int label=0x7f08000d;
+        public static final int menu_forgot_password=0x7f08000f;
+        public static final int menu_search=0x7f080010;
+        public static final int name=0x7f080003;
+        public static final int new_devices=0x7f080009;
+        public static final int pair_device=0x7f080012;
+        public static final int paired_devices=0x7f080007;
+        public static final int title_new_devices=0x7f080008;
+        public static final int title_paired_devices=0x7f080006;
     }
     public static final class layout {
         public static final int activity_item_create=0x7f030000;
@@ -59,18 +67,21 @@ public final class R {
     }
     public static final class menu {
         public static final int activity_inventory=0x7f070000;
+        public static final int activity_item_create=0x7f070001;
+        public static final int options=0x7f070002;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
         public static final int button_scan=0x7f05000a;
         public static final int discoverable=0x7f050003;
-        public static final int error_field_required=0x7f05000f;
-        public static final int error_invalid_password=0x7f05000e;
+        public static final int error_field_required=0x7f050010;
+        public static final int error_invalid_password=0x7f05000f;
         public static final int hello_world=0x7f050001;
-        public static final int login_progress_signing_in=0x7f05000d;
+        public static final int login_progress_signing_in=0x7f05000e;
         /**  Strings related to login 
          */
-        public static final int menu_forgot_password=0x7f05000c;
+        public static final int menu_forgot_password=0x7f05000d;
+        public static final int menu_search=0x7f05000b;
         public static final int menu_settings=0x7f050002;
         public static final int none_found=0x7f050007;
         public static final int none_paired=0x7f050006;
@@ -78,7 +89,7 @@ public final class R {
          */
         public static final int scanning=0x7f050004;
         public static final int select_device=0x7f050005;
-        public static final int title_activity_item_create=0x7f05000b;
+        public static final int title_activity_item_create=0x7f05000c;
         public static final int title_other_devices=0x7f050009;
         public static final int title_paired_devices=0x7f050008;
     }

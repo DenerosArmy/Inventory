@@ -20,4 +20,15 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:src="@android:drawable/ic_menu_mylocation" />
+     <item android:id="@+id/join_room"
+           android:title="Join Party"
+           android:layout_weight="0.25"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:textColor="#FFFFFF"
+           android:paddingTop="20sp"
+           android:drawablePadding="-15sp"
+           android:text="New"
+           android:gravity="right" />
+ 
 </menu>

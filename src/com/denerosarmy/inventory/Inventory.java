@@ -26,6 +26,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.SearchView.OnQueryTextListener;
+import android.view.MenuItem.OnActionExpandListener;
 
 public class Inventory extends Activity{
 
@@ -59,10 +61,10 @@ public class Inventory extends Activity{
     public static final int HEADER2WAIT = 1;
     public static final int READING_TAG = 2; 
     public static final int HEADER1WAIT = 0;
+    private SearchView searchView;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        System.out.println("Initialized is " + initialized);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         container = (ListView) findViewById(R.id.compartments);
@@ -82,17 +84,21 @@ public class Inventory extends Activity{
             Item i5 = new Item("5", "Mouse", R.drawable.sample_5);
             Item i6 = new Item("6", "Passport", R.drawable.sample_6);
             Item i7 = new Item("7", "Pencil", R.drawable.sample_7);
+            Item i10 = new Item("10", "Pencil", R.drawable.sample_7);
+            Item i11 = new Item("11", "Pencil", R.drawable.sample_7);
             Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
             Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
 
-            i0.putInto("1");
-            i1.putInto("3");
-            i2.putInto("3");
+            i0.putInto("2");
+            i1.putInto("1");
+            i2.putInto("1");
             i4.putInto("3");
-            i5.putInto("3");
-            i6.putInto("3");
+            i5.putInto("2");
+            //i6.putInto("3");
             i7.putInto("2");
-            i8.putInto("3");
+            i10.putInto("2");
+            i11.putInto("2");
+            //i8.putInto("3");
 
             rfidTags.put("102343530304238393845443838DA3",i8);
             rfidTags.put("102343530304637324434304446DA3",i9);
@@ -102,7 +108,6 @@ public class Inventory extends Activity{
         }
 
         if (initialized) {
-            System.out.println("AWEFHDSIUJUROEWRHUGFOJRATHUGJFAOIRHEGUJAFSIORGHEJ");
             try{
                 Intent intent = getIntent();
                 System.out.println(intent.toString());
@@ -111,6 +116,7 @@ public class Inventory extends Activity{
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
                 new Item(id, name, R.drawable.olivia_wilde).putInto(comp);
             } catch (NullPointerException e) {
+                System.out.println(e);
             }
         }
         initialized = true;
@@ -203,7 +209,44 @@ public class Inventory extends Activity{
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        System.out.println(searchManager.getSearchableInfo(getComponentName()));
+        //this.searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setOnQueryTextListener(new OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextChange(String newText){
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query){
+                container.setAdapter(new SearchCompartmentAdapter(Inventory.this, query));
+                update();
+                return true;
+            }
+        });
+        MenuItem searchBar = menu.findItem(R.id.menu_search);
+        searchBar.setOnActionExpandListener(new OnActionExpandListener(){
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item){
+                container.setAdapter(Inventory.this.adapter);
+                update();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item){
+                return true;
+            }
+
+        });
+        //searchView.setOnCloseListener(new OnCloseListener(){
+            //@Override
+            //public boolean onClose(){
+                //container.setAdapter(Inventory.this.adapter);
+                //update();
+                //return true;
+            //}
+        //});
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
@@ -222,7 +265,7 @@ public class Inventory extends Activity{
             switch(extraWifiState){
                 case WifiManager.WIFI_STATE_DISABLED:
                     checkForMissing();
-                    checkContextAware();
+                    //checkContextAware();
                     break;
                 case WifiManager.WIFI_STATE_DISABLING:
                     break;
@@ -244,7 +287,8 @@ public class Inventory extends Activity{
 
         if (rfidTags.containsKey(rfidTag.substring(0,30))) { 
             Log.d(TAG,"FLIP CALL PLEASE");
-            Toast.makeText(this, rfidTags.get(rfidTag.substring(0,30)).flip(),Toast.LENGTH_SHORT).show(); 
+            Item the_item = rfidTags.get(rfidTag.substring(0,30)); 
+            Toast.makeText(this, the_item.flip(),Toast.LENGTH_SHORT).show(); 
         }
 
 
@@ -332,7 +376,10 @@ public class Inventory extends Activity{
         //}catch (MalformedURLException e){
         //}
         boolean cold = true;
-        if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
+        System.out.println("Context-aware check");
+        if (cold){
+        //if ((cold)&&(Container.inst().getItemNamed("jacket") == null)){
+            System.out.println("It's cold!");
             Notification noti = new Notification.Builder(this)
                                 .setContentTitle("It's cold outside")
                                 .setContentText("Don't forget your jacket!")

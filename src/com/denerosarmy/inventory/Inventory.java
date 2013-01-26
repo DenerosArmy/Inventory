@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.SearchManager;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
@@ -160,7 +162,9 @@ public class Inventory extends Activity{
 
         checkContextAware();
     }
-
+    
+    
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -170,6 +174,31 @@ public class Inventory extends Activity{
                 return true;
             case R.id.pair_device:
                 deviceList();
+                return true;
+            case R.id.join_room:
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+                alert.setTitle("Join a Party!");
+
+                alert.setMessage("Party Name:");
+
+                // Set an EditText view to get user input 
+                final EditText input = new EditText(this);
+                alert.setView(input);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                  String value = input.getText().toString();
+                  }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int whichButton) {
+                    // Canceled.
+                  }
+                });
+
+                alert.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -379,7 +408,8 @@ public class Inventory extends Activity{
 
         notificationManager.notify(Integer.parseInt(item.getId()), noti); 
 
-    }
+    } 
+
     public void deviceList(View view) {
       deviceList();
     }

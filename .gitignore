@@ -3,3 +3,5 @@
 *.d
 *.cache
 local.properties
+bin/*
+gen/*

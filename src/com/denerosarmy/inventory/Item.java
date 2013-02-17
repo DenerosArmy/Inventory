@@ -1,12 +1,10 @@
 package com.denerosarmy.inventory;
 
+import android.view.animation.Animation;
+import java.io.Serializable;
 import java.util.Date;
 
-import android.view.animation.Animation;
-
-
-
-public class Item implements Comparable {
+public class Item implements Comparable, Serializable{
 
     private String id;
     private String name;
@@ -29,6 +27,7 @@ public class Item implements Comparable {
     protected void putInto(String compId){
         this.compId = compId;
         Container.inst().getComp(compId).putItem(this);
+        // save
     }
 
     protected void remove(){

@@ -1,12 +1,12 @@
 package com.denerosarmy.inventory;
 
+import android.annotation.SuppressLint;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-import android.annotation.SuppressLint;
-
-public class Compartment{
+public class Compartment implements Serializable{
 
     private String id;
     public String name;
@@ -17,6 +17,7 @@ public class Compartment{
         this.name = name;
         this.itemMap = new Hashtable<String, Item>();
         Container.inst().addComp(this);
+        // save
     }
     
     protected int getSize() {
@@ -95,7 +96,7 @@ public class Compartment{
     }
 
     @SuppressLint("NewApi")
-	protected Item[] getItemList(){
+    protected Item[] getItemList(){
         Object[] objs = this.itemMap.values().toArray();
         Item[] items = Arrays.copyOf(objs, objs.length, Item[].class);
         return items;

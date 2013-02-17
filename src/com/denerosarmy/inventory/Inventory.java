@@ -1,7 +1,5 @@
 package com.denerosarmy.inventory;
 
-import java.util.Hashtable;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -14,51 +12,47 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.http.AndroidHttpClient;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
-<<<<<<< HEAD
-import android.os.Message;
-import android.util.Log;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem.OnActionExpandListener;
+import android.view.MenuItem;
+import android.view.View.OnClickListener;
+import android.view.View;
+import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.Menu;
-import android.net.http.AndroidHttpClient;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SearchView.OnQueryTextListener;
+import android.widget.SearchView;
+import android.widget.Toast;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import android.view.MenuItem;
-import java.io.BufferedInputStream;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.StatusLine;
+import java.net.URL;
+import java.util.Hashtable;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.HttpEntity;
-import java.io.ByteArrayOutputStream;
-import 	org.apache.http.client.ClientProtocolException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import android.os.StrictMode;
-import android.widget.SearchView.OnQueryTextListener;
-import android.view.MenuItem.OnActionExpandListener;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class Inventory extends Activity{
     ListView container;
@@ -152,7 +146,7 @@ public class Inventory extends Activity{
 
         }
 
-        if (initialized) {
+        if (initialized){
             try{
                 Intent intent = getIntent();
                 System.out.println(intent.toString());
@@ -160,7 +154,7 @@ public class Inventory extends Activity{
                 String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
                 new Item(id, name, R.drawable.olivia_wilde).putInto(comp);
-            } catch (NullPointerException e) {
+            } catch (NullPointerException e){
                 System.out.println(e);
             }
         }
@@ -231,7 +225,7 @@ public class Inventory extends Activity{
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                   String value = input.getText().toString();
-                   StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                  StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
                   StrictMode.setThreadPolicy(policy); 
                   HttpURLConnection urlConnection = null;

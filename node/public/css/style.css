@@ -1,59 +1,129 @@
-@import url(http://fonts.googleapis.com/css?family=Lobster|Arvo|Anaheim|Droid+Sans);
+/* fonts */
+@import url(http://fonts.googleapis.com/css?family=Lobster|Play|Monda|Arvo|Anaheim|Droid+Sans);
+
+@font-face {
+  font-family: 'Code-Pro-Demo';
+  src: url('/css/webfonts/16CC75_0.eot');
+  src: url('/css/webfonts/16CC75_0.eot?#iefix') format('embedded-opentype'),
+       url('/css/webfonts/16CC75_0.woff') format('woff'),
+       url('/css/webfonts/16CC75_0.ttf') format('truetype'),
+       url('/css/webfonts/16CC75_0.svg#wf') format('svg');
+}
+
+@font-face {
+  font-family: 'Code-Pro-Light-Demo';
+  src: url('/css/webfonts/16CC75_1.eot');
+  src: url('/css/webfonts/16CC75_1.eot?#iefix') format('embedded-opentype'),
+       url('/css/webfonts/16CC75_1.woff') format('woff'),
+       url('/css/webfonts/16CC75_1.ttf') format('truetype'),
+       url('/css/webfonts/16CC75_1.svg#wf') format('svg');
+}
 
 html {
 	height: 102%;
 }
 
 body {
-	margin: 0;
-	overflow-x: hidden;
+	margin: 0px;
+	background-color: #fff;
 	display: none;
 }
 
-#retroheadband {
+#header {
 	width: 100%;
-	height: 15px;
-	background-color: grey;
+	height: 32px;
+	background-color: rgba(0,0,0,0.6);
 }
 
-#name {
-	font-family: Anaheim;
-	font-size: 48px;
-	color: #444;
-	width: 145px;
-	margin-top: 30px;
+#headercentre {
+	width: 74.5%;
 	margin-left: auto;
 	margin-right: auto;
-	cursor: pointer;
 }
 
-#contentbar {
-	float: left;
-	margin-right: auto;
+.nav, .dumbnav {
 	font-family: Anaheim;
 	font-size: 16px;
-	width: 700px;
+	color: #fff;
+	letter-spacing: 0px;
+	height: 100%;
+	text-transform: lowercase;
+	padding: 0px 10px 0px 10px;
+	line-height: 32px;
+	float: left;
+	font-weight: bold;
+	-moz-transition: background .15s linear;
+	-webkit-transition: background .15s linear;
+	border-radius: 2px;
+	text-align: center;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px #111; 
 }
 
-#wrapper {
-	margin-top: 10px;
+.dumbnav {
+	padding: 0px 2px 0px 0px;
+	cursor: default;
+}
+
+.nav:hover {
+	background-color: green;
+}
+
+#content {
+	width: 100%;
+}
+
+.mid_container {
+	width: 50%;
+	float: left;
 	margin-left: auto;
 	margin-right: auto;
-	width: 700px;
-	overflow: hidden;
 }
 
-.content  {
-	display: none;
-	float: top;
+.wide_container {
+	width: 80%;
+	margin-left: 12.5%;
+	margin-right: auto;
+}
+
+.form_line, .viewline {
+	margin-left: auto;
+	margin-right: auto;
+	line-height: 26px;
+}
+
+.form_line {
+	font-size: 18px;
+	font-family: Anaheim;
+}
+
+.title {
+	width: 100%;
+	font-size: 32px;
+	line-height: 32px;
+	text-align: center;
+	font-family: 'Code-Pro-Demo';
+	padding-bottom: 10px;
+}
+
+.form_input {
+	line-height: 40px;
+	width: 90%;
+	font-size: 16px;
+	padding-left: 10px;
+}
+
+:required {
+	border: 1px solid red;
 }
 
 .square {
 	float: left;
-	width: 160px;
-	height: 160px;
-	margin-right: 5px;
-	margin-bottom: 5px;
+	width: 12.2%;
+	height: 0px;
+	padding-bottom: 12.2%;
+	margin-right: 0.3%;
+	margin-bottom: 0.3%;
 	background-color: white;
 	box-shadow: 2px 2px 3px #aaaaaa;
 	visibility: visible;
@@ -62,32 +132,227 @@ body {
 	cursor: pointer;
 }
 
-p {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0px;
+.twocol {
+	width: 48.8%;
+	padding-bottom: 48.8%;
+	margin-right: 1.2%;
+	margin-bottom: 1.2%;
 }
 
-a {
-	color: #444;
+.threecol {
+	width: 32.5%;
+	padding-bottom: 32.5%;
+	margin-right: 0.8%;
+	margin-bottom: 0.8%;
+}
+
+.fourcol {
+	width: 24.4%;
+	padding-bottom: 24.4%;
+	margin-right: 0.6%;
+	margin-bottom: 0.6%;
+}
+
+.squaretext:hover, #cover:hover {
+	opacity: 0.1;
+}
+
+.blank {
+	background-color: #ddd;
+	cursor: default;
+	-moz-transition: background .15s linear;
+	-webkit-transition: background .15s linear;
+}
+
+.blank:hover {
+	background-color: #eee;
+}
+
+.grid {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	height: 1%;
+}
+
+.column {
+	position: relative;
+	width: 25%;
+	overflow: hidden;
+	height: 1%;
+	float: left;
 }
 
 .squaretext {
 	position: absolute;
-	bottom: 25px;
-	height: 20px;
-	padding-bottom: 5px;
-	background-color: green;
-	width: 120px;
-	border-right: 40px dashed white;
+	margin: 0px;
+	bottom: 0px;
+	height: 100%;
+	background-color: black;
+	width: 100%;
 	color: white;
-	opacity: 0.8;
+	opacity: 0.25;
+	text-align: center;
+	-moz-transition: opacity .15s linear;
+	-webkit-transition: opacity .15s linear;
 }
 
-.squaretext>span {
-	font-family: Arvo;
-	font-size: 18px;
+.card {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	float: top;
+}
+
+.cardcol {
+	font-weight: bold;
+	width: 32%;
+	margin-right: 1%;
+	margin-bottom: 1%;
+	box-shadow: 2px 2px 3px #aaaaaa;
+	height: 100%;
+	text-align: center;
+	line-height: 32px;
+	opacity: 0.5;
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.cardcol:hover {
+	opacity: 0.7;
+}
+
+#hackbar {
+	width: 100%;
+	height: 12.5%;
+	background-color: green;
+	opacity: 2.0;
+	color: white;
+	top: 0%;
+}
+
+#hacktitle {
+	text-align: center;
+	font-size: 32px;
+	line-height: 48px;
+	width: 90%;
+	margin-left: 5%;
+	padding-top: 2	px;
+	padding-bottom: 4px;
+	position: relative;
+	font-family: 'Code-Pro-Demo';
+	overflow: auto;
+}
+
+.container {
+	width: 75%;
+	margin-top: 12.2%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-right: 1%;
+	height: 0px;
+	padding-bottom: 75%;
+	overflow: hidden;
+	position: relative;
+}
+
+#cover { 	
+	font-family: Anaheim;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: black;
+	width: 99%;
+	height: 99%;
+	margin-right: 1%;
+	margin-bottom: 1%;
+	box-shadow: 2px 2px 3px #aaaaaa;
+	color: white;
+	opacity: 0.6;
+	-moz-transition: opacity .15s linear;
+	-webkit-transition: opacity .15s linear;
+}
+
+p {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	position: relative;
+}
+
+.square>span {
+	font-family: Anaheim;
+	font-size: 20px;
+	line-height: 22px;
+	font-weight: bold;
+	text-transform: lowercase;
+	width: 100%;
+	margin-top: 70%;
+	margin-left: 0px;
+	color: white;
+	background-color:rgba(0,148,0,0.75);
+	opacity: 0.9;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+.squaretext:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+.squaretext>.squaretitle {
+	font-family: 'Code-Pro-Demo';
+	text-shadow: 2px 2px 3px #111; 
+	font-size: 20px;
+	line-height: 22px;
+	font-weight: bold;
+	width: 100%;
+	color: white;
+	text-align: center;
 	display: inline-block;
-	margin-left: 10px;
+	vertical-align: middle;
+}
+
+.front {
+	background-color: green;
+	opacity: 0.6;
+}
+
+.front:hover {
+	opacity: 0.3;
+	-moz-transition: opacity .15s linear;
+	-webkit-transition: opacity .15s linear;
+}
+
+.demo {
+	background-color: green; 
+	opacity: 0.7;
+}
+
+.demo:hover {
+	opacity: 0.3;
+}
+
+input.submit {
+	width: 75px;
+	margin-top: 10px;
+	font-size: 18px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	font-family: Anaheim;
+	color: white;
+	background-color: green;
+}
+
+a {
+	text-decoration: none;
 }

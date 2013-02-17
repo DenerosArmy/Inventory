@@ -1,0 +1,7 @@
+.DS_Store
+*.class
+*.d
+*.cache
+local.properties
+bin/*
+gen/*

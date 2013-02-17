@@ -1,0 +1,22 @@
+
+<!DOCTYPE HTML>
+<html lang="en"> 
+	<head>
+		<title>Hacks</title>
+		<link rel="stylesheet" href="/css/style.css" type="text/css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="/js/index.js"></script>
+	</head>
+	<body>
+		
+		<div id="content">
+  <div class="grid" id="hackGrid">
+  <% for(var i=0; i<data['Members'].length; i++) {%>
+   <li><%= data['Members'][i] %></li>
+ <% } %>
+        </div>
+</div>
+
+		
+	</body>
+</html>

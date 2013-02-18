@@ -1,5 +1,6 @@
 package com.denerosarmy.inventory;
 
+import android.graphics.drawable.Drawable;
 import android.view.animation.Animation;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,14 +11,27 @@ public class Item implements Comparable, Serializable{
     private String name;
     private String compId;
     private Integer pic;
+    private Drawable img;
     public boolean isNew;
     public boolean toBeDeleted;
     private Date created;
 
-    public Item(String id, String name, Integer pic){
+    public Item(String id, String name, Integer pic) {
         this.id = id;
         this.name = name;
         this.pic = pic;
+        this.img = null;
+        this.isNew = true;
+        this.toBeDeleted = false;
+        this.created = new Date();
+        Container.inst().addItem(this);
+    }
+
+    public Item(String id, String name, Drawable img) {
+        this.id = id;
+        this.name = name;
+        this.pic = 0;
+        this.img = img;
         this.isNew = true;
         this.toBeDeleted = false;
         this.created = new Date();
@@ -60,6 +74,10 @@ public class Item implements Comparable, Serializable{
 
     protected Integer getPic(){
         return this.pic;
+    }
+
+    protected Drawable getImg() {
+        return this.img;
     }
 
     protected Compartment getComp(){

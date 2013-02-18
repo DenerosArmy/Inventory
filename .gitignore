@@ -7,7 +7,7 @@ bin/*
 gen/*
 bin
 gen
-..*
+*~
 
 # Log files
 *.log

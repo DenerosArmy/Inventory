@@ -38,7 +38,8 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     	
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View tile = inflater.inflate(R.layout.thumbnail, parent, false);
-        tile.setBackgroundResource(item.getPic());
+        //tile.setBackgroundResource(item.getPic());
+        tile.setBackground(item.getImg());
         TextView label = (TextView) tile.findViewById(R.id.label);
         TextView count = (TextView) tile.findViewById(R.id.count);
         //System.out.println(item.getName());

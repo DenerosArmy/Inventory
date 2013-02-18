@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.net.http.AndroidHttpClient;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -116,29 +117,8 @@ public class Inventory extends Activity{
 
             Compartment c3 = new Compartment("3", "My stuff");
             compartment = c3;
-            Item i0 = new Item("0", "Earbuds", R.drawable.sample_0);
-            Item i1 = new Item("1", "Glasses", R.drawable.sample_1);
-            Item i2 = new Item("2", "Headphones", R.drawable.sample_2);
-            Item i3 = new Item("3", "Jacket", R.drawable.sample_3);
-            Item i4 = new Item("4", "Laptop", R.drawable.sample_4);
-            Item i5 = new Item("5", "Mouse", R.drawable.sample_5);
-            Item i6 = new Item("6", "Passport", R.drawable.sample_6);
-            Item i7 = new Item("7", "Pencil", R.drawable.sample_7);
-            Item i10 = new Item("10", "Pencil", R.drawable.sample_7);
-            Item i11 = new Item("11", "Pencil", R.drawable.sample_7);
-            Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
-            Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
 
-            i0.putInto("3");
-            i1.putInto("3");
-            i2.putInto("3");
-            i4.putInto("3");
-            i5.putInto("3");
-            //i6.putInto("3");
-            i7.putInto("3");
-            i10.putInto("3");
-            i11.putInto("3");
-            //i8.putInto("3");
+            init();
 
             rfidTags.put("102343530304238393845443838DA3",i8);
             rfidTags.put("102343530304637324434304446DA3",i9);
@@ -632,4 +612,40 @@ public class Inventory extends Activity{
         mChatService.connect(device, secure);
     }
 
+    public void init() {
+        Drawable d0 = getResources().getDrawable(R.drawable.sample_0);
+        Drawable d1 = getResources().getDrawable(R.drawable.sample_1);
+        Drawable d2 = getResources().getDrawable(R.drawable.sample_2);
+        Drawable d3 = getResources().getDrawable(R.drawable.sample_3);
+        Drawable d4 = getResources().getDrawable(R.drawable.sample_4);
+        Drawable d5 = getResources().getDrawable(R.drawable.sample_5);
+        Drawable d6 = getResources().getDrawable(R.drawable.sample_6);
+        Drawable d7 = getResources().getDrawable(R.drawable.sample_7);
+        Drawable d10 = getResources().getDrawable(R.drawable.sample_7);
+        Drawable d11 = getResources().getDrawable(R.drawable.sample_7);
+
+        Item i0 = new Item("0", "Earbuds", d0);
+        Item i1 = new Item("1", "Glasses", d1);
+        Item i2 = new Item("2", "Headphones", d2);
+        Item i3 = new Item("3", "Jacket", d3);
+        Item i4 = new Item("4", "Laptop", d5);
+        Item i5 = new Item("5", "Mouse", d5);
+        Item i6 = new Item("6", "Passport", d6);
+        Item i7 = new Item("7", "Pencil", d7);
+        Item i10 = new Item("10", "Pencil", d7);
+        Item i11 = new Item("11", "Pencil", d7);
+        Item i8 = new Item("8", "Nexus", d10);
+        Item i9 = new Item("9", "Multimeter", d11);
+
+        i0.putInto("3");
+        i1.putInto("3");
+        i2.putInto("3");
+        i4.putInto("3");
+        i5.putInto("3");
+        //i6.putInto("3");
+        i7.putInto("3");
+        i10.putInto("3");
+        i11.putInto("3");
+        //i8.putInto("3");
+    }
 }

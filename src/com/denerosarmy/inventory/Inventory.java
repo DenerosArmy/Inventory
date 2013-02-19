@@ -12,7 +12,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.net.http.AndroidHttpClient;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -35,12 +36,7 @@ import android.widget.ListView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.SearchView;
 import android.widget.Toast;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -115,16 +111,7 @@ public class Inventory extends Activity{
         if (!initialized) {
             rfidTags = new Hashtable<String,Item>();
 
-            Compartment c3 = new Compartment("3", "My stuff");
-            compartment = c3;
-
             init();
-
-            rfidTags.put("102343530304238393845443838DA3",i8);
-            rfidTags.put("102343530304637324434304446DA3",i9);
-            rfidTags.put("102343530304238453546384530DA3",i3);
-            rfidTags.put("102343530304238453546454536DA3",i6);
-
         }
 
         if (initialized){
@@ -134,8 +121,13 @@ public class Inventory extends Activity{
                 String id = intent.getStringExtra(ItemCreate.ITEM_ID);
                 String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
-                new Item(id, name, R.drawable.olivia_wilde).putInto(comp);
-            } catch (NullPointerException e){
+
+                byte[] b = null;
+                FileInputStream fis = openFileInput(name);
+                fis.read(b);
+                Drawable image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
+                new Item(id, name, image).putInto(comp);
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
@@ -613,6 +605,9 @@ public class Inventory extends Activity{
     }
 
     public void init() {
+        Compartment c3 = new Compartment("3", "My stuff");
+        compartment = c3;
+
         Drawable d0 = getResources().getDrawable(R.drawable.sample_0);
         Drawable d1 = getResources().getDrawable(R.drawable.sample_1);
         Drawable d2 = getResources().getDrawable(R.drawable.sample_2);
@@ -647,5 +642,10 @@ public class Inventory extends Activity{
         i10.putInto("3");
         i11.putInto("3");
         //i8.putInto("3");
+
+        rfidTags.put("102343530304238393845443838DA3",i8);
+        rfidTags.put("102343530304637324434304446DA3",i9);
+        rfidTags.put("102343530304238453546384530DA3",i3);
+        rfidTags.put("102343530304238453546454536DA3",i6);
     }
 }

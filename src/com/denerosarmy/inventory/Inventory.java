@@ -114,7 +114,7 @@ public class Inventory extends Activity{
         if (!initialized) {
             rfidTags = new Hashtable<String,Item>();
 
-            Compartment c3 = new Compartment("3", "My stuff");
+            Compartment c3 = new Compartment("3", "My Stuff");
             compartment = c3;
             Item i0 = new Item("0", "Earbuds", R.drawable.sample_0);
             Item i1 = new Item("1", "Glasses", R.drawable.sample_1);

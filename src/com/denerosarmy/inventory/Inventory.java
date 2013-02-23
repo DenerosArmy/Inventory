@@ -111,7 +111,7 @@ public class Inventory extends Activity{
         if (!initialized) {
             rfidTags = new Hashtable<String,Item>();
 
-            init();
+            addTestItems();
         }
 
         if (initialized){
@@ -610,7 +610,7 @@ public class Inventory extends Activity{
         mChatService.connect(device, secure);
     }
 
-    public void init() {
+    public void addTestItems() {
         Compartment c3 = new Compartment("3", "My stuff");
         compartment = c3;
 

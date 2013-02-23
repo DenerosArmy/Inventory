@@ -76,7 +76,7 @@ public class Item implements Comparable, Serializable{
 
         try {
             System.out.println("Loading image file");
-            FileInputStream fis = new FileInputStream(this.filename);
+            FileInputStream fis = new FileInputStream(Inventory.getContext().getFilesDir().getAbsolutePath() + this.filename);
             System.out.println("Reading image file");
             fis.read(b);
             System.out.println("Creating drawable from image");

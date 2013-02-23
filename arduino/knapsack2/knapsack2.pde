@@ -4,10 +4,11 @@
 #define IRQ   (2)
 #define RESET (3)  // Not connected by default on the NFC Shield
 
+
 Adafruit_NFCShield_I2C nfc(IRQ, RESET);
 
 void setup(void) {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println("Hello!");
 
   nfc.begin();

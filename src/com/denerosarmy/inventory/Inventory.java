@@ -615,8 +615,9 @@ public class Inventory extends Activity{
             fos.write(bitmapdata);                                   
             System.out.println("Wrote file");                               
             fos.close();                                                    
-            System.out.println("IMAGE LOADED");
+            System.out.println("IMAGE SUCCESSFULY SAVED");
         } catch (Exception e) {
+            System.out.println("Save image failed");
             e.printStackTrace();
         }
     }

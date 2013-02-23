@@ -51,59 +51,61 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class Inventory extends Activity{
+    CompartmentAdapter adapter;
     ListView container;
     NotificationManager notificationManager;
-    static boolean initialized;
-    CompartmentAdapter adapter;
-    private static final String TAG = "Inventory"; 
-    private String backpackId= null;
-    private static final boolean D = true;
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothChatService mChatService = null;
-    private int messageState;
-    private int byteCount = 0;
-    private int bufferLen = 0;
     private Hashtable<String,Item> rfidTags;
+    private SearchView searchView;
+    private String backpackId= null;
     private String rfidTag = "";
-    private final String ANDROID_ID = Secure.ANDROID_ID;
+    private int bufferLen = 0;
+    private int byteCount = 0;
+    private int messageState;
+    private static Context context;
+    public Compartment compartment; 
+    static boolean initialized;
 
-    public static final char HEADER1 = '7';
-    public static final char HEADER2 = 'C';
-    public static final String BASEURL = "http://192.168.1.102:3000";
-    public static final int MESSAGE_STATE_CHANGE = 1;
-    public static final int MESSAGE_READ = 2;
-    public static final int MESSAGE_WRITE = 3;
-    public static final int MESSAGE_DEVICE_NAME = 4;
-    public static final int MESSAGE_TOAST = 5;
+    private final String ANDROID_ID = Secure.ANDROID_ID;
+    private static final String TAG = "Inventory"; 
+    private static final boolean D = true;
+    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_ENABLE_BT = 3;
+    public static final String BASEURL = "http://192.168.1.102:3000";
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast"; 
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-    public static final int HEADER2WAIT = 1;
-    public static final int READING_TAG = 2; 
+    public static final char HEADER1 = '7';
+    public static final char HEADER2 = 'C';
     public static final int HEADER1WAIT = 0;
-    public Compartment compartment; 
-    private SearchView searchView;
+    public static final int HEADER2WAIT = 1;
+    public static final int MESSAGE_DEVICE_NAME = 4;
+    public static final int MESSAGE_READ = 2;
+    public static final int MESSAGE_STATE_CHANGE = 1;
+    public static final int MESSAGE_TOAST = 5;
+    public static final int MESSAGE_WRITE = 3;
+    public static final int READING_TAG = 2; 
 
+    //public String readStream(InputStream is) {
+      //try {
+        //ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        //int i = is.read();
+        //while(i != -1) {
+          //bo.write(i);
+          //i = is.read();
+        //}
+        //return bo.toString();
+      //} catch (IOException e) {
+        //return "";
+      //}
+    //} 
     
-    public String readStream(InputStream is) {
-    try {
-      ByteArrayOutputStream bo = new ByteArrayOutputStream();
-      int i = is.read();
-      while(i != -1) {
-        bo.write(i);
-        i = is.read();
-      }
-      return bo.toString();
-    } catch (IOException e) {
-      return "";
-    }
-    } 
     @Override
     public void onCreate(Bundle savedInstanceState) {
        
         System.out.println("Initialized is " + initialized);
+        Inventory.context = getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         container = (ListView) findViewById(R.id.compartments);
@@ -178,6 +180,10 @@ public class Inventory extends Activity{
         }
 
         checkContextAware();
+    }
+
+    public static Context getContext(){
+        return Inventory.context;
     }
 
     @Override

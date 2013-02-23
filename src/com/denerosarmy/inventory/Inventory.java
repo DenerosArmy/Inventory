@@ -124,15 +124,7 @@ public class Inventory extends Activity{
                 String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
 
-                byte[] b = new byte[1024];
-                Thread.sleep(4000);
-                System.out.println("Loading image file");
-                FileInputStream fis = openFileInput(name);
-                System.out.println("Reading image file");
-                fis.read(b);
-                System.out.println("Creating drawable from image");
-                Drawable image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
-                new Item(id, name, image).putInto(comp);
+                new Item(id, name).putInto(comp);
                 System.out.println("Item created");
             } catch (Exception e) {
                 System.out.println("ITEM CREATION SHIT FUCKED UP");
@@ -616,6 +608,26 @@ public class Inventory extends Activity{
         mChatService.connect(device, secure);
     }
 
+    private void saveDrawable(String name, Drawable d) {
+        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+
+        try {
+            System.out.println("Opening file");                             
+            FileOutputStream fos = openFileOutput(name, Context.MODE_PRIVATE);
+            System.out.println("Opened file");                              
+            fos.write(bitmapdata);                                   
+            System.out.println("Wrote file");                               
+            fos.close();                                                    
+            System.out.println("IMAGE SUCCESSFULY SAVED");
+        } catch (Exception e) {
+            System.out.println("Save image failed");
+            e.printStackTrace();
+        }
+    }
+
     public void addTestItems() {
         Compartment c3 = new Compartment("3", "My stuff");
         compartment = c3;
@@ -631,18 +643,36 @@ public class Inventory extends Activity{
         Drawable d10 = getResources().getDrawable(R.drawable.sample_7);
         Drawable d11 = getResources().getDrawable(R.drawable.sample_7);
 
-        Item i0 = new Item("0", "Earbuds", d0);
-        Item i1 = new Item("1", "Glasses", d1);
-        Item i2 = new Item("2", "Headphones", d2);
-        Item i3 = new Item("3", "Jacket", d3);
-        Item i4 = new Item("4", "Laptop", d5);
-        Item i5 = new Item("5", "Mouse", d5);
-        Item i6 = new Item("6", "Passport", d6);
-        Item i7 = new Item("7", "Pencil", d7);
-        Item i10 = new Item("10", "Pencil", d7);
-        Item i11 = new Item("11", "Pencil", d7);
-        Item i8 = new Item("8", "Nexus", d10);
-        Item i9 = new Item("9", "Multimeter", d11);
+        Item i0 = new Item("0", "Earbuds");
+        saveDrawable("Earbuds", d0);
+
+        Item i1 = new Item("1", "Glasses");
+        saveDrawable("Glass", d1);
+
+        Item i2 = new Item("2", "Headphones");
+        saveDrawable("Headphones", d2);
+
+        Item i3 = new Item("3", "Jacket");
+        saveDrawable("Jacket", d3);
+
+        Item i4 = new Item("4", "Laptop");
+        saveDrawable("Laptop", d5);
+
+        Item i5 = new Item("5", "Mouse");
+        saveDrawable("Mouse", d5);
+
+        Item i6 = new Item("6", "Passport");
+        saveDrawable("Passport", d6);
+
+        Item i7 = new Item("7", "Pencil");
+        Item i10 = new Item("10", "Pencil");
+        Item i11 = new Item("11", "Pencil");
+        saveDrawable("Pencil", d7);
+
+        Item i8 = new Item("8", "Nexus");
+        saveDrawable("Nexus", d10);
+        Item i9 = new Item("9", "Multimeter");
+        saveDrawable("Multimeter", d11);
 
         i0.putInto("3");
         i1.putInto("3");

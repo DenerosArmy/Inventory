@@ -1,41 +1,35 @@
 package com.denerosarmy.inventory;
 
-import android.graphics.drawable.Drawable;
+import android.app.Activity;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.view.animation.Animation;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 
 public class Item implements Comparable, Serializable{
 
     private String id;
     private String name;
+    private String filename;
     private String compId;
-    private Integer pic;
-    private Drawable img;
     public boolean isNew;
     public boolean toBeDeleted;
     private Date created;
 
-    public Item(String id, String name, Integer pic) {
+    public Item(String id, String name) {
         this.id = id;
         this.name = name;
-        this.pic = pic;
-        this.img = null;
+        this.filename = name;
         this.isNew = true;
         this.toBeDeleted = false;
         this.created = new Date();
         Container.inst().addItem(this);
     }
 
-    public Item(String id, String name, Drawable img) {
-        this.id = id;
-        this.name = name;
-        this.pic = 0;
-        this.img = img;
-        this.isNew = true;
-        this.toBeDeleted = false;
-        this.created = new Date();
-        Container.inst().addItem(this);
+    public Item(String id, String name, String filename) {
+        this(id, name);
+        this.filename = filename;
     }
 
     protected void putInto(String compId){
@@ -72,12 +66,25 @@ public class Item implements Comparable, Serializable{
         return this.name;
     }
 
-    protected Integer getPic(){
-        return this.pic;
+    protected int getPic() {
+        return 0;
     }
 
     protected Drawable getImg() {
-        return this.img;
+        byte[] b = new byte[1024];
+        Drawable image = null;
+
+        try {
+            System.out.println("Loading image file");
+            FileInputStream fis = new FileInputStream(this.filename);
+            System.out.println("Reading image file");
+            fis.read(b);
+            System.out.println("Creating drawable from image");
+            image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     protected Compartment getComp(){

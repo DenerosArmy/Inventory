@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.apache.http.util.ByteArrayBuffer;
+
 import java.io.*;
 import java.net.*;
 
@@ -48,21 +50,47 @@ public class ItemCreate extends Activity {
         intent.putExtra(ITEM_COMPARTMENT, "3");
 
         // Image grabbing
-        Drawable thumb = null;
-        try {
-            String url = "http://" + name + ".jpg.to";
-            thumb = drawableFromURL(url);
-            byte[] bytes = byteArrayFromDrawable(thumb);
-            FileOutputStream fos = openFileOutput(name, Context.MODE_PRIVATE);
-            fos.write(bytes);
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-
+        Runnable imageLoader = new LoadItemImage(name);
+        new Thread(imageLoader).start();
         startActivity(intent);
     }
 
+    private class LoadItemImage implements Runnable {
+        private String name;
+
+        public LoadItemImage(String name) {
+            this.name = name;
+        }
+
+        public void run() {
+            try {
+                String url = "http://" + this.name + ".jpg.to";
+                //URL updateURL = new URL("http://penis.jpg.to");
+                URL updateURL = new URL(url);
+                URLConnection conn = updateURL.openConnection();
+                InputStream is = conn.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                ByteArrayBuffer baf = new ByteArrayBuffer(50);
+
+                int current = 0;
+                while((current = bis.read()) != -1) {
+                    baf.append((byte) current);
+                }
+
+                /* Write the bytes to file. */
+                System.out.println("Opening file");
+                FileOutputStream fos = openFileOutput(this.name, Context.MODE_PRIVATE);
+                System.out.println("Opened file");
+                fos.write(baf.toByteArray());
+                System.out.println("Wrote file");
+                fos.close();
+                System.out.println("IMAGE LOADED");
+            } catch (Exception e) {
+                System.out.println("IMAGE LOAD ERROR");
+                System.out.println(e);
+            }
+        }
+    };
 
     public static Drawable drawableFromURL(String url) {
         System.out.println("DRAWABLE FROM URL");

@@ -122,12 +122,18 @@ public class Inventory extends Activity{
                 String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
                 String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
 
-                byte[] b = null;
+                byte[] b = new byte[1024];
+                Thread.sleep(4000);
+                System.out.println("Loading image file");
                 FileInputStream fis = openFileInput(name);
+                System.out.println("Reading image file");
                 fis.read(b);
+                System.out.println("Creating drawable from image");
                 Drawable image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
                 new Item(id, name, image).putInto(comp);
+                System.out.println("Item created");
             } catch (Exception e) {
+                System.out.println("ITEM CREATION SHIT FUCKED UP");
                 System.out.println(e);
             }
         }

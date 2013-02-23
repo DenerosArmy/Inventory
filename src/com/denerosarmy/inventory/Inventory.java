@@ -659,5 +659,6 @@ public class Inventory extends Activity{
         rfidTags.put("102343530304637324434304446DA3",i9);
         rfidTags.put("102343530304238453546384530DA3",i3);
         rfidTags.put("102343530304238453546454536DA3",i6);
+
     }
 }

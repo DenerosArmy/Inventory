@@ -12,3 +12,4 @@ gen
 # Log files
 *.log
 *.dump
+*.un~

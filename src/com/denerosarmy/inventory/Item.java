@@ -88,7 +88,7 @@ public class Item implements Comparable, Serializable{
             fis.read(b);
             System.out.println("Creating drawable from image");
             image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
-            System.out.println("IMAGED SUCCESSFULLY LOADED");
+            System.out.println("IMAGE SUCCESSFULLY LOADED");
         } catch (Exception e) {
             System.out.println("Load image failed");
             e.printStackTrace();

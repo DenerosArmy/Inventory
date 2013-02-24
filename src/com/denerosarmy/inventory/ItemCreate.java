@@ -51,6 +51,8 @@ public class ItemCreate extends Activity {
         //    e.printStackTrace();
         //}
 
+        new Item(name).putInto("3");
+        Inventory.getActiveInventory().update();
         finish();
     }
 
@@ -63,8 +65,12 @@ public class ItemCreate extends Activity {
 
         public void run() {
             try {
-                String url = "http://" + this.name + ".jpg.to";
-                //URL updateURL = new URL("http://pony.jpg.to");
+                String url = "http://" + this.name + ".jpg.to/m";
+                String html = getHTML(url);
+                System.out.println(html);
+
+                url = getURL(html);
+
                 URL updateURL = new URL(url);
                 System.out.println("Loading " + url);
                 URLConnection conn = updateURL.openConnection();
@@ -85,14 +91,43 @@ public class ItemCreate extends Activity {
                 System.out.println("Wrote file");
                 fos.close();
                 System.out.println("IMAGE LOADED");
-
-                new Item(this.name).putInto("3");
                 Inventory.getActiveInventory().update();
             } catch (Exception e) {
                 System.out.println("IMAGE LOAD ERROR");
                 System.out.println(e);
             }
         }
+
+        private String getHTML(String urlToRead) {
+            URL url; // The URL to read
+            HttpURLConnection conn; // The actual connection to the web page
+            BufferedReader rd; // Used to read results from the web page
+            String line; // An individual line of the web page HTML
+            String result = ""; // A long string containing all the HTML
+            try {
+                url = new URL(urlToRead);
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line = rd.readLine()) != null) {
+                    result += line;
+                }
+                rd.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        private String getURL(String text) {
+            text = text.substring(text.indexOf("src=\""));
+            text = text.substring("src=\"".length());
+            text = text.substring(0, text.indexOf("\""));
+            System.out.println(text);
+            return text;
+        }
+
+
     };
 
     public static Drawable drawableFromURL(String url) {

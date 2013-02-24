@@ -579,15 +579,10 @@ public class Inventory extends Activity{
         byte[] bitmapdata = stream.toByteArray();
 
         try {
-            System.out.println("Opening file " + name);
             FileOutputStream fos = openFileOutput(name, Context.MODE_PRIVATE);
-            System.out.println("Opened file");                              
             fos.write(bitmapdata);                                   
-            System.out.println("Wrote file");                               
             fos.close();                                                    
-            System.out.println("IMAGE SUCCESSFULY SAVED");
         } catch (Exception e) {
-            System.out.println("Save image failed");
             e.printStackTrace();
         }
     }

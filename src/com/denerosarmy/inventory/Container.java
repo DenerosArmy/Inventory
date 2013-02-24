@@ -12,6 +12,7 @@ public class Container implements Serializable{
     private static Container inst = null;
     private Hashtable<String, Compartment> compartmentMap;
     private LinkedList<Item> items;
+    public static boolean _new = false; // To be deleted
 
     protected Container(){
         compartmentMap = new Hashtable<String, Compartment>();
@@ -20,7 +21,9 @@ public class Container implements Serializable{
 
     protected static Container inst() {
         if (inst == null){
+            Container._new = false;
             if ((inst = loadContainer()) == null){
+                Container._new = true;
                 inst = new Container();
             }
         }
@@ -33,6 +36,7 @@ public class Container implements Serializable{
             ObjectInputStream is = new ObjectInputStream(fis);
             Container container = (Container) is.readObject();
             is.close();
+            System.out.println("Load succeeded.");
             return container;
         }catch (FileNotFoundException fnfe){
             System.err.println(fnfe);
@@ -45,6 +49,7 @@ public class Container implements Serializable{
         }catch (ClassNotFoundException cnfe){
             System.err.println(cnfe);
         }
+        System.err.println("Load failed.");
         return null;
     }
 
@@ -94,6 +99,7 @@ public class Container implements Serializable{
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(this);
             os.close();
+            System.out.println("Save succeeded.");
             return true;
         }catch (FileNotFoundException fnfe){
             System.err.println(fnfe);

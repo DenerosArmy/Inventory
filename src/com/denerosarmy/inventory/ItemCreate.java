@@ -50,8 +50,8 @@ public class ItemCreate extends Activity {
         //intent.putExtra(ITEM_COMPARTMENT, "3");
 
         // Image grabbing
-        //Runnable imageLoader = new LoadItemImage(name);
-        //new Thread(imageLoader).start();
+        Runnable imageLoader = new LoadItemImage(name);
+        new Thread(imageLoader).start();
         new Item(name).putInto("3");
         Inventory.getActiveInventory().update();
         finish();

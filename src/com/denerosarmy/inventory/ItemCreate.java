@@ -42,17 +42,19 @@ public class ItemCreate extends Activity {
     }
 
 	public void addItem(View view) {
-        Intent intent = new Intent(this, Inventory.class);
+        //Intent intent = new Intent(this, Inventory.class);
         EditText nameView = (EditText) findViewById(R.id.itemName);
         String name = nameView.getText().toString();
-        intent.putExtra(ITEM_NAME, name);
-        intent.putExtra(ITEM_ID, "12345654");
-        intent.putExtra(ITEM_COMPARTMENT, "3");
+        //intent.putExtra(ITEM_NAME, name);
+        //intent.putExtra(ITEM_ID, "12345654");
+        //intent.putExtra(ITEM_COMPARTMENT, "3");
 
         // Image grabbing
         Runnable imageLoader = new LoadItemImage(name);
         new Thread(imageLoader).start();
-        startActivity(intent);
+        new Item(name).putInto("3");
+        finish();
+        //startActivity(intent);
     }
 
     private class LoadItemImage implements Runnable {

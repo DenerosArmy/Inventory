@@ -116,21 +116,21 @@ public class Inventory extends Activity{
             addTestItems();
         }
 
-        if (initialized){
-            try{
-                Intent intent = getIntent();
-                System.out.println(intent.toString());
-                String id = intent.getStringExtra(ItemCreate.ITEM_ID);
-                String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
-                String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
+        //if (initialized){
+            //try{
+                //Intent intent = getIntent();
+                //System.out.println(intent.toString());
+                //String id = intent.getStringExtra(ItemCreate.ITEM_ID);
+                //String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
+                //String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
 
-                new Item(id, name).putInto(comp);
-                System.out.println("Item created");
-            } catch (Exception e) {
-                System.out.println("ITEM CREATION SHIT FUCKED UP");
-                System.out.println(e);
-            }
-        }
+                //new Item(id, name).putInto(comp);
+                //System.out.println("Item created");
+            //} catch (Exception e) {
+                //System.out.println("ITEM CREATION SHIT FUCKED UP");
+                //System.out.println(e);
+            //}
+        //}
         initialized = true;
 
         this.adapter = new CompartmentAdapter(this);

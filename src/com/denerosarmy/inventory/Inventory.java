@@ -64,6 +64,7 @@ public class Inventory extends Activity{
     private int byteCount = 0;
     private int messageState;
     private static Context context;
+    private static Inventory inventory;
     public Compartment compartment; 
     static boolean initialized;
 
@@ -86,63 +87,49 @@ public class Inventory extends Activity{
     public static final int MESSAGE_TOAST = 5;
     public static final int MESSAGE_WRITE = 3;
     public static final int READING_TAG = 2; 
-
-    //public String readStream(InputStream is) {
-      //try {
-        //ByteArrayOutputStream bo = new ByteArrayOutputStream();
-        //int i = is.read();
-        //while(i != -1) {
-          //bo.write(i);
-          //i = is.read();
-        //}
-        //return bo.toString();
-      //} catch (IOException e) {
-        //return "";
-      //}
-    //} 
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
        
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         System.out.println("Initialized is " + initialized);
         Inventory.context = getApplicationContext();
+        Inventory.inventory = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         container = (ListView) findViewById(R.id.compartments);
         
-        if (!initialized) {
+        if (!initialized){
             rfidTags = new Hashtable<String,Item>();
-
             addTestItems();
         }
 
-        //if (initialized){
-            //try{
-                //Intent intent = getIntent();
-                //System.out.println(intent.toString());
-                //String id = intent.getStringExtra(ItemCreate.ITEM_ID);
-                //String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
-                //String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
-
-                //new Item(id, name).putInto(comp);
-                //System.out.println("Item created");
-            //} catch (Exception e) {
-                //System.out.println("ITEM CREATION SHIT FUCKED UP");
-                //System.out.println(e);
-            //}
-        //}
         initialized = true;
 
         this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
         //getActionBar().setDisplayShowTitleEnabled(false);
-
-        // Get the SearchView and set the searchable configuration
-        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        //SearchView searchView = (SearchView) findViewById(R.id.searchView);
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        //searchView.setIconifiedByDefault(true); // Do not iconify the widget; expand it by default
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -153,16 +140,16 @@ public class Inventory extends Activity{
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         
         if (!mBluetoothAdapter.isEnabled()) {
-        	System.out.println("Enabling bluetooth");
-        	mBluetoothAdapter.enable();
+            System.out.println("Enabling bluetooth");
+            mBluetoothAdapter.enable();
         }
 
         try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
@@ -172,6 +159,10 @@ public class Inventory extends Activity{
         }
 
         checkContextAware();
+    }
+
+    public static Inventory getActiveInventory(){
+        return Inventory.inventory;
     }
 
     public static Context getContext(){
@@ -457,11 +448,8 @@ public class Inventory extends Activity{
 
         // If BT is not on, request that it be enabled.
         // setupChat() will then be called during onActivityResult
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        if (mBluetoothAdapter.isEnabled()) {
         // Otherwise, setup the chat session
-        } else {
             if (mChatService == null) { 
                 mChatService = new BluetoothChatService(this,mHandler); 
             }
@@ -477,14 +465,8 @@ public class Inventory extends Activity{
     public void onStop() {
         super.onStop();
         if(D) Log.e(TAG, "-- ON STOP --");
-                
-        if (mBluetoothAdapter.isEnabled()) {
-        	System.out.println("Disabling bluetooth");
-            mBluetoothAdapter.disable();
-        }
-        
-        try {
-			Thread.sleep(500);
+    try{
+        Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -497,6 +479,8 @@ public class Inventory extends Activity{
         // Stop the Bluetooth chat services
         if (mChatService != null) mChatService.stop();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
+        // Save the items
+        Container.inst().save();
     }
     
 

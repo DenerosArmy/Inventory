@@ -71,16 +71,18 @@ public class Item implements Comparable, Serializable{
     }
 
     protected Drawable getImg() {
-        byte[] b = new byte[1024];
+        byte[] b = new byte[1000000];
         Drawable image = null;
 
         try {
-            System.out.println("Loading image file");
-            FileInputStream fis = new FileInputStream(Inventory.getContext().getFilesDir().getAbsolutePath() + this.filename);
+            System.out.println("Loading image file " + this.filename);
+            //FileInputStream fis = new FileInputStream(Inventory.getContext().getFilesDir().getAbsolutePath() + "/" + this.filename);
+            FileInputStream fis = Inventory.getContext().openFileInput(this.filename);
             System.out.println("Reading image file");
             fis.read(b);
             System.out.println("Creating drawable from image");
             image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
+            System.out.println("IMAGED SUCCESSFULLY LOADED");
         } catch (Exception e) {
             System.out.println("Load image failed");
             e.printStackTrace();

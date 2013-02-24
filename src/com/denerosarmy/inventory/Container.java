@@ -100,6 +100,7 @@ public class Container implements Serializable{
         }catch (IOException ioe){
             System.err.println(ioe);
         }
+        System.err.println("Save failed.");
         return false;
     }
 

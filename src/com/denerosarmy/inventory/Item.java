@@ -17,6 +17,10 @@ public class Item implements Comparable, Serializable{
     public boolean toBeDeleted;
     private Date created;
 
+    public Item(String name) {
+        this(name, name);
+    }
+
     public Item(String id, String name) {
         this.id = id;
         this.name = name;
@@ -25,26 +29,29 @@ public class Item implements Comparable, Serializable{
         this.toBeDeleted = false;
         this.created = new Date();
         Container.inst().addItem(this);
+        Container.inst().save();
     }
 
     public Item(String id, String name, String filename) {
         this(id, name);
         this.filename = filename;
+        Container.inst().save();
     }
 
     protected void putInto(String compId){
         this.compId = compId;
         Container.inst().getComp(compId).putItem(this);
-        // save
+        Container.inst().save();
     }
 
     protected void remove(){
         Container.inst().getComp(compId).popItem(this.getId());
         this.compId = null;
+        Container.inst().save();
     }
     
     protected void scheduleDeletion() {
-    	this.toBeDeleted = true;
+        this.toBeDeleted = true;
     }
     
     protected String flip() { 

@@ -593,13 +593,14 @@ public class Inventory extends Activity{
     }
 
     private void saveDrawable(String name, Drawable d) {
+        String path = getContext().getFilesDir().getAbsolutePath() + "/" + name;
         Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
 
         try {
-            System.out.println("Opening file");                             
+            System.out.println("Opening file " + name);
             FileOutputStream fos = openFileOutput(name, Context.MODE_PRIVATE);
             System.out.println("Opened file");                              
             fos.write(bitmapdata);                                   
@@ -631,7 +632,7 @@ public class Inventory extends Activity{
         saveDrawable("Earbuds", d0);
 
         Item i1 = new Item("1", "Glasses");
-        saveDrawable("Glass", d1);
+        saveDrawable("Glasses", d1);
 
         Item i2 = new Item("2", "Headphones");
         saveDrawable("Headphones", d2);

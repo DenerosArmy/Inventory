@@ -659,6 +659,10 @@ public class Inventory extends Activity{
         Item i9 = new Item("9", "Multimeter");
         saveDrawable("Multimeter", d11);
 
+        Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
+        saveDrawable("Olivia", o);
+
+
         i0.putInto("3");
         i1.putInto("3");
         i2.putInto("3");

@@ -36,26 +36,22 @@ public class ItemCreate extends Activity {
 		setContentView(R.layout.activity_item_create);
 	}
     
-    public void goBack(View view) {
-    	Intent intent = new Intent(this, Inventory.class);
-        startActivity(intent);
-    }
-
 	public void addItem(View view) {
         //Intent intent = new Intent(this, Inventory.class);
         EditText nameView = (EditText) findViewById(R.id.itemName);
         String name = nameView.getText().toString();
-        //intent.putExtra(ITEM_NAME, name);
-        //intent.putExtra(ITEM_ID, "12345654");
-        //intent.putExtra(ITEM_COMPARTMENT, "3");
 
         // Image grabbing
-        //Runnable imageLoader = new LoadItemImage(name);
-        //new Thread(imageLoader).start();
-        new Item(name).putInto("3");
-        Inventory.getActiveInventory().update();
+        Runnable imageLoader = new LoadItemImage(name);
+        new Thread(imageLoader).start();
+
+        //try {
+        //    Thread.sleep(4000);
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
+
         finish();
-        //startActivity(intent);
     }
 
     private class LoadItemImage implements Runnable {
@@ -68,8 +64,9 @@ public class ItemCreate extends Activity {
         public void run() {
             try {
                 String url = "http://" + this.name + ".jpg.to";
-                //URL updateURL = new URL("http://penis.jpg.to");
+                //URL updateURL = new URL("http://pony.jpg.to");
                 URL updateURL = new URL(url);
+                System.out.println("Loading " + url);
                 URLConnection conn = updateURL.openConnection();
                 InputStream is = conn.getInputStream();
                 BufferedInputStream bis = new BufferedInputStream(is);
@@ -81,13 +78,16 @@ public class ItemCreate extends Activity {
                 }
 
                 /* Write the bytes to file. */
-                System.out.println("Opening file");
+                System.out.println("Opening file " + this.name);
                 FileOutputStream fos = openFileOutput(this.name, Context.MODE_PRIVATE);
                 System.out.println("Opened file");
                 fos.write(baf.toByteArray());
                 System.out.println("Wrote file");
                 fos.close();
                 System.out.println("IMAGE LOADED");
+
+                new Item(this.name).putInto("3");
+                Inventory.getActiveInventory().update();
             } catch (Exception e) {
                 System.out.println("IMAGE LOAD ERROR");
                 System.out.println(e);
@@ -107,16 +107,6 @@ public class ItemCreate extends Activity {
             return null;
         }
     }
-    //public static Drawable drawableFromURL(String url) throws IOException {
-    //    HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-    //    System.out.println("ATTEMPTING TO CONNECT");
-    //    connection.connect();
-    //    System.out.println("CONNECTION ESTABLISHED");
-    //    InputStream input = connection.getInputStream();
-
-    //    Bitmap x = BitmapFactory.decodeStream(input);
-    //    return new BitmapDrawable(x);
-    //}
 
     public static byte[] byteArrayFromDrawable(Drawable d) {
         System.out.println("BYTE ARRAY FROM DRAWABLE");

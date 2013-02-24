@@ -83,7 +83,6 @@ public class Item implements Comparable, Serializable{
 
         try {
             System.out.println("Loading image file " + this.filename);
-            //FileInputStream fis = new FileInputStream(Inventory.getContext().getFilesDir().getAbsolutePath() + "/" + this.filename);
             FileInputStream fis = Inventory.getContext().openFileInput(this.filename);
             System.out.println("Reading image file");
             fis.read(b);
@@ -97,8 +96,8 @@ public class Item implements Comparable, Serializable{
         return image;
     }
 
-    protected Compartment getComp(){
-        if (this.compId == null){
+    protected Compartment getComp() {
+        if (this.compId == null) {
             return null;
         }
         return Container.inst().getComp(this.compId);

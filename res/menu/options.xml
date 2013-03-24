@@ -30,4 +30,10 @@
            android:drawablePadding="-15sp"
            android:text="New"
            android:gravity="right" />
+     <item android:id="@+id/test_animation"
+           android:title="Test Animation"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Test Animation"
+           android:gravity="right" />
 </menu>

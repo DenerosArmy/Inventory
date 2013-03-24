@@ -50,10 +50,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+
 public class Inventory extends Activity{
     CompartmentAdapter adapter;
     ListView container;
     NotificationManager notificationManager;
+    public boolean testImgUp = false;
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothChatService mChatService = null;
     private Hashtable<String,Item> rfidTags;
@@ -183,6 +185,19 @@ public class Inventory extends Activity{
                 });
                 alert.show();
                 return true;
+            case R.id.test_animation:
+                if (this.testImgUp) {
+                    compartment.getItem("8008").remove();
+                    this.testImgUp = false;
+                    update();
+                } else {
+                    Drawable d = getResources().getDrawable(R.drawable.olivia_wilde);
+                    saveDrawable("Female", d);
+                    Item i= new Item("8008", "Female");
+                    i.putInto("3");
+                    update();
+                    this.testImgUp = true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -633,10 +648,6 @@ public class Inventory extends Activity{
         Item i9 = new Item("9", "Multimeter");
         saveDrawable("Multimeter", d11);
 
-        Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
-        saveDrawable("Olivia", o);
-
-
         i0.putInto("3");
         i1.putInto("3");
         i2.putInto("3");
@@ -653,5 +664,7 @@ public class Inventory extends Activity{
         rfidTags.put("102343530304238453546384530DA3",i3);
         rfidTags.put("102343530304238453546454536DA3",i6);
 
+        Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
+        saveDrawable("Olivia", o);
     }
 }

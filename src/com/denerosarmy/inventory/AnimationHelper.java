@@ -4,11 +4,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
-/**
- *
- * @author paul.blundell
- *
- */
 public class AnimationHelper {
 
 	private static final int HALF_A_SECOND = 500;

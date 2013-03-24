@@ -35,21 +35,16 @@ public class ItemCreate extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_create);
 	}
-    
-	public void addItem(View view) {
-        //Intent intent = new Intent(this, Inventory.class);
+   
+    public void addItem(View view) {
         EditText nameView = (EditText) findViewById(R.id.itemName);
         String name = nameView.getText().toString();
+        createItem(name);
+    } 
 
-        // Image grabbing
+	public void createItem(String name) {
         Runnable imageLoader = new LoadItemImage(name);
         new Thread(imageLoader).start();
-
-        //try {
-        //    Thread.sleep(4000);
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
 
         new Item(name).putInto("3");
         Inventory.getActiveInventory().update();

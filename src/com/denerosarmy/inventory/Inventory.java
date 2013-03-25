@@ -187,7 +187,8 @@ public class Inventory extends Activity{
                 return true;
             case R.id.test_animation:
                 if (this.testImgUp) {
-                    compartment.getItem("8008").remove();
+                    //compartment.getItem("8008").remove();
+                    compartment.getItem("8008").scheduleDeletion();
                     this.testImgUp = false;
                     update();
                 } else {

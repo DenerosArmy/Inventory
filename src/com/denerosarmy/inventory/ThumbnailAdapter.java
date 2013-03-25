@@ -14,6 +14,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
 public class ThumbnailAdapter extends ArrayAdapter<Item>{
 
     private final Context context;
@@ -38,11 +39,9 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     	
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View tile = inflater.inflate(R.layout.thumbnail, parent, false);
-        //tile.setBackgroundResource(item.getPic());
         tile.setBackground(item.getImg());
         TextView label = (TextView) tile.findViewById(R.id.label);
         TextView count = (TextView) tile.findViewById(R.id.count);
-        //System.out.println(item.getName());
         label.setText(item.getName());
         if (itemCounts[position] > 1){
             count.setText(itemCounts[position].toString());
@@ -50,13 +49,12 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
             tile.findViewById(R.id.counter).setBackgroundColor(00000000);
             count.setText("");
         }
+
+        // Animations
         if (item.toBeDeleted) {
-        	//System.out.println("DELETING");
-        	//Animation fadeout = AnimationHelper.createFadeoutAnimation();
-        	//AnimationHelper.animate(tile, fadeout);
-            //deleteOnAnimationComplete(fadeout, item);
-        	item.remove();
-        	//item.toBeDeleted = false;
+        	Animation fadeout = AnimationHelper.createFadeoutAnimation();
+        	AnimationHelper.animate(tile, fadeout);
+            deleteOnAnimationComplete(fadeout, item);
         }
         if (item.isNew) {
         	Animation fadein = AnimationHelper.createFadeInAnimation();
@@ -68,11 +66,6 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
 
     private void deleteOnAnimationComplete(Animation fadeout, final Item item) {
         fadeout.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) { }
-            @Override
-            public void onAnimationRepeat(Animation animation) { }
-    
             @Override
             public void onAnimationEnd(Animation animation) {
                 item.remove();

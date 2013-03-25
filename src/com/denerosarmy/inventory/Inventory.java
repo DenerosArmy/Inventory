@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.net.http.AndroidHttpClient;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -34,12 +36,7 @@ import android.widget.ListView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.SearchView;
 import android.widget.Toast;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -53,10 +50,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+
 public class Inventory extends Activity{
     CompartmentAdapter adapter;
     ListView container;
     NotificationManager notificationManager;
+    public boolean testImgUp = false;
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothChatService mChatService = null;
     private Hashtable<String,Item> rfidTags;
@@ -67,6 +66,7 @@ public class Inventory extends Activity{
     private int byteCount = 0;
     private int messageState;
     private static Context context;
+    private static Inventory inventory;
     public Compartment compartment; 
     static boolean initialized;
 
@@ -89,90 +89,28 @@ public class Inventory extends Activity{
     public static final int MESSAGE_TOAST = 5;
     public static final int MESSAGE_WRITE = 3;
     public static final int READING_TAG = 2; 
-
-    //public String readStream(InputStream is) {
-      //try {
-        //ByteArrayOutputStream bo = new ByteArrayOutputStream();
-        //int i = is.read();
-        //while(i != -1) {
-          //bo.write(i);
-          //i = is.read();
-        //}
-        //return bo.toString();
-      //} catch (IOException e) {
-        //return "";
-      //}
-    //} 
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
        
         System.out.println("Initialized is " + initialized);
         Inventory.context = getApplicationContext();
+        Inventory.inventory = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         container = (ListView) findViewById(R.id.compartments);
         
-        if (!initialized) {
+        if (!initialized){
             rfidTags = new Hashtable<String,Item>();
-
-            Compartment c3 = new Compartment("3", "My stuff");
-            compartment = c3;
-            Item i0 = new Item("0", "Earbuds", R.drawable.sample_0);
-            Item i1 = new Item("1", "Glasses", R.drawable.sample_1);
-            Item i2 = new Item("2", "Headphones", R.drawable.sample_2);
-            Item i3 = new Item("3", "Jacket", R.drawable.sample_3);
-            Item i4 = new Item("4", "Laptop", R.drawable.sample_4);
-            Item i5 = new Item("5", "Mouse", R.drawable.sample_5);
-            Item i6 = new Item("6", "Passport", R.drawable.sample_6);
-            Item i7 = new Item("7", "Pencil", R.drawable.sample_7);
-            Item i10 = new Item("10", "Pencil", R.drawable.sample_7);
-            Item i11 = new Item("11", "Pencil", R.drawable.sample_7);
-            Item i8 = new Item("8", "Nexus", R.drawable.sample_10);
-            Item i9 = new Item("9", "Multimeter", R.drawable.sample_11);
-
-            i0.putInto("3");
-            i1.putInto("3");
-            i2.putInto("3");
-            i4.putInto("3");
-            i5.putInto("3");
-            //i6.putInto("3");
-            i7.putInto("3");
-            i10.putInto("3");
-            i11.putInto("3");
-            //i8.putInto("3");
-
-            rfidTags.put("102343530304238393845443838DA3",i8);
-            rfidTags.put("102343530304637324434304446DA3",i9);
-            rfidTags.put("102343530304238453546384530DA3",i3);
-            rfidTags.put("102343530304238453546454536DA3",i6);
-
+            addTestItems();
         }
 
-        if (initialized){
-            try{
-                Intent intent = getIntent();
-                System.out.println(intent.toString());
-                String id = intent.getStringExtra(ItemCreate.ITEM_ID);
-                String name = intent.getStringExtra(ItemCreate.ITEM_NAME);
-                String comp = intent.getStringExtra(ItemCreate.ITEM_COMPARTMENT);
-                new Item(id, name, R.drawable.olivia_wilde).putInto(comp);
-            } catch (NullPointerException e){
-                System.out.println(e);
-            }
-        }
         initialized = true;
 
         this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
         //getActionBar().setDisplayShowTitleEnabled(false);
-
-        // Get the SearchView and set the searchable configuration
-        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        //SearchView searchView = (SearchView) findViewById(R.id.searchView);
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        //searchView.setIconifiedByDefault(true); // Do not iconify the widget; expand it by default
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -183,16 +121,16 @@ public class Inventory extends Activity{
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         
         if (!mBluetoothAdapter.isEnabled()) {
-        	System.out.println("Enabling bluetooth");
-        	mBluetoothAdapter.enable();
+            System.out.println("Enabling bluetooth");
+            mBluetoothAdapter.enable();
         }
 
         try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
@@ -202,6 +140,10 @@ public class Inventory extends Activity{
         }
 
         checkContextAware();
+    }
+
+    public static Inventory getActiveInventory(){
+        return Inventory.inventory;
     }
 
     public static Context getContext(){
@@ -243,6 +185,20 @@ public class Inventory extends Activity{
                 });
                 alert.show();
                 return true;
+            case R.id.test_animation:
+                if (this.testImgUp) {
+                    //compartment.getItem("8008").remove();
+                    compartment.getItem("8008").scheduleDeletion();
+                    this.testImgUp = false;
+                    update();
+                } else {
+                    Drawable d = getResources().getDrawable(R.drawable.olivia_wilde);
+                    saveDrawable("Female", d);
+                    Item i= new Item("8008", "Female");
+                    i.putInto("3");
+                    update();
+                    this.testImgUp = true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -487,11 +443,8 @@ public class Inventory extends Activity{
 
         // If BT is not on, request that it be enabled.
         // setupChat() will then be called during onActivityResult
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        if (mBluetoothAdapter.isEnabled()) {
         // Otherwise, setup the chat session
-        } else {
             if (mChatService == null) { 
                 mChatService = new BluetoothChatService(this,mHandler); 
             }
@@ -507,14 +460,8 @@ public class Inventory extends Activity{
     public void onStop() {
         super.onStop();
         if(D) Log.e(TAG, "-- ON STOP --");
-                
-        if (mBluetoothAdapter.isEnabled()) {
-        	System.out.println("Disabling bluetooth");
-            mBluetoothAdapter.disable();
-        }
-        
-        try {
-			Thread.sleep(500);
+    try{
+        Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -527,6 +474,8 @@ public class Inventory extends Activity{
         // Stop the Bluetooth chat services
         if (mChatService != null) mChatService.stop();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
+        // Save the items
+        Container.inst().save();
     }
     
 
@@ -638,4 +587,85 @@ public class Inventory extends Activity{
         mChatService.connect(device, secure);
     }
 
+    private void saveDrawable(String name, Drawable d) {
+        String path = getContext().getFilesDir().getAbsolutePath() + "/" + name;
+        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+
+        try {
+            FileOutputStream fos = openFileOutput(name, Context.MODE_PRIVATE);
+            fos.write(bitmapdata);                                   
+            fos.close();                                                    
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTestItems() {
+        Compartment c3 = new Compartment("3", "My stuff");
+        compartment = c3;
+
+        Drawable d0 = getResources().getDrawable(R.drawable.sample_0);
+        Drawable d1 = getResources().getDrawable(R.drawable.sample_1);
+        Drawable d2 = getResources().getDrawable(R.drawable.sample_2);
+        Drawable d3 = getResources().getDrawable(R.drawable.sample_3);
+        Drawable d4 = getResources().getDrawable(R.drawable.sample_4);
+        Drawable d5 = getResources().getDrawable(R.drawable.sample_5);
+        Drawable d6 = getResources().getDrawable(R.drawable.sample_6);
+        Drawable d7 = getResources().getDrawable(R.drawable.sample_7);
+        Drawable d10 = getResources().getDrawable(R.drawable.sample_7);
+        Drawable d11 = getResources().getDrawable(R.drawable.sample_7);
+
+        Item i0 = new Item("0", "Earbuds");
+        saveDrawable("Earbuds", d0);
+
+        Item i1 = new Item("1", "Glasses");
+        saveDrawable("Glasses", d1);
+
+        Item i2 = new Item("2", "Headphones");
+        saveDrawable("Headphones", d2);
+
+        Item i3 = new Item("3", "Jacket");
+        saveDrawable("Jacket", d3);
+
+        Item i4 = new Item("4", "Laptop");
+        saveDrawable("Laptop", d5);
+
+        Item i5 = new Item("5", "Mouse");
+        saveDrawable("Mouse", d5);
+
+        Item i6 = new Item("6", "Passport");
+        saveDrawable("Passport", d6);
+
+        Item i7 = new Item("7", "Pencil");
+        Item i10 = new Item("10", "Pencil");
+        Item i11 = new Item("11", "Pencil");
+        saveDrawable("Pencil", d7);
+
+        Item i8 = new Item("8", "Nexus");
+        saveDrawable("Nexus", d10);
+        Item i9 = new Item("9", "Multimeter");
+        saveDrawable("Multimeter", d11);
+
+        i0.putInto("3");
+        i1.putInto("3");
+        i2.putInto("3");
+        i4.putInto("3");
+        i5.putInto("3");
+        //i6.putInto("3");
+        i7.putInto("3");
+        i10.putInto("3");
+        i11.putInto("3");
+        //i8.putInto("3");
+
+        rfidTags.put("102343530304238393845443838DA3",i8);
+        rfidTags.put("102343530304637324434304446DA3",i9);
+        rfidTags.put("102343530304238453546384530DA3",i3);
+        rfidTags.put("102343530304238453546454536DA3",i6);
+
+        Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
+        saveDrawable("Olivia", o);
+    }
 }

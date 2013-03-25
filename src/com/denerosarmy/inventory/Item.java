@@ -1,42 +1,57 @@
 package com.denerosarmy.inventory;
 
+import android.app.Activity;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.view.animation.Animation;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 
 public class Item implements Comparable, Serializable{
 
     private String id;
     private String name;
+    private String filename;
     private String compId;
-    private Integer pic;
     public boolean isNew;
     public boolean toBeDeleted;
     private Date created;
 
-    public Item(String id, String name, Integer pic){
+    public Item(String name) {
+        this(name, name);
+    }
+
+    public Item(String id, String name) {
         this.id = id;
         this.name = name;
-        this.pic = pic;
+        this.filename = name;
         this.isNew = true;
         this.toBeDeleted = false;
         this.created = new Date();
         Container.inst().addItem(this);
+        Container.inst().save();
+    }
+
+    public Item(String id, String name, String filename) {
+        this(id, name);
+        this.filename = filename;
+        Container.inst().save();
     }
 
     protected void putInto(String compId){
         this.compId = compId;
         Container.inst().getComp(compId).putItem(this);
-        // save
+        Container.inst().save();
     }
 
     protected void remove(){
         Container.inst().getComp(compId).popItem(this.getId());
         this.compId = null;
+        Container.inst().save();
     }
     
     protected void scheduleDeletion() {
-    	this.toBeDeleted = true;
+        this.toBeDeleted = true;
     }
     
     protected String flip() { 
@@ -58,12 +73,31 @@ public class Item implements Comparable, Serializable{
         return this.name;
     }
 
-    protected Integer getPic(){
-        return this.pic;
+    protected int getPic() {
+        return 0;
     }
 
-    protected Compartment getComp(){
-        if (this.compId == null){
+    protected Drawable getImg() {
+        byte[] b = new byte[1000000];
+        Drawable image = null;
+
+        try {
+            System.out.println("Loading image file " + this.filename);
+            FileInputStream fis = Inventory.getContext().openFileInput(this.filename);
+            System.out.println("Reading image file");
+            fis.read(b);
+            System.out.println("Creating drawable from image");
+            image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
+            System.out.println("IMAGE SUCCESSFULLY LOADED");
+        } catch (Exception e) {
+            System.out.println("Load image failed");
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    protected Compartment getComp() {
+        if (this.compId == null) {
             return null;
         }
         return Container.inst().getComp(this.compId);

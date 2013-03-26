@@ -604,6 +604,9 @@ public class Inventory extends Activity{
         Item i3 = new Item("3", "Jacket");
         saveDrawable("Jacket", d3);
 
+        Item i4 = new Item("4", "Laptop");
+        saveDrawable("Laptop", d5);
+
         Item i5 = new Item("5", "Mouse");
         saveDrawable("Mouse", d5);
 
@@ -623,8 +626,9 @@ public class Inventory extends Activity{
         i0.putInto("3");
         i1.putInto("3");
         i2.putInto("3");
+        i4.putInto("3");
         i5.putInto("3");
-        //i6.putInto("3");
+        i6.putInto("3");
         i7.putInto("3");
         i10.putInto("3");
         i11.putInto("3");

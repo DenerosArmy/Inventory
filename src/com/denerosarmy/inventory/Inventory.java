@@ -1,53 +1,29 @@
 package com.denerosarmy.inventory;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.SearchManager;
+import android.app.*;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.net.http.AndroidHttpClient;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.StrictMode;
+import android.os.*;
 import android.provider.Settings.Secure;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
+import android.view.*;
 import android.view.MenuItem.OnActionExpandListener;
-import android.view.MenuItem;
 import android.view.View.OnClickListener;
-import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.SearchView;
-import android.widget.Toast;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.*;
+import org.apache.http.client.*;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 
@@ -68,6 +44,7 @@ public class Inventory extends Activity{
     private static Context context;
     private static Inventory inventory;
     public Compartment compartment; 
+    public Compartment nullspace;
     static boolean initialized;
 
     private final String ANDROID_ID = Secure.ANDROID_ID;
@@ -110,8 +87,6 @@ public class Inventory extends Activity{
         this.adapter = new CompartmentAdapter(this);
         container.setAdapter(this.adapter);
 
-        //getActionBar().setDisplayShowTitleEnabled(false);
-
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         this.registerReceiver(this.WifiStateChangedReceiver,
@@ -128,8 +103,8 @@ public class Inventory extends Activity{
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         
         // If the adapter is null, then Bluetooth is not supported
@@ -142,7 +117,7 @@ public class Inventory extends Activity{
         checkContextAware();
     }
 
-    public static Inventory getActiveInventory(){
+    public static Inventory getActiveInventory() {
         return Inventory.inventory;
     }
 
@@ -187,7 +162,6 @@ public class Inventory extends Activity{
                 return true;
             case R.id.test_animation:
                 if (this.testImgUp) {
-                    //compartment.getItem("8008").remove();
                     compartment.getItem("8008").scheduleDeletion();
                     this.testImgUp = false;
                     update();
@@ -630,9 +604,6 @@ public class Inventory extends Activity{
         Item i3 = new Item("3", "Jacket");
         saveDrawable("Jacket", d3);
 
-        Item i4 = new Item("4", "Laptop");
-        saveDrawable("Laptop", d5);
-
         Item i5 = new Item("5", "Mouse");
         saveDrawable("Mouse", d5);
 
@@ -652,7 +623,6 @@ public class Inventory extends Activity{
         i0.putInto("3");
         i1.putInto("3");
         i2.putInto("3");
-        i4.putInto("3");
         i5.putInto("3");
         //i6.putInto("3");
         i7.putInto("3");

@@ -565,7 +565,7 @@ public class Inventory extends Activity{
         Drawable d10 = getResources().getDrawable(R.drawable.sample_7);
         Drawable d11 = getResources().getDrawable(R.drawable.sample_7);
 
-        Item i0 = new Item("0", "Earbuds");
+        Item i0 = new Item("0", "Charger");
         saveDrawable("Earbuds", d0);
 
         Item i1 = new Item("1", "Glasses");

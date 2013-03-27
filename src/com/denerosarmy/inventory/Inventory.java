@@ -258,12 +258,11 @@ public class Inventory extends Activity{
     protected void stateToggle(String rfidTag) { 
         System.out.println(rfidTag);
 
-
-        
         if (rfidTags.containsKey(rfidTag)) { 
             System.out.println("BOO");
             Item the_item = rfidTags.get(rfidTag); 
             Toast.makeText(this, the_item.flip(),Toast.LENGTH_SHORT).show(); 
+            update();
         }
 
 
@@ -284,7 +283,6 @@ public class Inventory extends Activity{
                 }
 
             }
-
     }
 
     protected void update(){

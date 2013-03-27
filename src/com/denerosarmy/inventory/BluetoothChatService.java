@@ -438,8 +438,6 @@ public class BluetoothChatService {
                     String readMessage = new String(buffer, 0, bytes);
                     bytes = mmInStream.read(buffer);
                     
-              
-                    
                    mHandler.obtainMessage(Inventory.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget(); 
                 } catch (IOException e) {

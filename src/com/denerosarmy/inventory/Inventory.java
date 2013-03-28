@@ -598,9 +598,9 @@ public class Inventory extends Activity{
         Item i9 = new Item("9", "Multimeter");
         saveDrawable("Multimeter", d11);
 		
-		Item i10 = new Item("10", "Pencilcase");
+		Item i12 = new Item("10", "Pencilcase");
 		saveDrawable("Pencilcase", d12);
-		Item i11 = new Item("11", "Wallet");
+		Item i13 = new Item("11", "Wallet");
 		saveDrawable("Wallet", d13);
 		
 
@@ -613,18 +613,20 @@ public class Inventory extends Activity{
         i7.putInto("3");
         i10.putInto("3");
         i11.putInto("3");
+        i12.putInto("3");
+        i13.putInto("3");
         //i8.putInto("3");
 
-        rfidTags.put("102363730303732363437343035DA3",i8); //nexus
+        //rfidTags.put("102363730303732363437343035DA3",i8); //nexus
 
-        rfidTags.put("102343530304637324434304446DA3",i9); //multimeter
-        rfidTags.put("102343530304238453546384530DA3",i3); //jacket
+        //rfidTags.put("343530304637324434304446DA325",i9); //multimeter
+        //rfidTags.put("343530304238453546384530DA325",i3); //jacket
 		
-        rfidTags.put("102343530304238453546454536DA3",i6); //passport
-		rfidTags.put("102304230304432334130334530DA3",i2); //headphones
-		rfidTags.put("102323130303634314443423933DA3",i5); //mouse
-		rfidTags.put("102304230304432333539463733DA3",i10); //pencilcase
-		rfidTags.put("102363730303732413442413042DA3",i11); //wallet
+        rfidTags.put("363730303732363437343035DA325",i6); //passport
+		rfidTags.put("304230304432334130334530DA325",i2); //headphones
+		rfidTags.put("323130303634314443423933DA325",i5); //mouse
+		rfidTags.put("304230304432333539463733DA325",i12); //pencilcase
+		rfidTags.put("363730303732413442413042DA325",i13); //wallet
 
         Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
         saveDrawable("Olivia", o);

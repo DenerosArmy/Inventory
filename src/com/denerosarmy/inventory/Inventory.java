@@ -551,7 +551,7 @@ public class Inventory extends Activity{
     }
 
     public void addTestItems() {
-        Compartment c3 = new Compartment("3", "My stuff");
+        Compartment c3 = new Compartment("3", "Nelson's stuff");
         compartment = c3;
 
         Drawable d0 = getResources().getDrawable(R.drawable.sample_0);
@@ -564,6 +564,8 @@ public class Inventory extends Activity{
         Drawable d7 = getResources().getDrawable(R.drawable.sample_7);
         Drawable d10 = getResources().getDrawable(R.drawable.sample_7);
         Drawable d11 = getResources().getDrawable(R.drawable.sample_7);
+		Drawable d12 = getResources().getDrawable(R.drawable.sample_12);
+        Drawable d13 = getResources().getDrawable(R.drawable.sample_13);
 
         Item i0 = new Item("0", "Charger");
         saveDrawable("Earbuds", d0);
@@ -595,11 +597,17 @@ public class Inventory extends Activity{
         saveDrawable("Nexus", d10);
         Item i9 = new Item("9", "Multimeter");
         saveDrawable("Multimeter", d11);
+		
+		Item i10 = new Item("10", "Pencilcase");
+		saveDrawable("Pencilcase", d12);
+		Item i11 = new Item("11", "Wallet");
+		saveDrawable("Wallet", d13);
+		
 
-        i0.putInto("3");
-        i1.putInto("3");
+        //i0.putInto("3");
+        //i1.putInto("3");
         i2.putInto("3");
-        i4.putInto("3");
+        //i4.putInto("3");
         i5.putInto("3");
         i6.putInto("3");
         i7.putInto("3");
@@ -607,11 +615,16 @@ public class Inventory extends Activity{
         i11.putInto("3");
         //i8.putInto("3");
 
-        rfidTags.put("363730303732363437343035DA325",i8);
+        rfidTags.put("102363730303732363437343035DA3",i8); //nexus
 
-        rfidTags.put("102343530304637324434304446DA3",i9);
-        rfidTags.put("102343530304238453546384530DA3",i3);
-        rfidTags.put("102343530304238453546454536DA3",i6);
+        rfidTags.put("102343530304637324434304446DA3",i9); //multimeter
+        rfidTags.put("102343530304238453546384530DA3",i3); //jacket
+		
+        rfidTags.put("102343530304238453546454536DA3",i6); //passport
+		rfidTags.put("102304230304432334130334530DA3",i2); //headphones
+		rfidTags.put("102323130303634314443423933DA3",i5); //mouse
+		rfidTags.put("102304230304432333539463733DA3",i10); //pencilcase
+		rfidTags.put("102363730303732413442413042DA3",i11); //wallet
 
         Drawable o = getResources().getDrawable(R.drawable.olivia_wilde);
         saveDrawable("Olivia", o);

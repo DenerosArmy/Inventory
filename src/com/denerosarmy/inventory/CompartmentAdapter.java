@@ -31,7 +31,7 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (autoUpdate){
+        if (autoUpdate) {
             this.compartments = Container.inst().getComps();
         }
         LayoutInflater inflater = (LayoutInflater) context
@@ -41,7 +41,6 @@ public class CompartmentAdapter extends ArrayAdapter<Compartment>{
         GridView gridView = (GridView) rowView.findViewById(R.id.itemGrid);
         textView.setText(compartments[position].getName());
         gridView.setAdapter(new ThumbnailAdapter(context, compartments[position].getItemsAndCounts()));
-
         final float scale = getContext().getResources().getDisplayMetrics().density;
         double rows = Math.ceil(compartments[position].getNumTiles()/3.0);
         int width = -1;

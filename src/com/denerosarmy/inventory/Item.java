@@ -45,9 +45,11 @@ public class Item implements Comparable, Serializable{
     }
 
     protected void remove(){
-        Container.inst().getComp(compId).popItem(this.getId());
-        this.compId = null;
-        Container.inst().save();
+        if (this.compId != null) {
+            Container.inst().getComp(this.compId).popItem(this.getId());
+            this.compId = null;
+            Container.inst().save();
+        }
     }
     
     protected void scheduleDeletion() {
@@ -82,11 +84,8 @@ public class Item implements Comparable, Serializable{
         Drawable image = null;
 
         try {
-            System.out.println("Loading image file " + this.filename);
             FileInputStream fis = Inventory.getContext().openFileInput(this.filename);
-            System.out.println("Reading image file");
             fis.read(b);
-            System.out.println("Creating drawable from image");
             image =  new BitmapDrawable(BitmapFactory.decodeByteArray(b, 0, b.length));
             System.out.println("IMAGE SUCCESSFULLY LOADED");
         } catch (Exception e) {

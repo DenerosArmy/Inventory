@@ -1,8 +1,10 @@
 package com.denerosarmy.inventory;
 
-import java.lang.Thread;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.lang.Thread;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,11 +22,16 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
     private final Context context;
     private final Item[] items;
     private final Integer[] itemCounts;
+    private CompartmentAdapter compartment;
 
     @SuppressLint("NewApi")
-    public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts){
-        super(context, R.layout.thumbnail, Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class));
+    public ThumbnailAdapter(Context context, Hashtable<Item, Integer> itemsAndCounts) {
+        super(context, R.layout.thumbnail, Collections.list(itemsAndCounts.keys()));
+        //ArrayList<Item> lst = new ArrayList<Item>();
+        //lst.addAll((Collection) Arrays.asList(itemsAndCounts.keySet().toArray()));
+        //super(context, R.layout.thumbnail, Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class));
         this.context = context;
+        this.compartment = compartment;
         this.items = Arrays.copyOf(itemsAndCounts.keySet().toArray(), itemsAndCounts.size(), Item[].class);
         java.util.Arrays.sort(this.items);
         this.itemCounts = new Integer[items.length];
@@ -55,6 +62,7 @@ public class ThumbnailAdapter extends ArrayAdapter<Item>{
         	Animation fadeout = AnimationHelper.createFadeoutAnimation();
         	AnimationHelper.animate(tile, fadeout);
             deleteOnAnimationComplete(fadeout, item);
+            this.remove(item);
         }
         if (item.isNew) {
         	Animation fadein = AnimationHelper.createFadeInAnimation();
